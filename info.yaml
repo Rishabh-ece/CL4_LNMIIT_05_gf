@@ -42,13 +42,13 @@ pinout:
   ui[7]: ""
 
   # Outputs
-  uo[0]: ""
-  uo[1]: ""
-  uo[2]: ""
-  uo[3]: ""
-  uo[4]: ""
-  uo[5]: ""
-  uo[6]: ""
+  uo[0]: "LOCK_STATE"
+  uo[1]: "LOCKED_OUT_STATE"
+  uo[2]: "ATTEMPT_COUNT_0"
+  uo[3]: "ATTEMPT_COUNT_1"
+  uo[4]: "STATE_1" # red rgb pin
+  uo[5]: "STATE_2" # green rgb pin
+  uo[6]: "STATE_3" # blue rgb pin
   uo[7]: ""
 
   # Bidirectional pins
