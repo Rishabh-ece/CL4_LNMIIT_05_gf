@@ -1,23 +1,24 @@
-// CL-4 optional two-flop reset synchronizer. No asynchronous resets.
-module reset_sync #(
-  parameter integer RST_SYNC = 1
-) (
-  input  wire clk,
-  input  wire rst_n,
-  output wire internal_rst_n
+
+module reset_sync (
+    input wire clk,
+    input wire rst_n,
+    output wire internal_rst_n
 );
-  generate
-    if (RST_SYNC == 1) begin : g_sync
-      // Intentionally no reset on either synchronizer flop.
-      reg rst_s1;
-      reg rst_s2;
-      always @(posedge clk) begin
-        rst_s1 <= rst_n;
-        rst_s2 <= rst_s1;
-      end
-      assign internal_rst_n = rst_s2;
-    end else begin : g_direct
-      assign internal_rst_n = rst_n;
+
+    reg rst_sync1;
+    reg rst_sync2;
+
+    always @(posedge clk or negedge rst_n) begin
+        if (!rst_n) begin
+            rst_sync1 <= 1'b0;
+            rst_sync2 <= 1'b0;
+        end
+        else begin
+            rst_sync1 <= 1'b1;
+            rst_sync2 <= rst_sync1;
+        end
     end
-  endgenerate
+
+    wire internal_rst_n = rst_sync2;
+
 endmodule
