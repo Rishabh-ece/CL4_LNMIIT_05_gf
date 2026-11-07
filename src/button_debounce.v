@@ -27,7 +27,7 @@ module button_debounce #(
   // Combinational from pre-edge values.
   assign press = s2 & ~lvl & (cnt == COUNT_LAST);
 
-  always @(posedge clk) begin
+  always @(posedge clk or negedge rst_n) begin
     if (!rst_n) begin
       s1  <= 1'b0;
       s2  <= 1'b0;
