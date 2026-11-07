@@ -5,7 +5,7 @@ module failure_counter (
   input  wire [1:0] next_fail,
   output reg  [1:0] fail
 );
-  always @(posedge clk) begin
+  always @(posedge clk or negedge rst_n) begin
     if (!rst_n) begin
       fail <= 2'd0;
     end else begin
