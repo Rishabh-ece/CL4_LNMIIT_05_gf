@@ -102,7 +102,7 @@ module entry_fsm #(
     endcase
   end
 
-  always @(posedge clk) begin
+  always @(posedge clk or negedge rst_n) begin
     if (!rst_n) begin
       st         <= IDLE;
       unlock     <= 1'b0;
