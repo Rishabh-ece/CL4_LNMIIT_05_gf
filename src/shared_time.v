@@ -6,7 +6,7 @@ module shared_timer (
   input  wire [7:0] next_tmr,
   output reg  [7:0] tmr
 );
-  always @(posedge clk) begin
+  always @(posedge clk or negedge rst_n) begin
     if (!rst_n) begin
       tmr <= 8'd0;
     end else begin
