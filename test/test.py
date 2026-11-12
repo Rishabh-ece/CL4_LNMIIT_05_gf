@@ -2,7 +2,7 @@
 
 """
 
-CL-4 combination lock - complete cocotb regression (one file, F01..F36).
+CL-4 combination lock - complete cocotb regression for complete-password comparison (F01..F36, with F31 revised and F36 async reset retained).
 
 
 
@@ -58,7 +58,7 @@ Conventions (all cycle numbers follow CL4-SPEC-001 section 1.2):
 
 
 
-Every implemented Cocotb test states which plan item (F01..F36) it implements. N1-N4 are external tool-flow checks.
+Every implemented Cocotb test states which plan item it implements. The FSM state remains visible as required by the specification. N1-N4 are external tool-flow checks.
 
 N1..N4 (lint, synthesis, STA, gate level) are tool flows, not cocotb tests.
 
@@ -200,6 +200,10 @@ class RefModel:
 
         self.cnt = [0] * 4
 
+        # First three 2-bit digits collected before the complete comparison.
+
+        self.prefix = [0, 0, 0]
+
 
 
     def force_state(self, v):
@@ -288,23 +292,43 @@ class RefModel:
 
             if valid:
 
-                if digit != DIGITS[st]:
+                if st == IDLE:
 
-                    st_n = FAIL
+                    self.prefix[0] = digit
 
-                elif st == DIGIT4:
+                    st_n, tmr_n = DIGIT2, (N - 1) & 0xFF
 
-                    st_n, tmr_n, fail_n = UNLOCK, (UNL - 1) & 0xFF, 0
+                elif st == DIGIT2:
+
+                    self.prefix[1] = digit
+
+                    st_n, tmr_n = DIGIT3, (N - 1) & 0xFF
+
+                elif st == DIGIT3:
+
+                    self.prefix[2] = digit
+
+                    st_n, tmr_n = DIGIT4, (N - 1) & 0xFF
 
                 else:
 
-                    st_n, tmr_n = st + 1, (N - 1) & 0xFF
+                    candidate = ((self.prefix[0] & 3) << 6) | ((self.prefix[1] & 3) << 4) | ((self.prefix[2] & 3) << 2) | (digit & 3)
+
+                    if candidate == CODE:
+
+                        st_n, tmr_n, fail_n = UNLOCK, (UNL - 1) & 0xFF, 0
+
+                    else:
+
+                        st_n = FAIL
 
             elif st != IDLE and N != 0:
 
                 if tmr == 0:
 
                     st_n = IDLE
+
+                    self.prefix = [0, 0, 0]
 
                 else:
 
@@ -345,6 +369,12 @@ class RefModel:
             st_n = IDLE
 
         self.st, self.fail, self.tmr = st_n, fail_n, tmr_n
+
+        if st_n in (FAIL, UNLOCK, LOCKOUT, IDLE) and st != IDLE:
+
+            # A completed attempt, timeout, or recovery must not retain a prefix.
+
+            self.prefix = [0, 0, 0]
 
         self.unlock = int(st_n == UNLOCK)
 
@@ -506,25 +536,17 @@ class Tb:
 
         tb.pins.init()
 
-        # Commit the initial HIGH reset level before starting the clock or
+        # Begin with raw reset HIGH.  Starting the DUT with rst_n already LOW
 
-        # allowing a test to assert reset.  Without this time step, Icarus may
+        # can leave event-driven simulators without a negedge event, so some
 
-        # coalesce the initial HIGH and subsequent LOW writes, so no genuine
+        # async-reset flops may remain X.  Wait for a clock falling edge, then
 
-        # 1->0 edge reaches the asynchronous-reset logic.
-
-        await Timer(1, unit="ns")
-
-
+        # let each test assert reset with a genuine HIGH-to-LOW transition.
 
         cocotb.start_soon(Clock(dut.clk, 1, unit="ms").start(start_high=False))
 
-        # Let the clock's initial value settle as a separate simulator event.
-
-        # The test can now create a real raw-reset falling edge at any time.
-
-        await Timer(1, unit="ns")
+        await FallingEdge(dut.clk)
 
         return tb
 
@@ -844,11 +866,33 @@ class Tb:
 
 
 
-    async def fail_once(self, wrong, final_tick=True):
+    async def fail_once(self, wrong, final_tick=True, wrong_pos=0):
 
-        n = await self.hold_until(1 << wrong, FAIL)
+        """Submit one complete incorrect four-digit code; wrong is the bad button."""
 
-        assert n == D + 2, "wrong digit reached FAIL after %d ticks, expected %d" % (n, D + 2)
+        candidate = list(DIGITS)
+
+        candidate[wrong_pos] = wrong
+
+        # Positions 1-3 are always accepted as collection events, even when wrong.
+
+        for pos in range(3):
+
+            target = pos + 1
+
+            n = await self.hold_until(1 << candidate[pos], target)
+
+            assert n == D + 2, "digit %d accepted after %d ticks, expected %d" % (pos, n, D + 2)
+
+            self.set_btn(0)
+
+            await self.tick(D + 2)
+
+        n = await self.hold_until(1 << candidate[3], FAIL if candidate != DIGITS else UNLOCK)
+
+        assert n == D + 2, "fourth digit verdict after %d ticks, expected %d" % (n, D + 2)
+
+        assert candidate != DIGITS, "fail_once was given a correct complete code"
 
         self.set_btn(0)
 
@@ -874,9 +918,7 @@ class Tb:
 
         elif target == FAIL:
 
-            await self.hold_until(1 << WRONGS[0], FAIL)
-
-            self.set_btn(0)
+            await self.fail_once(WRONGS[0], final_tick=False, wrong_pos=0)
 
         elif target == LOCKOUT:
 
@@ -978,11 +1020,9 @@ async def test_reset_all_states(dut):
 
     await tb.reset()
 
-    tb.set_btn(1 << WRONGS[0])
+    await tb.fail_once(WRONGS[0], final_tick=False, wrong_pos=0)
 
-    await tb.tick(D+2)
-
-    tb.expect(FAIL, 0, "F02 FAIL setup")
+    tb.expect(FAIL, 0, "F02 FAIL setup after complete wrong code")
 
     tb.set_rst(0)
 
@@ -1014,7 +1054,7 @@ async def test_reset_clears_debouncers(dut):
 
     tb = await Tb.create(dut)
 
-    for held, expect_fail in ((DIGITS[0], False), (WRONGS[0], True)):
+    for held in (DIGITS[0], WRONGS[0]):
 
         await tb.reset()
 
@@ -1046,23 +1086,9 @@ async def test_reset_clears_debouncers(dut):
 
         assert tb.edge == change
 
-        tb.expect(FAIL if expect_fail else DIGIT2, 0, "F03 at edge j+D+1")
+        tb.expect(DIGIT2, 0, "F03 at edge j+D+1: even a wrong first digit is collected")
 
         await tb.tick(1)
-
-        if expect_fail:
-
-            if MAXA > 1:
-
-                tb.expect(IDLE, 1, "F03 after FAIL")
-
-            else:
-
-                tb.expect(LOCKOUT, 1, "F03 after FAIL (MAX_ATTEMPTS=1)")
-
-                await tb.tick(LOCK)
-
-                tb.expect(IDLE, 0, "F03 lockout over")
 
         mk = tb.mark()
 
@@ -1070,13 +1096,11 @@ async def test_reset_clears_debouncers(dut):
 
         await tb.tick(min(10 * D, (N - 5) if N else 10 * D))   # keep holding
 
-        extra = [s for s in tb.trace[mk:] if s.state == FAIL]
+        extra = [sample for sample in tb.trace[mk:] if sample.state in (DIGIT3, FAIL)]
 
-        assert not extra, "F03: second press produced while held"
+        assert not extra, "F03: held button generated a second press"
 
-        tb.expect(IDLE if expect_fail else DIGIT2,
-
-                  (1 if MAXA > 1 else 0) if expect_fail else 0, "F03 hold")
+        tb.expect(DIGIT2, 0, "F03 hold")
 
         tb.set_btn(0)
 
@@ -1350,13 +1374,9 @@ async def test_release_debounce(dut):
 
     seq = [v for v, _ in tb.rle(mk, lambda s: s.state)]
 
-    if DIGITS[1] != b:
+    assert seq[:2] == [DIGIT2, DIGIT3], "F09: second qualified press must advance to DIGIT3: %s" % seq
 
-        assert seq[:2] == [DIGIT2, FAIL] and seq.count(FAIL) == 1, "F09: seq %s" % seq
-
-    else:
-
-        assert seq[:2] == [DIGIT2, DIGIT3], "F09: seq %s" % seq
+    assert FAIL not in seq, "F09: no verdict is allowed before digit four"
 
     dut._log.info("F09 PASS")
 
@@ -1444,7 +1464,7 @@ async def test_unlock_clears_failure_count(dut):
 
 async def test_wrong_digit_each_position(dut):
 
-    """F13: wrong digit at each position -> FAIL for one cycle -> IDLE, +1 failure."""
+    """F13: wrong digits in positions 1-3 do not fail early; verdict only at digit 4."""
 
     tb = await Tb.create(dut)
 
@@ -1452,33 +1472,47 @@ async def test_wrong_digit_each_position(dut):
 
         await tb.reset()
 
-        if pos:
+        candidate = list(DIGITS)
 
-            await tb.enter_digits(DIGITS[:pos], gap=D + 2)
+        candidate[pos] = (DIGITS[pos] + 1) & 3
+
+        # First three accepted presses must always advance, regardless of correctness.
+
+        for k in range(3):
+
+            target = k + 1
+
+            n = await tb.hold_until(1 << candidate[k], target)
+
+            assert n == D + 2
+
+            tb.expect(target, 0, "F13: no verdict before fourth digit")
+
+            tb.set_btn(0)
+
+            await tb.tick(D + 2)
 
         mk = tb.mark()
 
-        wrong = (DIGITS[pos] + 1) & 3
+        n = await tb.hold_until(1 << candidate[3], FAIL)
 
-        await tb.hold_until(1 << wrong, FAIL)
+        assert n == D + 2, "F13: FAIL latency on fourth press was %d" % n
 
-        tb.expect(FAIL, 0, "F13 att during FAIL")
+        tb.expect(FAIL, 0, "F13: count unchanged inside FAIL")
 
         tb.set_btn(0)
 
         await tb.tick(1)
 
-        tb.expect(IDLE if MAXA > 1 else LOCKOUT, 1, "F13 after FAIL")
+        tb.expect(IDLE if MAXA > 1 else LOCKOUT, 1, "F13 after complete wrong code")
 
-        await tb.tick(5)
+        runs = tb.rle(mk, lambda sample: sample.state)
 
-        runs = tb.rle(mk, lambda s: s.state)
-
-        assert [n for v, n in runs if v == FAIL] == [1], "F13 pos %d: FAIL runs %s" % (pos, runs)
+        assert [n for v, n in runs if v == FAIL] == [1], "F13 pos %d: %s" % (pos, runs)
 
         assert UNLOCK not in [v for v, _ in runs]
 
-    dut._log.info("F13 PASS")
+    dut._log.info("F13 PASS: all four mismatch positions verdict only after digit four")
 
 
 
@@ -1488,33 +1522,49 @@ async def test_wrong_digit_each_position(dut):
 
 async def test_failure_count_increment(dut):
 
-    """F14: each FAIL adds exactly 1, only when FAIL is left."""
+    """F14: one increment per complete wrong code, for 1/2/3/4 wrong digits."""
 
     tb = await Tb.create(dut)
 
-    await tb.reset()
+    for wrong_count in (1, 2, 3, 4):
 
-    steps = min(2, MAXA - 1)
+        await tb.reset()
 
-    for k in range(steps):
+        candidate = list(DIGITS)
 
-        await tb.hold_until(1 << WRONGS[k % 3], FAIL)
+        for pos in range(wrong_count):
 
-        tb.expect(FAIL, k, "F14 count must not change inside FAIL")
+            candidate[pos] = (candidate[pos] + 1) & 3
+
+        # No failure count change during the first three collected digits.
+
+        for pos in range(3):
+
+            await tb.hold_until(1 << candidate[pos], pos + 1)
+
+            tb.expect(pos + 1, 0, "F14 count unchanged before final digit")
+
+            tb.set_btn(0)
+
+            await tb.tick(D + 2)
+
+        await tb.hold_until(1 << candidate[3], FAIL)
+
+        tb.expect(FAIL, 0, "F14 count unchanged while FAIL is active")
 
         tb.set_btn(0)
 
         await tb.tick(1)
 
-        tb.expect(IDLE, k + 1, "F14 after FAIL")
+        tb.expect(IDLE if MAXA > 1 else LOCKOUT, 1, "F14 exactly one increment")
 
         mk = tb.mark()
 
-        await tb.tick(60)
+        await tb.tick(5)
 
-        assert all(v == k + 1 for v, _ in tb.rle(mk, lambda s: s.att)), "F14: idle cycles changed count"
+        assert all(v == 1 for v, _ in tb.rle(mk, lambda sample: sample.att)), "F14 count changed more than once"
 
-    dut._log.info("F14 PASS")
+    dut._log.info("F14 PASS: one increment for entries with 1, 2, 3 or 4 wrong digits")
 
 
 
@@ -1544,9 +1594,9 @@ async def test_lockout_threshold(dut):
 
         assert tb.last.lo == 0
 
-    await tb.hold_until(1 << WRONGS[(MAXA - 1) % 3], FAIL)
+    await tb.fail_once(WRONGS[(MAXA - 1) % 3], final_tick=False, wrong_pos=0)
 
-    tb.expect(FAIL, MAXA - 1, "F15 threshold FAIL")
+    tb.expect(FAIL, MAXA - 1, "F15 threshold FAIL after complete wrong code")
 
     tb.set_btn(0)
 
@@ -1822,15 +1872,25 @@ async def test_press_during_fail(dut):
 
     await tb.reset()
 
-    A, B = WRONGS[0], DIGITS[0]          # B is the correct first digit
+    # Collect a deliberately wrong prefix without entering FAIL.
+
+    prefix = list(DIGITS)
+
+    prefix[0] = WRONGS[0]
+
+    await tb.enter_digits(prefix[:3], final_gap=0)
+
+    A = (DIGITS[3] + 1) & 3             # wrong fourth digit triggers FAIL
+
+    B = next(b for b in range(4) if b != A)
 
     tb.set_btn(1 << A)
 
     await tb.tick(1)
 
-    tb.set_btn((1 << A) | (1 << B))      # B first sampled one edge later -> pulse in FAIL cycle
+    tb.set_btn((1 << A) | (1 << B))      # B's pulse is aligned with the FAIL cycle
 
-    await tb.tick_until(lambda s: s.state == FAIL, D + 6)
+    await tb.tick_until(lambda sample: sample.state == FAIL, D + 6)
 
     await tb.tick(1)
 
@@ -1978,11 +2038,11 @@ async def test_timeout_boundary(dut):
 
     await tb.tick(1)
 
-    tb.expect(FAIL, 0, "F22 B judged in IDLE as wrong first digit")
+    tb.expect(DIGIT2, 0, "F22 B judged in IDLE as a new first digit")
 
     await tb.tick(1)
 
-    tb.expect(IDLE if MAXA > 1 else LOCKOUT, 1, "F22 B counted as failure")
+    tb.expect(DIGIT2, 0, "F22 B must not count as a failure")
 
     dut._log.info("F22 PASS")
 
@@ -2028,7 +2088,7 @@ async def test_timeout_disabled(dut):
 
 async def test_button_mapping(dut):
 
-    """F24: at each position every button is judged correctly (16 combinations)."""
+    """F24: all button values map correctly; positions 1-3 always advance, verdict at 4."""
 
     tb = await Tb.create(dut)
 
@@ -2038,21 +2098,27 @@ async def test_button_mapping(dut):
 
             await tb.reset()
 
-            if pos:
+            candidate = list(DIGITS)
 
-                await tb.enter_digits(DIGITS[:pos])
+            candidate[pos] = b
 
-            if b == DIGITS[pos]:
+            for k in range(3):
 
-                await tb.hold_until(1 << b, pos + 1 if pos < 3 else UNLOCK)
+                await tb.hold_until(1 << candidate[k], k + 1)
 
-            else:
+                tb.expect(k + 1, 0, "F24: first three digits are collection only")
 
-                await tb.hold_until(1 << b, FAIL)
+                tb.set_btn(0)
+
+                await tb.tick(D + 2)
+
+            target = UNLOCK if candidate == DIGITS else FAIL
+
+            await tb.hold_until(1 << candidate[3], target)
 
             tb.set_btn(0)
 
-    dut._log.info("F24 PASS")
+    dut._log.info("F24 PASS: all four button values exercised at every position")
 
 
 
@@ -2240,7 +2306,67 @@ async def test_parameter_configuration(dut):
 
 # ============================================================================
 
-# F31  Illegal state recovery
+# F31  Follow-up complete failure entry
+
+# ============================================================================
+
+@cocotb.test(**TMO)
+
+async def test_followup_failure_complete_entry(dut):
+
+    """F31: every follow-up failure is a fresh complete four-digit entry."""
+
+    tb = await Tb.create(dut)
+
+    await tb.reset()
+
+    for attempt in range(MAXA):
+
+        # Use a different wrong position on successive attempts.
+
+        wrong_pos = attempt % 4
+
+        wrong = (DIGITS[wrong_pos] + 1 + attempt) & 3
+
+        candidate = list(DIGITS)
+
+        candidate[wrong_pos] = wrong
+
+        for pos in range(3):
+
+            await tb.hold_until(1 << candidate[pos], pos + 1)
+
+            tb.expect(pos + 1, attempt, "F31: no failure before digit four")
+
+            tb.set_btn(0)
+
+            await tb.tick(D + 2)
+
+        await tb.hold_until(1 << candidate[3], FAIL)
+
+        tb.expect(FAIL, attempt, "F31: count unchanged during FAIL")
+
+        tb.set_btn(0)
+
+        await tb.tick(1)
+
+        expected = LOCKOUT if attempt == MAXA - 1 else IDLE
+
+        tb.expect(expected, attempt + 1, "F31 follow-up complete failure")
+
+        if expected == LOCKOUT:
+
+            break
+
+    dut._log.info("F31 PASS: %d complete incorrect entries, lockout at threshold", MAXA)
+
+
+
+
+
+# ============================================================================
+
+# F39  Preserved illegal-state recovery coverage (original F31 objective)
 
 # ============================================================================
 
@@ -2248,7 +2374,7 @@ async def test_parameter_configuration(dut):
 
 async def test_illegal_state_recovery(dut):
 
-    """F31: forcing st=111 returns to IDLE, fail/tmr unchanged, lockout still works."""
+    """F39 (retained original F31 objective): forcing st=111 returns to IDLE, fail/tmr unchanged, lockout still works."""
 
     tb = await Tb.create(dut)
 
@@ -2312,7 +2438,7 @@ async def test_illegal_state_recovery(dut):
 
     mk = tb.mark()
 
-    await tb.hold_until(1 << WRONGS[0], FAIL)
+    await tb.fail_once(WRONGS[0], final_tick=False, wrong_pos=0)
 
     tb.set_btn(0)
 
@@ -2324,7 +2450,7 @@ async def test_illegal_state_recovery(dut):
 
     tb.expect(IDLE, 0, "F31 B end")
 
-    dut._log.info("F31 PASS (forced %s)", "tb.user_project.U_combo_lock.U_entry_fsm.st"
+    dut._log.info("F39 PASS (preserved illegal-state recovery; forced %s)", "tb.user_project.U_combo_lock.U_entry_fsm.st"
 
                   if tb.pins.wrapper else "U_entry_fsm.st")
 
@@ -2596,13 +2722,13 @@ class RandomStim:
 
         gap = rng.choice([D, D + 1, D + 3, 2 * D, 4, 1])
 
-        if pick < 0.30:                                   # correct next digit
+        if pick < 0.30:                                   # correct next digit / complete code path
 
             b = self._exp()
 
             self._m(1 << b, hold); self._m(0, gap)
 
-        elif pick < 0.42:                                 # wrong digit
+        elif pick < 0.42:                                 # arbitrary wrong candidate digit; verdict only at digit 4
 
             b = self._wrong(self._exp())
 
