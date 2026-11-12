@@ -4,7 +4,7 @@
 
 // is compared only when the fourth digit arrives (in DIGIT4).
 
-// All child modules use one clock and synchronous active-low internal reset.
+
 
 module combo_lock #(
 
