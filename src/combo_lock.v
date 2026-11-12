@@ -140,7 +140,7 @@ module combo_lock #(
 
   // Storage only: no comparison happens here.
 
-  always @(posedge clk) begin
+  always @(posedge clk or negedge internal_rst_n) begin
 
     if (!internal_rst_n) begin
 
