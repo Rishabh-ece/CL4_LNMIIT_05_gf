@@ -13,9 +13,9 @@ async def cycles(dut, n):
 @cocotb.test()
 async def test_gate_level_smoke(dut):
 
-    # Start clock
+    # Initialize inputs
     dut.clk.value = 0
-    dut.rst_n.value = 0
+    dut.rst_n.value = 1
     dut.ena.value = 1
     dut.ui_in.value = 0
     dut.uio_in.value = 0
@@ -24,22 +24,33 @@ async def test_gate_level_smoke(dut):
         Clock(dut.clk, 1, unit="ms").start()
     )
 
-    # Hold reset
-    await cycles(dut, 5)
+    # Wait for clock to start
+    await FallingEdge(dut.clk)
 
-    # Check reset outputs
+    # Assert reset asynchronously
+    dut.rst_n.value = 0
+
+    # Allow asynchronous reset to propagate
+    await Timer(1, unit="ns")
+
+    # Check reset before clock edge
     out = int(dut.user_project.uo_out.value)
 
     assert (out & 0x7F) == 0, (
-        f"Reset failed: uo_out = {out:08b}"
+        f"Async reset failed: uo_out={out:08b}"
     )
 
     assert int(dut.user_project.uio_out.value) == 0
     assert int(dut.user_project.uio_oe.value) == 0
 
+    # Hold reset
+    await cycles(dut, 5)
+
     # Release reset
+    await FallingEdge(dut.clk)
     dut.rst_n.value = 1
 
+    # Allow synchronizer and downstream logic to recover
     await cycles(dut, 5)
 
     # Check reset state
@@ -61,14 +72,11 @@ async def test_gate_level_smoke(dut):
 
     for digit in [2, 1, 3, 0]:
 
-        # Press button
         await FallingEdge(dut.clk)
         dut.ui_in.value = 1 << digit
 
-        # Wait for debounce
         await cycles(dut, 26)
 
-        # Release button
         await FallingEdge(dut.clk)
         dut.ui_in.value = 0
 
