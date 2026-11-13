@@ -24,7 +24,7 @@ module entry_fsm #(
 
   input  wire [1:0] fail,
 
-  input  wire [7:0] tmr,
+  input  wire [11:0] tmr,
 
   output reg  [2:0] st,
 
@@ -34,7 +34,7 @@ module entry_fsm #(
 
   output reg  [1:0] fail_n,
 
-  output reg  [7:0] tmr_n
+  output reg  [11:0] tmr_n
 
 );
 
@@ -58,11 +58,10 @@ module entry_fsm #(
 
   // Valid parameter ranges ensure all loads fit in 8 bits.
 
-  localparam [7:0] INTERDIGIT_LOAD = INTERDIGIT_TIMEOUT_CYCLES[7:0] - 8'd1;
-
-  localparam [7:0] UNLOCK_LOAD     = UNLOCK_CYCLES[7:0] - 8'd1;
-
-  localparam [7:0] LOCKOUT_LOAD    = LOCKOUT_CYCLES[7:0] - 8'd1;
+  // Valid parameter ranges (<= 4095) ensure all loads fit in 12 bits.
+  localparam [11:0] INTERDIGIT_LOAD = INTERDIGIT_TIMEOUT_CYCLES[11:0] - 12'd1;
+  localparam [11:0] UNLOCK_LOAD     = UNLOCK_CYCLES[11:0]  - 12'd1;
+  localparam [11:0] LOCKOUT_LOAD    = LOCKOUT_CYCLES[11:0] - 12'd1;
 
   localparam [1:0] MAX_FAIL       = MAX_ATTEMPTS[1:0];
 
@@ -122,13 +121,13 @@ module entry_fsm #(
 
         end else if ((st != IDLE) && (INTERDIGIT_TIMEOUT_CYCLES != 0)) begin
 
-          if (tmr == 8'd0) begin
+          if (tmr == 12'd0) begin
 
             st_n = IDLE; // abandonment does not change fail
 
           end else begin
 
-            tmr_n = tmr - 8'd1;
+            tmr_n = tmr - 12'd1;
 
           end
 
@@ -142,13 +141,13 @@ module entry_fsm #(
 
         // Presses are discarded here, including the final timed cycle.
 
-        if (tmr == 8'd0) begin
+        if (tmr == 12'd0) begin
 
           st_n = IDLE;
 
         end else begin
 
-          tmr_n = tmr - 8'd1;
+          tmr_n = tmr - 12'd1;
 
         end
 
@@ -184,7 +183,7 @@ module entry_fsm #(
 
         // No input affects the lockout timer or failure counter.
 
-        if (tmr == 8'd0) begin
+        if (tmr == 12'd0) begin
 
           st_n   = IDLE;
 
@@ -192,7 +191,7 @@ module entry_fsm #(
 
         end else begin
 
-          tmr_n = tmr - 8'd1;
+          tmr_n = tmr - 12'd1;
 
         end
 
