@@ -1,6 +1,6 @@
 // One 8-bit timer shared by entry timeout, UNLOCK and LOCKOUT.
 // The FSM determines whether to load, decrement, or hold via next_tmr.
-module shared_timer (
+module shared_time (
   input  wire       clk,
   input  wire       rst_n,
   input  wire [11:0] next_tmr,
