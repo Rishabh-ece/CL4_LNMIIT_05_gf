@@ -8,15 +8,15 @@
 
 module combo_lock #(
 
-  parameter integer DEBOUNCE_CYCLES = 24,
+  parameter integer DEBOUNCE_CYCLES = 16,
 
   parameter integer MAX_ATTEMPTS = 3,
 
-  parameter integer UNLOCK_CYCLES = 100,
+  parameter integer UNLOCK_CYCLES = 4000,
 
-  parameter integer LOCKOUT_CYCLES = 200,
+  parameter integer LOCKOUT_CYCLES = 4000,
 
-  parameter integer INTERDIGIT_TIMEOUT_CYCLES = 250,
+  parameter integer INTERDIGIT_TIMEOUT_CYCLES = 4000,
 
   parameter [7:0] CODE_VALUE = 8'h9C,
 
