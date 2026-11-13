@@ -1,7 +1,7 @@
 // CL-4 per-button 2-FF synchronizer + symmetric debounce filter (spec 6.3).
 // Plain Verilog-2005 constructs only.
 module button_debounce #(
-  parameter integer DEBOUNCE_CYCLES = 24
+  parameter integer DEBOUNCE_CYCLES = 16
 ) (
   input  wire clk,
   input  wire rst_n,   // synchronous, active low; clears s1, s2, lvl, cnt
