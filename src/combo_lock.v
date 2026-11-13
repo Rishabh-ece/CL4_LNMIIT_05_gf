@@ -222,7 +222,7 @@ module combo_lock #(
 
 
 
-  shared_timer U_shared_timer (
+  shared_time U_shared_time (
 
     .clk(clk),
 
