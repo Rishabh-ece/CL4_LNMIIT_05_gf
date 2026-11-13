@@ -1,0 +1,2141 @@
+
+
+ /----------------------------------------------------------------------------\
+
+ |                                                                            |
+
+ |  yosys -- Yosys Open SYnthesis Suite                                       |
+
+ |                                                                            |
+
+ |  Copyright (C) 2012 - 2020  Claire Xenia Wolf <claire@yosyshq.com>         |
+
+ |                                                                            |
+
+ |  Permission to use, copy, modify, and/or distribute this software for any  |
+
+ |  purpose with or without fee is hereby granted, provided that the above    |
+
+ |  copyright notice and this permission notice appear in all copies.         |
+
+ |                                                                            |
+
+ |  THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES  |
+
+ |  WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF          |
+
+ |  MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR   |
+
+ |  ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES    |
+
+ |  WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN     |
+
+ |  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF   |
+
+ |  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.            |
+
+ |                                                                            |
+
+ \----------------------------------------------------------------------------/
+
+
+
+ Yosys 0.29+23 (git sha1 cdeef5481, gcc 7.5.0-3ubuntu1~18.04 -fPIC -Os)
+
+
+
+
+
+-- Running command `read_verilog src/*.v; hierarchy -check -top tt_um_CL4_LNMIIT; synth -top tt_um_CL4_LNMIIT -flatten; check; stat' --
+
+
+
+1. Executing Verilog-2005 frontend: src/button_debounce.v
+
+Parsing Verilog input from `src/button_debounce.v' to AST representation.
+
+Generating RTLIL representation for module `\button_debounce'.
+
+Successfully finished Verilog frontend.
+
+
+
+2. Executing Verilog-2005 frontend: src/code_compare.v
+
+Parsing Verilog input from `src/code_compare.v' to AST representation.
+
+Generating RTLIL representation for module `\code_compare'.
+
+Successfully finished Verilog frontend.
+
+
+
+3. Executing Verilog-2005 frontend: src/combo_lock.v
+
+Parsing Verilog input from `src/combo_lock.v' to AST representation.
+
+Generating RTLIL representation for module `\combo_lock'.
+
+Successfully finished Verilog frontend.
+
+
+
+4. Executing Verilog-2005 frontend: src/entry_fsm.v
+
+Parsing Verilog input from `src/entry_fsm.v' to AST representation.
+
+Generating RTLIL representation for module `\entry_fsm'.
+
+Successfully finished Verilog frontend.
+
+
+
+5. Executing Verilog-2005 frontend: src/failure_counter.v
+
+Parsing Verilog input from `src/failure_counter.v' to AST representation.
+
+Generating RTLIL representation for module `\failure_counter'.
+
+Successfully finished Verilog frontend.
+
+
+
+6. Executing Verilog-2005 frontend: src/press_qualify.v
+
+Parsing Verilog input from `src/press_qualify.v' to AST representation.
+
+Generating RTLIL representation for module `\press_qualify'.
+
+Successfully finished Verilog frontend.
+
+
+
+7. Executing Verilog-2005 frontend: src/project.v
+
+Parsing Verilog input from `src/project.v' to AST representation.
+
+Generating RTLIL representation for module `\tt_um_CL4_LNMIIT'.
+
+Successfully finished Verilog frontend.
+
+
+
+8. Executing Verilog-2005 frontend: src/reset_sync.v
+
+Parsing Verilog input from `src/reset_sync.v' to AST representation.
+
+Generating RTLIL representation for module `\reset_sync'.
+
+Successfully finished Verilog frontend.
+
+
+
+9. Executing Verilog-2005 frontend: src/shared_time.v
+
+Parsing Verilog input from `src/shared_time.v' to AST representation.
+
+Generating RTLIL representation for module `\shared_time'.
+
+Successfully finished Verilog frontend.
+
+
+
+10. Executing HIERARCHY pass (managing design hierarchy).
+
+
+
+10.1. Analyzing design hierarchy..
+
+Top module:  \tt_um_CL4_LNMIIT
+
+Used module:     \combo_lock
+
+Used module:         \button_debounce
+
+Used module:         \failure_counter
+
+Used module:         \shared_time
+
+Used module:         \entry_fsm
+
+Used module:         \code_compare
+
+Used module:         \press_qualify
+
+Used module:         \reset_sync
+
+Parameter \DEBOUNCE_CYCLES = 16
+
+
+
+10.2. Executing AST frontend in derive mode using pre-parsed AST for module `\button_debounce'.
+
+Parameter \DEBOUNCE_CYCLES = 16
+
+Generating RTLIL representation for module `$paramod\button_debounce\DEBOUNCE_CYCLES=s32'00000000000000000000000000010000'.
+
+Parameter \DEBOUNCE_CYCLES = 16
+
+Found cached RTLIL representation for module `$paramod\button_debounce\DEBOUNCE_CYCLES=s32'00000000000000000000000000010000'.
+
+Parameter \DEBOUNCE_CYCLES = 16
+
+Found cached RTLIL representation for module `$paramod\button_debounce\DEBOUNCE_CYCLES=s32'00000000000000000000000000010000'.
+
+Parameter \DEBOUNCE_CYCLES = 16
+
+Found cached RTLIL representation for module `$paramod\button_debounce\DEBOUNCE_CYCLES=s32'00000000000000000000000000010000'.
+
+Parameter \MAX_ATTEMPTS = 3
+
+Parameter \UNLOCK_CYCLES = 4000
+
+Parameter \LOCKOUT_CYCLES = 4000
+
+Parameter \INTERDIGIT_TIMEOUT_CYCLES = 4000
+
+
+
+10.3. Executing AST frontend in derive mode using pre-parsed AST for module `\entry_fsm'.
+
+Parameter \MAX_ATTEMPTS = 3
+
+Parameter \UNLOCK_CYCLES = 4000
+
+Parameter \LOCKOUT_CYCLES = 4000
+
+Parameter \INTERDIGIT_TIMEOUT_CYCLES = 4000
+
+Generating RTLIL representation for module `$paramod$bbdccc09e789bd30fc4b52be389e0426e77b78bc\entry_fsm'.
+
+Parameter \CODE_VALUE = 8'10011100
+
+
+
+10.4. Executing AST frontend in derive mode using pre-parsed AST for module `\code_compare'.
+
+Parameter \CODE_VALUE = 8'10011100
+
+Generating RTLIL representation for module `$paramod\code_compare\CODE_VALUE=8'10011100'.
+
+Parameter \RST_SYNC = 1
+
+
+
+10.5. Executing AST frontend in derive mode using pre-parsed AST for module `\reset_sync'.
+
+Parameter \RST_SYNC = 1
+
+Generating RTLIL representation for module `$paramod\reset_sync\RST_SYNC=s32'00000000000000000000000000000001'.
+
+
+
+10.6. Analyzing design hierarchy..
+
+Top module:  \tt_um_CL4_LNMIIT
+
+Used module:     \combo_lock
+
+Used module:         $paramod\button_debounce\DEBOUNCE_CYCLES=s32'00000000000000000000000000010000
+
+Used module:         \failure_counter
+
+Used module:         \shared_time
+
+Used module:         $paramod$bbdccc09e789bd30fc4b52be389e0426e77b78bc\entry_fsm
+
+Used module:         $paramod\code_compare\CODE_VALUE=8'10011100
+
+Used module:         \press_qualify
+
+Used module:         $paramod\reset_sync\RST_SYNC=s32'00000000000000000000000000000001
+
+
+
+10.7. Analyzing design hierarchy..
+
+Top module:  \tt_um_CL4_LNMIIT
+
+Used module:     \combo_lock
+
+Used module:         $paramod\button_debounce\DEBOUNCE_CYCLES=s32'00000000000000000000000000010000
+
+Used module:         \failure_counter
+
+Used module:         \shared_time
+
+Used module:         $paramod$bbdccc09e789bd30fc4b52be389e0426e77b78bc\entry_fsm
+
+Used module:         $paramod\code_compare\CODE_VALUE=8'10011100
+
+Used module:         \press_qualify
+
+Used module:         $paramod\reset_sync\RST_SYNC=s32'00000000000000000000000000000001
+
+Removing unused module `\reset_sync'.
+
+Removing unused module `\entry_fsm'.
+
+Removing unused module `\code_compare'.
+
+Removing unused module `\button_debounce'.
+
+Removed 4 unused modules.
+
+
+
+11. Executing SYNTH pass.
+
+
+
+11.1. Executing HIERARCHY pass (managing design hierarchy).
+
+
+
+11.1.1. Analyzing design hierarchy..
+
+Top module:  \tt_um_CL4_LNMIIT
+
+Used module:     \combo_lock
+
+Used module:         $paramod\button_debounce\DEBOUNCE_CYCLES=s32'00000000000000000000000000010000
+
+Used module:         \failure_counter
+
+Used module:         \shared_time
+
+Used module:         $paramod$bbdccc09e789bd30fc4b52be389e0426e77b78bc\entry_fsm
+
+Used module:         $paramod\code_compare\CODE_VALUE=8'10011100
+
+Used module:         \press_qualify
+
+Used module:         $paramod\reset_sync\RST_SYNC=s32'00000000000000000000000000000001
+
+
+
+11.1.2. Analyzing design hierarchy..
+
+Top module:  \tt_um_CL4_LNMIIT
+
+Used module:     \combo_lock
+
+Used module:         $paramod\button_debounce\DEBOUNCE_CYCLES=s32'00000000000000000000000000010000
+
+Used module:         \failure_counter
+
+Used module:         \shared_time
+
+Used module:         $paramod$bbdccc09e789bd30fc4b52be389e0426e77b78bc\entry_fsm
+
+Used module:         $paramod\code_compare\CODE_VALUE=8'10011100
+
+Used module:         \press_qualify
+
+Used module:         $paramod\reset_sync\RST_SYNC=s32'00000000000000000000000000000001
+
+Removed 0 unused modules.
+
+
+
+11.2. Executing PROC pass (convert processes to netlists).
+
+
+
+11.2.1. Executing PROC_CLEAN pass (remove empty switches from decision trees).
+
+Cleaned up 0 empty switches.
+
+
+
+11.2.2. Executing PROC_RMDEAD pass (remove dead branches from decision trees).
+
+Marked 1 switch rules as full_case in process $proc$src/shared_time.v:9$45 in module shared_time.
+
+Marked 1 switch rules as full_case in process $proc$src/reset_sync.v:12$74 in module $paramod\reset_sync\RST_SYNC=s32'00000000000000000000000000000001.
+
+Marked 1 switch rules as full_case in process $proc$src/failure_counter.v:8$31 in module failure_counter.
+
+Marked 2 switch rules as full_case in process $proc$src/combo_lock.v:143$11 in module combo_lock.
+
+Marked 1 switch rules as full_case in process $proc$src/entry_fsm.v:216$69 in module $paramod$bbdccc09e789bd30fc4b52be389e0426e77b78bc\entry_fsm.
+
+Marked 9 switch rules as full_case in process $proc$src/entry_fsm.v:76$56 in module $paramod$bbdccc09e789bd30fc4b52be389e0426e77b78bc\entry_fsm.
+
+Marked 3 switch rules as full_case in process $proc$src/button_debounce.v:30$51 in module $paramod\button_debounce\DEBOUNCE_CYCLES=s32'00000000000000000000000000010000.
+
+Removed a total of 0 dead cases.
+
+
+
+11.2.3. Executing PROC_PRUNE pass (remove redundant assignments in processes).
+
+Removed 10 redundant assignments.
+
+Promoted 3 assignments to connections.
+
+
+
+11.2.4. Executing PROC_INIT pass (extract init attributes).
+
+
+
+11.2.5. Executing PROC_ARST pass (detect async resets in processes).
+
+Found async reset \rst_n in `\shared_time.$proc$src/shared_time.v:9$45'.
+
+Found async reset \rst_n in `$paramod\reset_sync\RST_SYNC=s32'00000000000000000000000000000001.$proc$src/reset_sync.v:12$74'.
+
+Found async reset \rst_n in `\failure_counter.$proc$src/failure_counter.v:8$31'.
+
+Found async reset \internal_rst_n in `\combo_lock.$proc$src/combo_lock.v:143$11'.
+
+Found async reset \rst_n in `$paramod$bbdccc09e789bd30fc4b52be389e0426e77b78bc\entry_fsm.$proc$src/entry_fsm.v:216$69'.
+
+Found async reset \rst_n in `$paramod\button_debounce\DEBOUNCE_CYCLES=s32'00000000000000000000000000010000.$proc$src/button_debounce.v:30$51'.
+
+
+
+11.2.6. Executing PROC_ROM pass (convert switches to ROMs).
+
+Converted 0 switches.
+
+<suppressed ~14 debug messages>
+
+
+
+11.2.7. Executing PROC_MUX pass (convert decision trees to multiplexers).
+
+Creating decoders for process `\shared_time.$proc$src/shared_time.v:9$45'.
+
+     1/1: $0\tmr[11:0]
+
+Creating decoders for process `$paramod\reset_sync\RST_SYNC=s32'00000000000000000000000000000001.$proc$src/reset_sync.v:12$74'.
+
+     1/2: $0\rs2[0:0]
+
+     2/2: $0\rs1[0:0]
+
+Creating decoders for process `\failure_counter.$proc$src/failure_counter.v:8$31'.
+
+     1/1: $0\fail[1:0]
+
+Creating decoders for process `\combo_lock.$proc$src/combo_lock.v:143$11'.
+
+     1/3: $0\entered_code[5:0] [5:4]
+
+     2/3: $0\entered_code[5:0] [3:2]
+
+     3/3: $0\entered_code[5:0] [1:0]
+
+Creating decoders for process `$paramod$bbdccc09e789bd30fc4b52be389e0426e77b78bc\entry_fsm.$proc$src/entry_fsm.v:216$69'.
+
+     1/3: $0\locked_out[0:0]
+
+     2/3: $0\unlock[0:0]
+
+     3/3: $0\st[2:0]
+
+Creating decoders for process `$paramod$bbdccc09e789bd30fc4b52be389e0426e77b78bc\entry_fsm.$proc$src/entry_fsm.v:76$56'.
+
+     1/24: $6\fail_n[1:0]
+
+     2/24: $9\st_n[2:0]
+
+     3/24: $9\tmr_n[11:0]
+
+     4/24: $5\fail_n[1:0]
+
+     5/24: $8\tmr_n[11:0]
+
+     6/24: $8\st_n[2:0]
+
+     7/24: $7\st_n[2:0]
+
+     8/24: $7\tmr_n[11:0]
+
+     9/24: $6\st_n[2:0]
+
+    10/24: $6\tmr_n[11:0]
+
+    11/24: $5\st_n[2:0]
+
+    12/24: $5\tmr_n[11:0]
+
+    13/24: $4\fail_n[1:0]
+
+    14/24: $4\tmr_n[11:0]
+
+    15/24: $4\st_n[2:0]
+
+    16/24: $3\st_n[2:0]
+
+    17/24: $3\tmr_n[11:0]
+
+    18/24: $3\fail_n[1:0]
+
+    19/24: $2\st_n[2:0]
+
+    20/24: $2\tmr_n[11:0]
+
+    21/24: $2\fail_n[1:0]
+
+    22/24: $1\st_n[2:0]
+
+    23/24: $1\tmr_n[11:0]
+
+    24/24: $1\fail_n[1:0]
+
+Creating decoders for process `$paramod\button_debounce\DEBOUNCE_CYCLES=s32'00000000000000000000000000010000.$proc$src/button_debounce.v:30$51'.
+
+     1/4: $0\cnt[3:0]
+
+     2/4: $0\s2[0:0]
+
+     3/4: $0\s1[0:0]
+
+     4/4: $0\lvl[0:0]
+
+
+
+11.2.8. Executing PROC_DLATCH pass (convert process syncs to latches).
+
+No latch inferred for signal `$paramod$bbdccc09e789bd30fc4b52be389e0426e77b78bc\entry_fsm.\fail_n' from process `$paramod$bbdccc09e789bd30fc4b52be389e0426e77b78bc\entry_fsm.$proc$src/entry_fsm.v:76$56'.
+
+No latch inferred for signal `$paramod$bbdccc09e789bd30fc4b52be389e0426e77b78bc\entry_fsm.\tmr_n' from process `$paramod$bbdccc09e789bd30fc4b52be389e0426e77b78bc\entry_fsm.$proc$src/entry_fsm.v:76$56'.
+
+No latch inferred for signal `$paramod$bbdccc09e789bd30fc4b52be389e0426e77b78bc\entry_fsm.\st_n' from process `$paramod$bbdccc09e789bd30fc4b52be389e0426e77b78bc\entry_fsm.$proc$src/entry_fsm.v:76$56'.
+
+
+
+11.2.9. Executing PROC_DFF pass (convert process syncs to FFs).
+
+Creating register for signal `\shared_time.\tmr' using process `\shared_time.$proc$src/shared_time.v:9$45'.
+
+  created $adff cell `$procdff$344' with positive edge clock and negative level reset.
+
+Creating register for signal `$paramod\reset_sync\RST_SYNC=s32'00000000000000000000000000000001.\rs1' using process `$paramod\reset_sync\RST_SYNC=s32'00000000000000000000000000000001.$proc$src/reset_sync.v:12$74'.
+
+  created $adff cell `$procdff$345' with positive edge clock and negative level reset.
+
+Creating register for signal `$paramod\reset_sync\RST_SYNC=s32'00000000000000000000000000000001.\rs2' using process `$paramod\reset_sync\RST_SYNC=s32'00000000000000000000000000000001.$proc$src/reset_sync.v:12$74'.
+
+  created $adff cell `$procdff$346' with positive edge clock and negative level reset.
+
+Creating register for signal `\failure_counter.\fail' using process `\failure_counter.$proc$src/failure_counter.v:8$31'.
+
+  created $adff cell `$procdff$347' with positive edge clock and negative level reset.
+
+Creating register for signal `\combo_lock.\entered_code' using process `\combo_lock.$proc$src/combo_lock.v:143$11'.
+
+  created $adff cell `$procdff$348' with positive edge clock and negative level reset.
+
+Creating register for signal `$paramod$bbdccc09e789bd30fc4b52be389e0426e77b78bc\entry_fsm.\unlock' using process `$paramod$bbdccc09e789bd30fc4b52be389e0426e77b78bc\entry_fsm.$proc$src/entry_fsm.v:216$69'.
+
+  created $adff cell `$procdff$349' with positive edge clock and negative level reset.
+
+Creating register for signal `$paramod$bbdccc09e789bd30fc4b52be389e0426e77b78bc\entry_fsm.\locked_out' using process `$paramod$bbdccc09e789bd30fc4b52be389e0426e77b78bc\entry_fsm.$proc$src/entry_fsm.v:216$69'.
+
+  created $adff cell `$procdff$350' with positive edge clock and negative level reset.
+
+Creating register for signal `$paramod$bbdccc09e789bd30fc4b52be389e0426e77b78bc\entry_fsm.\st' using process `$paramod$bbdccc09e789bd30fc4b52be389e0426e77b78bc\entry_fsm.$proc$src/entry_fsm.v:216$69'.
+
+  created $adff cell `$procdff$351' with positive edge clock and negative level reset.
+
+Creating register for signal `$paramod\button_debounce\DEBOUNCE_CYCLES=s32'00000000000000000000000000010000.\s1' using process `$paramod\button_debounce\DEBOUNCE_CYCLES=s32'00000000000000000000000000010000.$proc$src/button_debounce.v:30$51'.
+
+  created $adff cell `$procdff$352' with positive edge clock and negative level reset.
+
+Creating register for signal `$paramod\button_debounce\DEBOUNCE_CYCLES=s32'00000000000000000000000000010000.\s2' using process `$paramod\button_debounce\DEBOUNCE_CYCLES=s32'00000000000000000000000000010000.$proc$src/button_debounce.v:30$51'.
+
+  created $adff cell `$procdff$353' with positive edge clock and negative level reset.
+
+Creating register for signal `$paramod\button_debounce\DEBOUNCE_CYCLES=s32'00000000000000000000000000010000.\lvl' using process `$paramod\button_debounce\DEBOUNCE_CYCLES=s32'00000000000000000000000000010000.$proc$src/button_debounce.v:30$51'.
+
+  created $adff cell `$procdff$354' with positive edge clock and negative level reset.
+
+Creating register for signal `$paramod\button_debounce\DEBOUNCE_CYCLES=s32'00000000000000000000000000010000.\cnt' using process `$paramod\button_debounce\DEBOUNCE_CYCLES=s32'00000000000000000000000000010000.$proc$src/button_debounce.v:30$51'.
+
+  created $adff cell `$procdff$355' with positive edge clock and negative level reset.
+
+
+
+11.2.10. Executing PROC_MEMWR pass (convert process memory writes to cells).
+
+
+
+11.2.11. Executing PROC_CLEAN pass (remove empty switches from decision trees).
+
+Removing empty process `shared_time.$proc$src/shared_time.v:9$45'.
+
+Removing empty process `$paramod\reset_sync\RST_SYNC=s32'00000000000000000000000000000001.$proc$src/reset_sync.v:12$74'.
+
+Removing empty process `failure_counter.$proc$src/failure_counter.v:8$31'.
+
+Found and cleaned up 3 empty switches in `\combo_lock.$proc$src/combo_lock.v:143$11'.
+
+Removing empty process `combo_lock.$proc$src/combo_lock.v:143$11'.
+
+Removing empty process `$paramod$bbdccc09e789bd30fc4b52be389e0426e77b78bc\entry_fsm.$proc$src/entry_fsm.v:216$69'.
+
+Found and cleaned up 9 empty switches in `$paramod$bbdccc09e789bd30fc4b52be389e0426e77b78bc\entry_fsm.$proc$src/entry_fsm.v:76$56'.
+
+Removing empty process `$paramod$bbdccc09e789bd30fc4b52be389e0426e77b78bc\entry_fsm.$proc$src/entry_fsm.v:76$56'.
+
+Found and cleaned up 2 empty switches in `$paramod\button_debounce\DEBOUNCE_CYCLES=s32'00000000000000000000000000010000.$proc$src/button_debounce.v:30$51'.
+
+Removing empty process `$paramod\button_debounce\DEBOUNCE_CYCLES=s32'00000000000000000000000000010000.$proc$src/button_debounce.v:30$51'.
+
+Cleaned up 14 empty switches.
+
+
+
+11.2.12. Executing OPT_EXPR pass (perform const folding).
+
+Optimizing module shared_time.
+
+Optimizing module $paramod\reset_sync\RST_SYNC=s32'00000000000000000000000000000001.
+
+Optimizing module tt_um_CL4_LNMIIT.
+
+<suppressed ~1 debug messages>
+
+Optimizing module press_qualify.
+
+Optimizing module failure_counter.
+
+Optimizing module $paramod\code_compare\CODE_VALUE=8'10011100.
+
+Optimizing module combo_lock.
+
+<suppressed ~3 debug messages>
+
+Optimizing module $paramod$bbdccc09e789bd30fc4b52be389e0426e77b78bc\entry_fsm.
+
+<suppressed ~21 debug messages>
+
+Optimizing module $paramod\button_debounce\DEBOUNCE_CYCLES=s32'00000000000000000000000000010000.
+
+
+
+11.3. Executing FLATTEN pass (flatten design).
+
+Deleting now unused module shared_time.
+
+Deleting now unused module $paramod\reset_sync\RST_SYNC=s32'00000000000000000000000000000001.
+
+Deleting now unused module press_qualify.
+
+Deleting now unused module failure_counter.
+
+Deleting now unused module $paramod\code_compare\CODE_VALUE=8'10011100.
+
+Deleting now unused module combo_lock.
+
+Deleting now unused module $paramod$bbdccc09e789bd30fc4b52be389e0426e77b78bc\entry_fsm.
+
+Deleting now unused module $paramod\button_debounce\DEBOUNCE_CYCLES=s32'00000000000000000000000000010000.
+
+<suppressed ~11 debug messages>
+
+
+
+11.4. Executing OPT_EXPR pass (perform const folding).
+
+Optimizing module tt_um_CL4_LNMIIT.
+
+
+
+11.5. Executing OPT_CLEAN pass (remove unused cells and wires).
+
+Finding unused cells or wires in module \tt_um_CL4_LNMIIT..
+
+Removed 9 unused cells and 129 unused wires.
+
+<suppressed ~10 debug messages>
+
+
+
+11.6. Executing CHECK pass (checking for obvious problems).
+
+Checking module tt_um_CL4_LNMIIT...
+
+Found and reported 0 problems.
+
+
+
+11.7. Executing OPT pass (performing simple optimizations).
+
+
+
+11.7.1. Executing OPT_EXPR pass (perform const folding).
+
+Optimizing module tt_um_CL4_LNMIIT.
+
+
+
+11.7.2. Executing OPT_MERGE pass (detect identical cells).
+
+Finding identical cells in module `\tt_um_CL4_LNMIIT'.
+
+<suppressed ~327 debug messages>
+
+Removed a total of 109 cells.
+
+
+
+11.7.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+
+Running muxtree optimizer on module \tt_um_CL4_LNMIIT..
+
+  Creating internal representation of mux trees.
+
+  Evaluating internal representation of mux trees.
+
+  Analyzing evaluation results.
+
+    dead port 2/2 on $mux $flatten\U_combo_lock.\U_entry_fsm.$procmux$246.
+
+    dead port 2/2 on $mux $flatten\U_combo_lock.\U_entry_fsm.$procmux$248.
+
+    dead port 2/2 on $mux $flatten\U_combo_lock.\U_entry_fsm.$procmux$250.
+
+    dead port 2/2 on $mux $flatten\U_combo_lock.\U_entry_fsm.$procmux$114.
+
+    dead port 2/2 on $mux $flatten\U_combo_lock.\U_entry_fsm.$procmux$121.
+
+    dead port 2/2 on $mux $flatten\U_combo_lock.\U_entry_fsm.$procmux$260.
+
+    dead port 2/2 on $mux $flatten\U_combo_lock.\U_entry_fsm.$procmux$262.
+
+    dead port 2/2 on $mux $flatten\U_combo_lock.\U_entry_fsm.$procmux$128.
+
+    dead port 2/2 on $mux $flatten\U_combo_lock.\U_entry_fsm.$procmux$272.
+
+    dead port 2/2 on $mux $flatten\U_combo_lock.\U_entry_fsm.$procmux$274.
+
+    dead port 2/2 on $mux $flatten\U_combo_lock.\U_entry_fsm.$procmux$135.
+
+    dead port 2/2 on $mux $flatten\U_combo_lock.\U_entry_fsm.$procmux$284.
+
+    dead port 2/2 on $mux $flatten\U_combo_lock.\U_entry_fsm.$procmux$286.
+
+    dead port 2/2 on $mux $flatten\U_combo_lock.\U_entry_fsm.$procmux$102.
+
+    dead port 2/2 on $mux $flatten\U_combo_lock.\U_entry_fsm.$procmux$143.
+
+    dead port 2/2 on $mux $flatten\U_combo_lock.\U_entry_fsm.$procmux$151.
+
+    dead port 2/2 on $mux $flatten\U_combo_lock.\U_entry_fsm.$procmux$295.
+
+    dead port 2/2 on $mux $flatten\U_combo_lock.\U_entry_fsm.$procmux$161.
+
+    dead port 1/2 on $mux $flatten\U_combo_lock.\U_entry_fsm.$procmux$164.
+
+    dead port 2/2 on $mux $flatten\U_combo_lock.\U_entry_fsm.$procmux$304.
+
+    dead port 2/2 on $mux $flatten\U_combo_lock.\U_entry_fsm.$procmux$166.
+
+    dead port 2/2 on $mux $flatten\U_combo_lock.\U_entry_fsm.$procmux$231.
+
+    dead port 2/2 on $mux $flatten\U_combo_lock.\U_entry_fsm.$procmux$313.
+
+    dead port 2/2 on $mux $flatten\U_combo_lock.\U_entry_fsm.$procmux$233.
+
+    dead port 2/2 on $mux $flatten\U_combo_lock.\U_entry_fsm.$procmux$176.
+
+    dead port 1/2 on $mux $flatten\U_combo_lock.\U_entry_fsm.$procmux$179.
+
+    dead port 2/2 on $mux $flatten\U_combo_lock.\U_entry_fsm.$procmux$181.
+
+    dead port 2/2 on $mux $flatten\U_combo_lock.\U_entry_fsm.$procmux$235.
+
+    dead port 2/2 on $mux $flatten\U_combo_lock.\U_entry_fsm.$procmux$220.
+
+    dead port 1/2 on $mux $flatten\U_combo_lock.\U_entry_fsm.$procmux$191.
+
+    dead port 2/2 on $mux $flatten\U_combo_lock.\U_entry_fsm.$procmux$193.
+
+    dead port 2/2 on $mux $flatten\U_combo_lock.\U_entry_fsm.$procmux$108.
+
+    dead port 1/2 on $mux $flatten\U_combo_lock.\U_entry_fsm.$procmux$203.
+
+    dead port 2/2 on $mux $flatten\U_combo_lock.\U_entry_fsm.$procmux$205.
+
+    dead port 2/2 on $mux $flatten\U_combo_lock.\U_entry_fsm.$procmux$216.
+
+    dead port 2/2 on $mux $flatten\U_combo_lock.\U_entry_fsm.$procmux$218.
+
+Removed 36 multiplexer ports.
+
+<suppressed ~15 debug messages>
+
+
+
+11.7.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+
+  Optimizing cells in module \tt_um_CL4_LNMIIT.
+
+    New ctrl vector for $pmux cell $flatten\U_combo_lock.$procmux$83: { $flatten\U_combo_lock.$procmux$81_CMP $flatten\U_combo_lock.$procmux$80_CMP $auto$opt_reduce.cc:134:opt_pmux$357 }
+
+    New ctrl vector for $pmux cell $flatten\U_combo_lock.$procmux$91: { $flatten\U_combo_lock.$procmux$81_CMP $flatten\U_combo_lock.$procmux$79_CMP $auto$opt_reduce.cc:134:opt_pmux$359 }
+
+    New ctrl vector for $pmux cell $flatten\U_combo_lock.$procmux$77: { $flatten\U_combo_lock.$procmux$81_CMP $auto$opt_reduce.cc:134:opt_pmux$361 }
+
+  Optimizing cells in module \tt_um_CL4_LNMIIT.
+
+Performed a total of 3 changes.
+
+
+
+11.7.5. Executing OPT_MERGE pass (detect identical cells).
+
+Finding identical cells in module `\tt_um_CL4_LNMIIT'.
+
+<suppressed ~12 debug messages>
+
+Removed a total of 4 cells.
+
+
+
+11.7.6. Executing OPT_DFF pass (perform DFF optimizations).
+
+
+
+11.7.7. Executing OPT_CLEAN pass (remove unused cells and wires).
+
+Finding unused cells or wires in module \tt_um_CL4_LNMIIT..
+
+Removed 0 unused cells and 101 unused wires.
+
+<suppressed ~1 debug messages>
+
+
+
+11.7.8. Executing OPT_EXPR pass (perform const folding).
+
+Optimizing module tt_um_CL4_LNMIIT.
+
+
+
+11.7.9. Rerunning OPT passes. (Maybe there is more to do..)
+
+
+
+11.7.10. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+
+Running muxtree optimizer on module \tt_um_CL4_LNMIIT..
+
+  Creating internal representation of mux trees.
+
+  Evaluating internal representation of mux trees.
+
+  Analyzing evaluation results.
+
+Removed 0 multiplexer ports.
+
+<suppressed ~17 debug messages>
+
+
+
+11.7.11. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+
+  Optimizing cells in module \tt_um_CL4_LNMIIT.
+
+    New ctrl vector for $pmux cell $flatten\U_combo_lock.\U_entry_fsm.$procmux$316: { $flatten\U_combo_lock.\U_entry_fsm.$procmux$167_CTRL $flatten\U_combo_lock.\U_entry_fsm.$procmux$122_CMP $auto$opt_reduce.cc:134:opt_pmux$363 }
+
+    New ctrl vector for $pmux cell $flatten\U_combo_lock.\U_entry_fsm.$procmux$322: { $flatten\U_combo_lock.\U_entry_fsm.$procmux$167_CTRL $flatten\U_combo_lock.\U_entry_fsm.$procmux$122_CMP $auto$opt_reduce.cc:134:opt_pmux$365 }
+
+  Optimizing cells in module \tt_um_CL4_LNMIIT.
+
+Performed a total of 2 changes.
+
+
+
+11.7.12. Executing OPT_MERGE pass (detect identical cells).
+
+Finding identical cells in module `\tt_um_CL4_LNMIIT'.
+
+<suppressed ~3 debug messages>
+
+Removed a total of 1 cells.
+
+
+
+11.7.13. Executing OPT_DFF pass (perform DFF optimizations).
+
+
+
+11.7.14. Executing OPT_CLEAN pass (remove unused cells and wires).
+
+Finding unused cells or wires in module \tt_um_CL4_LNMIIT..
+
+Removed 0 unused cells and 1 unused wires.
+
+<suppressed ~1 debug messages>
+
+
+
+11.7.15. Executing OPT_EXPR pass (perform const folding).
+
+Optimizing module tt_um_CL4_LNMIIT.
+
+
+
+11.7.16. Rerunning OPT passes. (Maybe there is more to do..)
+
+
+
+11.7.17. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+
+Running muxtree optimizer on module \tt_um_CL4_LNMIIT..
+
+  Creating internal representation of mux trees.
+
+  Evaluating internal representation of mux trees.
+
+  Analyzing evaluation results.
+
+Removed 0 multiplexer ports.
+
+<suppressed ~17 debug messages>
+
+
+
+11.7.18. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+
+  Optimizing cells in module \tt_um_CL4_LNMIIT.
+
+Performed a total of 0 changes.
+
+
+
+11.7.19. Executing OPT_MERGE pass (detect identical cells).
+
+Finding identical cells in module `\tt_um_CL4_LNMIIT'.
+
+Removed a total of 0 cells.
+
+
+
+11.7.20. Executing OPT_DFF pass (perform DFF optimizations).
+
+
+
+11.7.21. Executing OPT_CLEAN pass (remove unused cells and wires).
+
+Finding unused cells or wires in module \tt_um_CL4_LNMIIT..
+
+
+
+11.7.22. Executing OPT_EXPR pass (perform const folding).
+
+Optimizing module tt_um_CL4_LNMIIT.
+
+
+
+11.7.23. Finished OPT passes. (There is nothing left to do.)
+
+
+
+11.8. Executing FSM pass (extract and optimize FSM).
+
+
+
+11.8.1. Executing FSM_DETECT pass (finding FSMs in design).
+
+
+
+11.8.2. Executing FSM_EXTRACT pass (extracting FSM from design).
+
+
+
+11.8.3. Executing FSM_OPT pass (simple optimizations of FSMs).
+
+
+
+11.8.4. Executing OPT_CLEAN pass (remove unused cells and wires).
+
+Finding unused cells or wires in module \tt_um_CL4_LNMIIT..
+
+
+
+11.8.5. Executing FSM_OPT pass (simple optimizations of FSMs).
+
+
+
+11.8.6. Executing FSM_RECODE pass (re-assigning FSM state encoding).
+
+
+
+11.8.7. Executing FSM_INFO pass (dumping all available information on FSM cells).
+
+
+
+11.8.8. Executing FSM_MAP pass (mapping FSMs to basic logic).
+
+
+
+11.9. Executing OPT pass (performing simple optimizations).
+
+
+
+11.9.1. Executing OPT_EXPR pass (perform const folding).
+
+Optimizing module tt_um_CL4_LNMIIT.
+
+
+
+11.9.2. Executing OPT_MERGE pass (detect identical cells).
+
+Finding identical cells in module `\tt_um_CL4_LNMIIT'.
+
+Removed a total of 0 cells.
+
+
+
+11.9.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+
+Running muxtree optimizer on module \tt_um_CL4_LNMIIT..
+
+  Creating internal representation of mux trees.
+
+  Evaluating internal representation of mux trees.
+
+  Analyzing evaluation results.
+
+Removed 0 multiplexer ports.
+
+<suppressed ~17 debug messages>
+
+
+
+11.9.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+
+  Optimizing cells in module \tt_um_CL4_LNMIIT.
+
+Performed a total of 0 changes.
+
+
+
+11.9.5. Executing OPT_MERGE pass (detect identical cells).
+
+Finding identical cells in module `\tt_um_CL4_LNMIIT'.
+
+Removed a total of 0 cells.
+
+
+
+11.9.6. Executing OPT_DFF pass (perform DFF optimizations).
+
+Adding EN signal on $flatten\U_combo_lock.\g_buttons[3].U_button_debounce.$procdff$354 ($adff) from module tt_um_CL4_LNMIIT (D = \U_combo_lock.g_buttons[3].U_button_debounce.s2, Q = \U_combo_lock.g_buttons[3].U_button_debounce.lvl).
+
+Adding EN signal on $flatten\U_combo_lock.\g_buttons[2].U_button_debounce.$procdff$354 ($adff) from module tt_um_CL4_LNMIIT (D = \U_combo_lock.g_buttons[2].U_button_debounce.s2, Q = \U_combo_lock.g_buttons[2].U_button_debounce.lvl).
+
+Adding EN signal on $flatten\U_combo_lock.\g_buttons[1].U_button_debounce.$procdff$354 ($adff) from module tt_um_CL4_LNMIIT (D = \U_combo_lock.g_buttons[1].U_button_debounce.s2, Q = \U_combo_lock.g_buttons[1].U_button_debounce.lvl).
+
+Adding EN signal on $flatten\U_combo_lock.\g_buttons[0].U_button_debounce.$procdff$354 ($adff) from module tt_um_CL4_LNMIIT (D = \U_combo_lock.g_buttons[0].U_button_debounce.s2, Q = \U_combo_lock.g_buttons[0].U_button_debounce.lvl).
+
+Adding EN signal on $flatten\U_combo_lock.\U_shared_time.$procdff$344 ($adff) from module tt_um_CL4_LNMIIT (D = \U_combo_lock.U_shared_time.next_tmr, Q = \U_combo_lock.U_shared_time.tmr).
+
+Adding EN signal on $flatten\U_combo_lock.\U_failure_counter.$procdff$347 ($adff) from module tt_um_CL4_LNMIIT (D = \U_combo_lock.U_failure_counter.next_fail, Q = \U_combo_lock.U_failure_counter.fail).
+
+Adding EN signal on $flatten\U_combo_lock.$procdff$348 ($adff) from module tt_um_CL4_LNMIIT (D = $flatten\U_combo_lock.$0\entered_code[5:0] [3:2], Q = \U_combo_lock.entered_code [3:2]).
+
+Adding EN signal on $flatten\U_combo_lock.$procdff$348 ($adff) from module tt_um_CL4_LNMIIT (D = $flatten\U_combo_lock.$0\entered_code[5:0] [1:0], Q = \U_combo_lock.entered_code [1:0]).
+
+Adding EN signal on $flatten\U_combo_lock.$procdff$348 ($adff) from module tt_um_CL4_LNMIIT (D = $flatten\U_combo_lock.$0\entered_code[5:0] [5:4], Q = \U_combo_lock.entered_code [5:4]).
+
+
+
+11.9.7. Executing OPT_CLEAN pass (remove unused cells and wires).
+
+Finding unused cells or wires in module \tt_um_CL4_LNMIIT..
+
+Removed 8 unused cells and 8 unused wires.
+
+<suppressed ~9 debug messages>
+
+
+
+11.9.8. Executing OPT_EXPR pass (perform const folding).
+
+Optimizing module tt_um_CL4_LNMIIT.
+
+<suppressed ~6 debug messages>
+
+
+
+11.9.9. Rerunning OPT passes. (Maybe there is more to do..)
+
+
+
+11.9.10. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+
+Running muxtree optimizer on module \tt_um_CL4_LNMIIT..
+
+  Creating internal representation of mux trees.
+
+  Evaluating internal representation of mux trees.
+
+  Analyzing evaluation results.
+
+Removed 0 multiplexer ports.
+
+<suppressed ~13 debug messages>
+
+
+
+11.9.11. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+
+  Optimizing cells in module \tt_um_CL4_LNMIIT.
+
+Performed a total of 0 changes.
+
+
+
+11.9.12. Executing OPT_MERGE pass (detect identical cells).
+
+Finding identical cells in module `\tt_um_CL4_LNMIIT'.
+
+<suppressed ~6 debug messages>
+
+Removed a total of 2 cells.
+
+
+
+11.9.13. Executing OPT_DFF pass (perform DFF optimizations).
+
+
+
+11.9.14. Executing OPT_CLEAN pass (remove unused cells and wires).
+
+Finding unused cells or wires in module \tt_um_CL4_LNMIIT..
+
+Removed 1 unused cells and 3 unused wires.
+
+<suppressed ~2 debug messages>
+
+
+
+11.9.15. Executing OPT_EXPR pass (perform const folding).
+
+Optimizing module tt_um_CL4_LNMIIT.
+
+
+
+11.9.16. Rerunning OPT passes. (Maybe there is more to do..)
+
+
+
+11.9.17. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+
+Running muxtree optimizer on module \tt_um_CL4_LNMIIT..
+
+  Creating internal representation of mux trees.
+
+  Evaluating internal representation of mux trees.
+
+  Analyzing evaluation results.
+
+Removed 0 multiplexer ports.
+
+<suppressed ~14 debug messages>
+
+
+
+11.9.18. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+
+  Optimizing cells in module \tt_um_CL4_LNMIIT.
+
+Performed a total of 0 changes.
+
+
+
+11.9.19. Executing OPT_MERGE pass (detect identical cells).
+
+Finding identical cells in module `\tt_um_CL4_LNMIIT'.
+
+Removed a total of 0 cells.
+
+
+
+11.9.20. Executing OPT_DFF pass (perform DFF optimizations).
+
+
+
+11.9.21. Executing OPT_CLEAN pass (remove unused cells and wires).
+
+Finding unused cells or wires in module \tt_um_CL4_LNMIIT..
+
+
+
+11.9.22. Executing OPT_EXPR pass (perform const folding).
+
+Optimizing module tt_um_CL4_LNMIIT.
+
+
+
+11.9.23. Finished OPT passes. (There is nothing left to do.)
+
+
+
+11.10. Executing WREDUCE pass (reducing word size of cells).
+
+Removed top 1 bits (of 3) from port B of cell tt_um_CL4_LNMIIT.$auto$opt_dff.cc:195:make_patterns_logic$388 ($ne).
+
+Removed top 1 bits (of 2) from port B of cell tt_um_CL4_LNMIIT.$auto$opt_dff.cc:195:make_patterns_logic$407 ($ne).
+
+Removed top 1 bits (of 2) from port B of cell tt_um_CL4_LNMIIT.$auto$opt_dff.cc:195:make_patterns_logic$412 ($ne).
+
+Removed top 1 bits (of 2) from port B of cell tt_um_CL4_LNMIIT.$auto$opt_dff.cc:195:make_patterns_logic$419 ($ne).
+
+Removed top 2 bits (of 3) from port B of cell tt_um_CL4_LNMIIT.$flatten\U_combo_lock.\U_entry_fsm.$add$src/entry_fsm.v:116$58 ($add).
+
+Removed top 11 bits (of 12) from port B of cell tt_um_CL4_LNMIIT.$flatten\U_combo_lock.\U_entry_fsm.$sub$src/entry_fsm.v:130$62 ($sub).
+
+Removed top 1 bits (of 2) from port B of cell tt_um_CL4_LNMIIT.$flatten\U_combo_lock.\U_entry_fsm.$add$src/entry_fsm.v:174$66 ($add).
+
+Removed top 2 bits (of 3) from mux cell tt_um_CL4_LNMIIT.$flatten\U_combo_lock.\U_entry_fsm.$procmux$244 ($mux).
+
+Removed top 2 bits (of 4) from port B of cell tt_um_CL4_LNMIIT.$flatten\U_combo_lock.\U_press_qualify.$eq$src/press_qualify.v:8$34 ($eq).
+
+Removed top 1 bits (of 4) from port B of cell tt_um_CL4_LNMIIT.$flatten\U_combo_lock.\U_press_qualify.$eq$src/press_qualify.v:9$36 ($eq).
+
+Removed top 2 bits (of 3) from port B of cell tt_um_CL4_LNMIIT.$flatten\U_combo_lock.$procmux$80_CMP0 ($eq).
+
+Removed top 1 bits (of 3) from port B of cell tt_um_CL4_LNMIIT.$flatten\U_combo_lock.$procmux$79_CMP0 ($eq).
+
+Removed top 1 bits (of 3) from port B of cell tt_um_CL4_LNMIIT.$flatten\U_combo_lock.$procmux$78_CMP0 ($eq).
+
+Removed top 3 bits (of 4) from port B of cell tt_um_CL4_LNMIIT.$flatten\U_combo_lock.\U_press_qualify.$eq$src/press_qualify.v:7$33 ($eq).
+
+Removed top 2 bits (of 3) from wire tt_um_CL4_LNMIIT.$flatten\U_combo_lock.\U_entry_fsm.$4\st_n[2:0].
+
+
+
+11.11. Executing PEEPOPT pass (run peephole optimizers).
+
+
+
+11.12. Executing OPT_CLEAN pass (remove unused cells and wires).
+
+Finding unused cells or wires in module \tt_um_CL4_LNMIIT..
+
+Removed 0 unused cells and 1 unused wires.
+
+<suppressed ~1 debug messages>
+
+
+
+11.13. Executing ALUMACC pass (create $alu and $macc cells).
+
+Extracting $alu and $macc cells in module tt_um_CL4_LNMIIT:
+
+  creating $macc model for $flatten\U_combo_lock.\U_entry_fsm.$add$src/entry_fsm.v:116$58 ($add).
+
+  creating $macc model for $flatten\U_combo_lock.\U_entry_fsm.$add$src/entry_fsm.v:174$66 ($add).
+
+  creating $macc model for $flatten\U_combo_lock.\U_entry_fsm.$sub$src/entry_fsm.v:130$62 ($sub).
+
+  creating $macc model for $flatten\U_combo_lock.\g_buttons[0].U_button_debounce.$add$src/button_debounce.v:47$55 ($add).
+
+  creating $macc model for $flatten\U_combo_lock.\g_buttons[1].U_button_debounce.$add$src/button_debounce.v:47$55 ($add).
+
+  creating $macc model for $flatten\U_combo_lock.\g_buttons[2].U_button_debounce.$add$src/button_debounce.v:47$55 ($add).
+
+  creating $macc model for $flatten\U_combo_lock.\g_buttons[3].U_button_debounce.$add$src/button_debounce.v:47$55 ($add).
+
+  creating $alu model for $macc $flatten\U_combo_lock.\g_buttons[3].U_button_debounce.$add$src/button_debounce.v:47$55.
+
+  creating $alu model for $macc $flatten\U_combo_lock.\g_buttons[2].U_button_debounce.$add$src/button_debounce.v:47$55.
+
+  creating $alu model for $macc $flatten\U_combo_lock.\g_buttons[1].U_button_debounce.$add$src/button_debounce.v:47$55.
+
+  creating $alu model for $macc $flatten\U_combo_lock.\g_buttons[0].U_button_debounce.$add$src/button_debounce.v:47$55.
+
+  creating $alu model for $macc $flatten\U_combo_lock.\U_entry_fsm.$sub$src/entry_fsm.v:130$62.
+
+  creating $alu model for $macc $flatten\U_combo_lock.\U_entry_fsm.$add$src/entry_fsm.v:174$66.
+
+  creating $alu model for $macc $flatten\U_combo_lock.\U_entry_fsm.$add$src/entry_fsm.v:116$58.
+
+  creating $alu model for $flatten\U_combo_lock.\U_entry_fsm.$ge$src/entry_fsm.v:162$65 ($ge): new $alu
+
+  creating $alu cell for $flatten\U_combo_lock.\U_entry_fsm.$ge$src/entry_fsm.v:162$65: $auto$alumacc.cc:485:replace_alu$429
+
+  creating $alu cell for $flatten\U_combo_lock.\U_entry_fsm.$add$src/entry_fsm.v:116$58: $auto$alumacc.cc:485:replace_alu$438
+
+  creating $alu cell for $flatten\U_combo_lock.\U_entry_fsm.$add$src/entry_fsm.v:174$66: $auto$alumacc.cc:485:replace_alu$441
+
+  creating $alu cell for $flatten\U_combo_lock.\U_entry_fsm.$sub$src/entry_fsm.v:130$62: $auto$alumacc.cc:485:replace_alu$444
+
+  creating $alu cell for $flatten\U_combo_lock.\g_buttons[0].U_button_debounce.$add$src/button_debounce.v:47$55: $auto$alumacc.cc:485:replace_alu$447
+
+  creating $alu cell for $flatten\U_combo_lock.\g_buttons[1].U_button_debounce.$add$src/button_debounce.v:47$55: $auto$alumacc.cc:485:replace_alu$450
+
+  creating $alu cell for $flatten\U_combo_lock.\g_buttons[2].U_button_debounce.$add$src/button_debounce.v:47$55: $auto$alumacc.cc:485:replace_alu$453
+
+  creating $alu cell for $flatten\U_combo_lock.\g_buttons[3].U_button_debounce.$add$src/button_debounce.v:47$55: $auto$alumacc.cc:485:replace_alu$456
+
+  created 8 $alu and 0 $macc cells.
+
+
+
+11.14. Executing SHARE pass (SAT-based resource sharing).
+
+
+
+11.15. Executing OPT pass (performing simple optimizations).
+
+
+
+11.15.1. Executing OPT_EXPR pass (perform const folding).
+
+Optimizing module tt_um_CL4_LNMIIT.
+
+
+
+11.15.2. Executing OPT_MERGE pass (detect identical cells).
+
+Finding identical cells in module `\tt_um_CL4_LNMIIT'.
+
+Removed a total of 0 cells.
+
+
+
+11.15.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+
+Running muxtree optimizer on module \tt_um_CL4_LNMIIT..
+
+  Creating internal representation of mux trees.
+
+  Evaluating internal representation of mux trees.
+
+  Analyzing evaluation results.
+
+Removed 0 multiplexer ports.
+
+<suppressed ~14 debug messages>
+
+
+
+11.15.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+
+  Optimizing cells in module \tt_um_CL4_LNMIIT.
+
+Performed a total of 0 changes.
+
+
+
+11.15.5. Executing OPT_MERGE pass (detect identical cells).
+
+Finding identical cells in module `\tt_um_CL4_LNMIIT'.
+
+Removed a total of 0 cells.
+
+
+
+11.15.6. Executing OPT_DFF pass (perform DFF optimizations).
+
+
+
+11.15.7. Executing OPT_CLEAN pass (remove unused cells and wires).
+
+Finding unused cells or wires in module \tt_um_CL4_LNMIIT..
+
+Removed 0 unused cells and 1 unused wires.
+
+<suppressed ~1 debug messages>
+
+
+
+11.15.8. Executing OPT_EXPR pass (perform const folding).
+
+Optimizing module tt_um_CL4_LNMIIT.
+
+
+
+11.15.9. Rerunning OPT passes. (Maybe there is more to do..)
+
+
+
+11.15.10. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+
+Running muxtree optimizer on module \tt_um_CL4_LNMIIT..
+
+  Creating internal representation of mux trees.
+
+  Evaluating internal representation of mux trees.
+
+  Analyzing evaluation results.
+
+Removed 0 multiplexer ports.
+
+<suppressed ~14 debug messages>
+
+
+
+11.15.11. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+
+  Optimizing cells in module \tt_um_CL4_LNMIIT.
+
+Performed a total of 0 changes.
+
+
+
+11.15.12. Executing OPT_MERGE pass (detect identical cells).
+
+Finding identical cells in module `\tt_um_CL4_LNMIIT'.
+
+Removed a total of 0 cells.
+
+
+
+11.15.13. Executing OPT_DFF pass (perform DFF optimizations).
+
+
+
+11.15.14. Executing OPT_CLEAN pass (remove unused cells and wires).
+
+Finding unused cells or wires in module \tt_um_CL4_LNMIIT..
+
+
+
+11.15.15. Executing OPT_EXPR pass (perform const folding).
+
+Optimizing module tt_um_CL4_LNMIIT.
+
+
+
+11.15.16. Finished OPT passes. (There is nothing left to do.)
+
+
+
+11.16. Executing MEMORY pass.
+
+
+
+11.16.1. Executing OPT_MEM pass (optimize memories).
+
+Performed a total of 0 transformations.
+
+
+
+11.16.2. Executing OPT_MEM_PRIORITY pass (removing unnecessary memory write priority relations).
+
+Performed a total of 0 transformations.
+
+
+
+11.16.3. Executing OPT_MEM_FEEDBACK pass (finding memory read-to-write feedback paths).
+
+
+
+11.16.4. Executing MEMORY_BMUX2ROM pass (converting muxes to ROMs).
+
+
+
+11.16.5. Executing MEMORY_DFF pass (merging $dff cells to $memrd).
+
+
+
+11.16.6. Executing OPT_CLEAN pass (remove unused cells and wires).
+
+Finding unused cells or wires in module \tt_um_CL4_LNMIIT..
+
+
+
+11.16.7. Executing MEMORY_SHARE pass (consolidating $memrd/$memwr cells).
+
+
+
+11.16.8. Executing OPT_MEM_WIDEN pass (optimize memories where all ports are wide).
+
+Performed a total of 0 transformations.
+
+
+
+11.16.9. Executing OPT_CLEAN pass (remove unused cells and wires).
+
+Finding unused cells or wires in module \tt_um_CL4_LNMIIT..
+
+
+
+11.16.10. Executing MEMORY_COLLECT pass (generating $mem cells).
+
+
+
+11.17. Executing OPT_CLEAN pass (remove unused cells and wires).
+
+Finding unused cells or wires in module \tt_um_CL4_LNMIIT..
+
+
+
+11.18. Executing OPT pass (performing simple optimizations).
+
+
+
+11.18.1. Executing OPT_EXPR pass (perform const folding).
+
+Optimizing module tt_um_CL4_LNMIIT.
+
+<suppressed ~15 debug messages>
+
+
+
+11.18.2. Executing OPT_MERGE pass (detect identical cells).
+
+Finding identical cells in module `\tt_um_CL4_LNMIIT'.
+
+Removed a total of 0 cells.
+
+
+
+11.18.3. Executing OPT_DFF pass (perform DFF optimizations).
+
+
+
+11.18.4. Executing OPT_CLEAN pass (remove unused cells and wires).
+
+Finding unused cells or wires in module \tt_um_CL4_LNMIIT..
+
+Removed 0 unused cells and 9 unused wires.
+
+<suppressed ~1 debug messages>
+
+
+
+11.18.5. Finished fast OPT passes.
+
+
+
+11.19. Executing MEMORY_MAP pass (converting memories to logic and flip-flops).
+
+
+
+11.20. Executing OPT pass (performing simple optimizations).
+
+
+
+11.20.1. Executing OPT_EXPR pass (perform const folding).
+
+Optimizing module tt_um_CL4_LNMIIT.
+
+
+
+11.20.2. Executing OPT_MERGE pass (detect identical cells).
+
+Finding identical cells in module `\tt_um_CL4_LNMIIT'.
+
+Removed a total of 0 cells.
+
+
+
+11.20.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+
+Running muxtree optimizer on module \tt_um_CL4_LNMIIT..
+
+  Creating internal representation of mux trees.
+
+  Evaluating internal representation of mux trees.
+
+  Analyzing evaluation results.
+
+Removed 0 multiplexer ports.
+
+<suppressed ~13 debug messages>
+
+
+
+11.20.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+
+  Optimizing cells in module \tt_um_CL4_LNMIIT.
+
+    Consolidated identical input bits for $mux cell $flatten\U_combo_lock.$ternary$src/combo_lock.v:153$13:
+
+      Old ports: A=6'000000, B={ \U_combo_lock.U_code_compare.complete_code [1:0] 4'0000 }, Y=$flatten\U_combo_lock.$ternary$src/combo_lock.v:153$13_Y
+
+      New ports: A=2'00, B=\U_combo_lock.U_code_compare.complete_code [1:0], Y=$flatten\U_combo_lock.$ternary$src/combo_lock.v:153$13_Y [5:4]
+
+      New connections: $flatten\U_combo_lock.$ternary$src/combo_lock.v:153$13_Y [3:0] = 4'0000
+
+    Consolidated identical input bits for $mux cell $flatten\U_combo_lock.\U_entry_fsm.$procmux$133:
+
+      Old ports: A=3'000, B=3'110, Y=$flatten\U_combo_lock.\U_entry_fsm.$8\st_n[2:0]
+
+      New ports: A=1'0, B=1'1, Y=$flatten\U_combo_lock.\U_entry_fsm.$8\st_n[2:0] [1]
+
+      New connections: { $flatten\U_combo_lock.\U_entry_fsm.$8\st_n[2:0] [2] $flatten\U_combo_lock.\U_entry_fsm.$8\st_n[2:0] [0] } = { $flatten\U_combo_lock.\U_entry_fsm.$8\st_n[2:0] [1] 1'0 }
+
+    New ctrl vector for $pmux cell $flatten\U_combo_lock.\U_entry_fsm.$procmux$328: $flatten\U_combo_lock.\U_entry_fsm.$procmux$122_CMP
+
+  Optimizing cells in module \tt_um_CL4_LNMIIT.
+
+    New ctrl vector for $pmux cell $flatten\U_combo_lock.$procmux$83: $flatten\U_combo_lock.$procmux$80_CMP
+
+    New ctrl vector for $pmux cell $flatten\U_combo_lock.$procmux$91: $flatten\U_combo_lock.$procmux$79_CMP
+
+  Optimizing cells in module \tt_um_CL4_LNMIIT.
+
+Performed a total of 5 changes.
+
+
+
+11.20.5. Executing OPT_MERGE pass (detect identical cells).
+
+Finding identical cells in module `\tt_um_CL4_LNMIIT'.
+
+Removed a total of 0 cells.
+
+
+
+11.20.6. Executing OPT_SHARE pass.
+
+
+
+11.20.7. Executing OPT_DFF pass (perform DFF optimizations).
+
+
+
+11.20.8. Executing OPT_CLEAN pass (remove unused cells and wires).
+
+Finding unused cells or wires in module \tt_um_CL4_LNMIIT..
+
+
+
+11.20.9. Executing OPT_EXPR pass (perform const folding).
+
+Optimizing module tt_um_CL4_LNMIIT.
+
+<suppressed ~1 debug messages>
+
+
+
+11.20.10. Rerunning OPT passes. (Maybe there is more to do..)
+
+
+
+11.20.11. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+
+Running muxtree optimizer on module \tt_um_CL4_LNMIIT..
+
+  Creating internal representation of mux trees.
+
+  Evaluating internal representation of mux trees.
+
+  Analyzing evaluation results.
+
+Removed 0 multiplexer ports.
+
+<suppressed ~12 debug messages>
+
+
+
+11.20.12. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+
+  Optimizing cells in module \tt_um_CL4_LNMIIT.
+
+Performed a total of 0 changes.
+
+
+
+11.20.13. Executing OPT_MERGE pass (detect identical cells).
+
+Finding identical cells in module `\tt_um_CL4_LNMIIT'.
+
+Removed a total of 0 cells.
+
+
+
+11.20.14. Executing OPT_SHARE pass.
+
+
+
+11.20.15. Executing OPT_DFF pass (perform DFF optimizations).
+
+
+
+11.20.16. Executing OPT_CLEAN pass (remove unused cells and wires).
+
+Finding unused cells or wires in module \tt_um_CL4_LNMIIT..
+
+Removed 0 unused cells and 1 unused wires.
+
+<suppressed ~1 debug messages>
+
+
+
+11.20.17. Executing OPT_EXPR pass (perform const folding).
+
+Optimizing module tt_um_CL4_LNMIIT.
+
+
+
+11.20.18. Rerunning OPT passes. (Maybe there is more to do..)
+
+
+
+11.20.19. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+
+Running muxtree optimizer on module \tt_um_CL4_LNMIIT..
+
+  Creating internal representation of mux trees.
+
+  Evaluating internal representation of mux trees.
+
+  Analyzing evaluation results.
+
+Removed 0 multiplexer ports.
+
+<suppressed ~12 debug messages>
+
+
+
+11.20.20. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+
+  Optimizing cells in module \tt_um_CL4_LNMIIT.
+
+Performed a total of 0 changes.
+
+
+
+11.20.21. Executing OPT_MERGE pass (detect identical cells).
+
+Finding identical cells in module `\tt_um_CL4_LNMIIT'.
+
+Removed a total of 0 cells.
+
+
+
+11.20.22. Executing OPT_SHARE pass.
+
+
+
+11.20.23. Executing OPT_DFF pass (perform DFF optimizations).
+
+
+
+11.20.24. Executing OPT_CLEAN pass (remove unused cells and wires).
+
+Finding unused cells or wires in module \tt_um_CL4_LNMIIT..
+
+
+
+11.20.25. Executing OPT_EXPR pass (perform const folding).
+
+Optimizing module tt_um_CL4_LNMIIT.
+
+
+
+11.20.26. Finished OPT passes. (There is nothing left to do.)
+
+
+
+11.21. Executing TECHMAP pass (map to technology primitives).
+
+
+
+11.21.1. Executing Verilog-2005 frontend: /usr/local/bin/../share/yosys/techmap.v
+
+Parsing Verilog input from `/usr/local/bin/../share/yosys/techmap.v' to AST representation.
+
+Generating RTLIL representation for module `\_90_simplemap_bool_ops'.
+
+Generating RTLIL representation for module `\_90_simplemap_reduce_ops'.
+
+Generating RTLIL representation for module `\_90_simplemap_logic_ops'.
+
+Generating RTLIL representation for module `\_90_simplemap_compare_ops'.
+
+Generating RTLIL representation for module `\_90_simplemap_various'.
+
+Generating RTLIL representation for module `\_90_simplemap_registers'.
+
+Generating RTLIL representation for module `\_90_shift_ops_shr_shl_sshl_sshr'.
+
+Generating RTLIL representation for module `\_90_shift_shiftx'.
+
+Generating RTLIL representation for module `\_90_fa'.
+
+Generating RTLIL representation for module `\_90_lcu'.
+
+Generating RTLIL representation for module `\_90_alu'.
+
+Generating RTLIL representation for module `\_90_macc'.
+
+Generating RTLIL representation for module `\_90_alumacc'.
+
+Generating RTLIL representation for module `\$__div_mod_u'.
+
+Generating RTLIL representation for module `\$__div_mod_trunc'.
+
+Generating RTLIL representation for module `\_90_div'.
+
+Generating RTLIL representation for module `\_90_mod'.
+
+Generating RTLIL representation for module `\$__div_mod_floor'.
+
+Generating RTLIL representation for module `\_90_divfloor'.
+
+Generating RTLIL representation for module `\_90_modfloor'.
+
+Generating RTLIL representation for module `\_90_pow'.
+
+Generating RTLIL representation for module `\_90_pmux'.
+
+Generating RTLIL representation for module `\_90_demux'.
+
+Generating RTLIL representation for module `\_90_lut'.
+
+Successfully finished Verilog frontend.
+
+
+
+11.21.2. Continuing TECHMAP pass.
+
+Using extmapper simplemap for cells of type $reduce_or.
+
+Using extmapper simplemap for cells of type $reduce_and.
+
+Using extmapper simplemap for cells of type $not.
+
+Using extmapper simplemap for cells of type $ne.
+
+Using extmapper simplemap for cells of type $reduce_bool.
+
+Using extmapper simplemap for cells of type $adffe.
+
+Using template $paramod$7e708ae28ab761f11d0fb59d3ffc72f6a4baf5d9\_90_alu for cells of type $alu.
+
+Using extmapper simplemap for cells of type $and.
+
+Using extmapper simplemap for cells of type $eq.
+
+Using extmapper simplemap for cells of type $mux.
+
+Using extmapper simplemap for cells of type $adff.
+
+Using template $paramod$32a7b7b86c07519b7537abc18e96f0331f97914d\_90_alu for cells of type $alu.
+
+Using template $paramod$175e67c02b86e96b1288b9dc100122520d7240d8\_90_alu for cells of type $alu.
+
+Using extmapper simplemap for cells of type $logic_not.
+
+Using template $paramod$3ef7d3dd227da7627a99c5e5a6a4deb817573e39\_90_alu for cells of type $alu.
+
+Using template $paramod$6831557730818fb92b11a295f9eb33ff8fa62af1\_90_alu for cells of type $alu.
+
+Using template $paramod$85df5dc01c7df96a7d8e5f1fdf76ce9ac452af63\_90_pmux for cells of type $pmux.
+
+Using template $paramod$c014078428616de547d5c8d6f159d828f2151b7a\_90_pmux for cells of type $pmux.
+
+Using extmapper simplemap for cells of type $logic_or.
+
+Using extmapper simplemap for cells of type $or.
+
+Using extmapper simplemap for cells of type $pos.
+
+Using template $paramod\_90_lcu\WIDTH=32'00000000000000000000000000000100 for cells of type $lcu.
+
+Using extmapper simplemap for cells of type $xor.
+
+Using template $paramod\_90_lcu\WIDTH=32'00000000000000000000000000000010 for cells of type $lcu.
+
+Using template $paramod\_90_lcu\WIDTH=32'00000000000000000000000000001100 for cells of type $lcu.
+
+Using template $paramod\_90_lcu\WIDTH=32'00000000000000000000000000000011 for cells of type $lcu.
+
+No more expansions possible.
+
+<suppressed ~956 debug messages>
+
+
+
+11.22. Executing OPT pass (performing simple optimizations).
+
+
+
+11.22.1. Executing OPT_EXPR pass (perform const folding).
+
+Optimizing module tt_um_CL4_LNMIIT.
+
+<suppressed ~342 debug messages>
+
+
+
+11.22.2. Executing OPT_MERGE pass (detect identical cells).
+
+Finding identical cells in module `\tt_um_CL4_LNMIIT'.
+
+<suppressed ~150 debug messages>
+
+Removed a total of 50 cells.
+
+
+
+11.22.3. Executing OPT_DFF pass (perform DFF optimizations).
+
+
+
+11.22.4. Executing OPT_CLEAN pass (remove unused cells and wires).
+
+Finding unused cells or wires in module \tt_um_CL4_LNMIIT..
+
+Removed 23 unused cells and 441 unused wires.
+
+<suppressed ~24 debug messages>
+
+
+
+11.22.5. Finished fast OPT passes.
+
+
+
+11.23. Executing ABC pass (technology mapping using ABC).
+
+
+
+11.23.1. Extracting gate netlist of module `\tt_um_CL4_LNMIIT' to `<abc-temp-dir>/input.blif'..
+
+Extracted 382 gates and 431 wires to a netlist network with 47 inputs and 50 outputs.
+
+
+
+11.23.1.1. Executing ABC.
+
+Running ABC command: "<yosys-exe-dir>/yosys-abc" -s -f <abc-temp-dir>/abc.script 2>&1
+
+ABC: ABC command line: "source <abc-temp-dir>/abc.script".
+
+ABC: 
+
+ABC: + read_blif <abc-temp-dir>/input.blif 
+
+ABC: + read_library <abc-temp-dir>/stdcells.genlib 
+
+ABC: Entered genlib library with 13 gates from file "<abc-temp-dir>/stdcells.genlib".
+
+ABC: + strash 
+
+ABC: + dretime 
+
+ABC: + map 
+
+ABC: + write_blif <abc-temp-dir>/output.blif 
+
+
+
+11.23.1.2. Re-integrating ABC results.
+
+ABC RESULTS:               AND cells:        5
+
+ABC RESULTS:              XNOR cells:        4
+
+ABC RESULTS:               NOR cells:       18
+
+ABC RESULTS:               NOT cells:       21
+
+ABC RESULTS:                OR cells:       38
+
+ABC RESULTS:               MUX cells:       29
+
+ABC RESULTS:             ORNOT cells:       23
+
+ABC RESULTS:               XOR cells:       25
+
+ABC RESULTS:              NAND cells:       31
+
+ABC RESULTS:            ANDNOT cells:      111
+
+ABC RESULTS:        internal signals:      334
+
+ABC RESULTS:           input signals:       47
+
+ABC RESULTS:          output signals:       50
+
+Removing temp directory.
+
+
+
+11.24. Executing OPT pass (performing simple optimizations).
+
+
+
+11.24.1. Executing OPT_EXPR pass (perform const folding).
+
+Optimizing module tt_um_CL4_LNMIIT.
+
+
+
+11.24.2. Executing OPT_MERGE pass (detect identical cells).
+
+Finding identical cells in module `\tt_um_CL4_LNMIIT'.
+
+<suppressed ~12 debug messages>
+
+Removed a total of 4 cells.
+
+
+
+11.24.3. Executing OPT_DFF pass (perform DFF optimizations).
+
+
+
+11.24.4. Executing OPT_CLEAN pass (remove unused cells and wires).
+
+Finding unused cells or wires in module \tt_um_CL4_LNMIIT..
+
+Removed 0 unused cells and 281 unused wires.
+
+<suppressed ~13 debug messages>
+
+
+
+11.24.5. Finished fast OPT passes.
+
+
+
+11.25. Executing HIERARCHY pass (managing design hierarchy).
+
+
+
+11.25.1. Analyzing design hierarchy..
+
+Top module:  \tt_um_CL4_LNMIIT
+
+
+
+11.25.2. Analyzing design hierarchy..
+
+Top module:  \tt_um_CL4_LNMIIT
+
+Removed 0 unused modules.
+
+
+
+11.26. Printing statistics.
+
+
+
+=== tt_um_CL4_LNMIIT ===
+
+
+
+   Number of wires:                367
+
+   Number of wire bits:            521
+
+   Number of public wires:          83
+
+   Number of public wire bits:     237
+
+   Number of memories:               0
+
+   Number of memory bits:            0
+
+   Number of processes:              0
+
+   Number of cells:                356
+
+     $_ANDNOT_                     111
+
+     $_AND_                          5
+
+     $_DFFE_PN0N_                    2
+
+     $_DFFE_PN0P_                   22
+
+     $_DFF_PN0_                     31
+
+     $_MUX_                         29
+
+     $_NAND_                        31
+
+     $_NOR_                         15
+
+     $_NOT_                         21
+
+     $_ORNOT_                       23
+
+     $_OR_                          37
+
+     $_XNOR_                         4
+
+     $_XOR_                         25
+
+
+
+11.27. Executing CHECK pass (checking for obvious problems).
+
+Checking module tt_um_CL4_LNMIIT...
+
+Found and reported 0 problems.
+
+
+
+12. Executing CHECK pass (checking for obvious problems).
+
+Checking module tt_um_CL4_LNMIIT...
+
+Found and reported 0 problems.
+
+
+
+13. Printing statistics.
+
+
+
+=== tt_um_CL4_LNMIIT ===
+
+
+
+   Number of wires:                367
+
+   Number of wire bits:            521
+
+   Number of public wires:          83
+
+   Number of public wire bits:     237
+
+   Number of memories:               0
+
+   Number of memory bits:            0
+
+   Number of processes:              0
+
+   Number of cells:                356
+
+     $_ANDNOT_                     111
+
+     $_AND_                          5
+
+     $_DFFE_PN0N_                    2
+
+     $_DFFE_PN0P_                   22
+
+     $_DFF_PN0_                     31
+
+     $_MUX_                         29
+
+     $_NAND_                        31
+
+     $_NOR_                         15
+
+     $_NOT_                         21
+
+     $_ORNOT_                       23
+
+     $_OR_                          37
+
+     $_XNOR_                         4
+
+     $_XOR_                         25
+
+
+
+End of script. Logfile hash: 4b5d53ba51, CPU: user 0.50s system 0.02s, MEM: 18.73 MB peak
+
+Yosys 0.29+23 (git sha1 cdeef5481, gcc 7.5.0-3ubuntu1~18.04 -fPIC -Os)
+
+Time spent: 23% 28x opt_expr (0 sec), 14% 1x abc (0 sec), ...
