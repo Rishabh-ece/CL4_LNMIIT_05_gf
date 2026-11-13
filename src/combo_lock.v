@@ -68,9 +68,9 @@ module combo_lock #(
 
   wire [1:0] fail_n;
 
-  wire [7:0] tmr;
+  wire [11:0] tmr;
 
-  wire [7:0] tmr_n;
+  wire [11:0] tmr_n;
 
 
 
@@ -264,13 +264,13 @@ module combo_lock #(
 
         (MAX_ATTEMPTS < 1) || (MAX_ATTEMPTS > 3) ||
 
-        (UNLOCK_CYCLES < 1) || (UNLOCK_CYCLES > 255) ||
+        (UNLOCK_CYCLES < 1) || (UNLOCK_CYCLES > 4095) ||
 
-        (LOCKOUT_CYCLES < 1) || (LOCKOUT_CYCLES > 255) ||
+        (LOCKOUT_CYCLES < 1) || (LOCKOUT_CYCLES > 4095) ||
 
         (INTERDIGIT_TIMEOUT_CYCLES < 0) ||
 
-        (INTERDIGIT_TIMEOUT_CYCLES > 255) ||
+        (INTERDIGIT_TIMEOUT_CYCLES > 4095) ||
 
         ((RST_SYNC != 0) && (RST_SYNC != 1))) begin : g_invalid_parameters
 
