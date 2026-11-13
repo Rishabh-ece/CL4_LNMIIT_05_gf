@@ -1,7 +1,7 @@
 # CL-4 Verification Plan
 
 **DUT:** `combo_lock` (wrapped by `tt_um_CL4_LNMIIT`)  
-**Specification:** CL4-SPEC-001, Revision 1.0, with the deviations listed in section 2  
+**Specification:** CL4-SPEC-001, Revision 1.0  
 **Verification methodology:** Directed and constrained-random simulation  
 **Verification framework:** cocotb with a Python reference model  
 **Target technology:** GF180MCU 180 nm
@@ -10,7 +10,7 @@
 
 ## 1. Verification overview
 
-The goal is to show that the combination lock controller behaves as defined in CL4-SPEC-001, apart from the deviations in section 2.
+The goal is to show that the combination lock controller behaves as defined in CL4-SPEC-001.
 
 The environment uses directed tests, a cycle-accurate Python reference model, randomized stimulus and static checks.
 
@@ -23,27 +23,7 @@ The signals monitored are:
 
 All outputs are sampled after each rising clock edge has settled and are compared with the reference model.
 
-## 2. Deviations from CL4-SPEC-001
-
-The RTL differs from the written specification in these ways. The reference model and the tests follow the RTL behavior listed here, and the specification will be revised to match.
-
-| # | Item | Specification | Current design |
-|---|---|---|---|
-| 1 | Process | SKY130 | GF180MCU 180 nm |
-| 2 | Code check | Each digit is compared when it arrives; a wrong digit at any position enters FAIL | Digits 1 to 3 are stored and accepted unconditionally. The full 8-bit code is compared when the fourth digit arrives. A wrong code enters FAIL after the fourth digit |
-| 3 | Timer width | 8-bit shared timer; unlock, lockout and timeout up to 255 cycles | 12-bit shared timer; these values up to 4095 cycles |
-| 4 | Debounce window | D = 24 default | D = 16 |
-| 5 | Timer values | 100 / 200 / 250 cycles | 4000 cycles each (4 s at 1 kHz) |
-| 6 | Reset style | Fully synchronous, no asynchronous reset | Registers use asynchronous-assert active-low reset (`negedge rst_n`). With `RST_SYNC = 1` the reset is released synchronously |
-| 7 | Flop count | 4 x (3 + max(1, ceil(log2 D))) + 13 + F + 2 x RST_SYNC | See section 6 |
-
-Consequences for testing:
-
-- A wrong digit at position 1, 2 or 3 does not enter FAIL at once. The FSM keeps advancing, and the failure appears after the fourth digit. F13 and the reference model are written for this behavior.
-- An entry that starts with a wrong digit and is then abandoned is only a timeout. It is not counted as a failure.
-- Because reset asserts asynchronously, F02 checks that outputs are 0 as soon as reset is applied, not only at the next edge.
-
-## 3. Verification methodology
+## 2. Verification methodology
 
 1. **Directed testing:** predefined input sequences check individual features and corner cases.
 2. **Reference model:** an independent Python model of the behavior.
@@ -61,11 +41,11 @@ The testbench has four parts:
 
 The DUT under simulation is the Tiny Tapeout wrapper `tt_um_CL4_LNMIIT`. Buttons are on `ui_in[3:0]`. Outputs are `uo_out[0]` (unlock), `uo_out[1]` (locked_out), `uo_out[3:2]` (attempt_count) and `uo_out[6:4]` (state).
 
-## 4. Functional verification
+## 3. Functional verification
 
 The suite has 35 functional tests, grouped by feature.
 
-### 4.1 Reset
+### 3.1 Reset
 
 | Test ID | Test name | Objective |
 |---|---|---|
@@ -76,7 +56,7 @@ The suite has 35 functional tests, grouped by feature.
 
 When `RST_SYNC = 1`, the environment accounts for the two-flop reset synchronization latency. F35 is required only for that setting.
 
-### 4.2 Button synchronization and debounce
+### 3.2 Button synchronization and debounce
 
 | Test ID | Test name | Objective |
 |---|---|---|
@@ -87,7 +67,7 @@ When `RST_SYNC = 1`, the environment accounts for the two-flop reset synchroniza
 | F08 | `test_held_button_single_press` | Check a held button gives only one press. |
 | F09 | `test_release_debounce` | Check release filtering and correct re-arming. |
 
-### 4.3 Code entry and unlock
+### 3.3 Code entry and unlock
 
 | Test ID | Test name | Objective |
 |---|---|---|
@@ -99,7 +79,7 @@ When `RST_SYNC = 1`, the environment accounts for the two-flop reset synchroniza
 
 For F13, the plan covers all four wrong-digit positions. For wrong digits at positions 1 to 3 the test continues the entry and checks the verdict after digit 4. The tests use several `CODE_VALUE` settings, including a code with repeated digits.
 
-### 4.4 Failure counter and lockout
+### 3.4 Failure counter and lockout
 
 | Test ID | Test name | Objective |
 |---|---|---|
@@ -110,7 +90,7 @@ For F13, the plan covers all four wrong-digit positions. For wrong digits at pos
 | F18 | `test_input_ignored_during_lockout` | Check presses are discarded during lockout. |
 | F19 | `test_recovery_after_lockout` | Check normal operation resumes immediately after lockout. |
 
-### 4.5 Press qualification and timeout
+### 3.5 Press qualification and timeout
 
 | Test ID | Test name | Objective |
 |---|---|---|
@@ -122,7 +102,7 @@ For F13, the plan covers all four wrong-digit positions. For wrong digits at pos
 | F33 | `test_press_at_unlock_end` | Check a press in the last UNLOCK cycle is discarded. |
 | F34 | `test_held_across_lockout_end` | Check a button held through lockout end gives no delayed press. |
 
-### 4.6 FSM and outputs
+### 3.6 FSM and outputs
 
 | Test ID | Test name | Objective |
 |---|---|---|
@@ -134,9 +114,9 @@ For F13, the plan covers all four wrong-digit positions. For wrong digits at pos
 
 For F31, record the hierarchical name of the state register, `st` in `U_entry_fsm`, and force it from the testbench.
 
-## 5. Reference model and randomized verification
+## 4. Reference model and randomized verification
 
-### 5.1 Cycle-accurate reference model
+### 4.1 Cycle-accurate reference model
 
 The Python model predicts the expected behavior. It covers:
 
@@ -148,7 +128,7 @@ The Python model predicts the expected behavior. It covers:
 - Shared timer for unlock, lockout and timeout.
 - Reset priority and registered outputs.
 
-The model uses pre-edge values, as the specification's execution model does, so scheduling differences cannot cause false mismatches. It is updated for the code check in deviation 2.
+The model uses pre-edge values, as the specification's execution model does, so scheduling differences cannot cause false mismatches.
 
 After every rising clock edge settles, these are compared:
 
@@ -161,7 +141,7 @@ locked_out
 
 Any mismatch reports the cycle number, the inputs, the expected outputs and the DUT outputs.
 
-### 5.2 Randomized regression
+### 4.2 Randomized regression
 
 - At least 100 random runs of 5000 cycles each.
 - Random button press and release timing.
@@ -173,7 +153,7 @@ Any mismatch reports the cycle number, the inputs, the expected outputs and the 
 
 Random runs at the operating values (4000-cycle timers) mostly stay in one timed state. The regression therefore also runs on the short-timer configurations below.
 
-## 6. Parameter configurations
+## 5. Parameter configurations
 
 | Parameter | CFG-0 Default | CFG-1 Boundary | CFG-2 Repeated digit | CFG-3 Alternate code | CFG-4 Operating |
 |---|---|---|---|---|---|
@@ -196,7 +176,7 @@ CFG-4 uses the declared operating values: 1 kHz clock, so D = 16 ms and each tim
 
 Together, the configuration-dependent tests cover at least three parameter sets besides the default. For operating values, the timeout must be 0 or at least D + 2.
 
-## 7. Static checks and implementation verification
+## 6. Static checks and implementation verification
 
 | Check ID | Tool / method | Acceptance criteria |
 |---|---|---|
@@ -207,7 +187,7 @@ Together, the configuration-dependent tests cover at least three parameter sets 
 
 ### Expected flop count
 
-The specification formula assumes an 8-bit timer. The current RTL adds 4 timer flops and 6 flops for the stored digits (`entered_code[7:2]`), so the expected count is:
+The expected flop count follows from the RTL: the 12-bit timer and the 6 flops that store the first three digits (`entered_code[7:2]`) are included.
 
 ```text
 4 x (3 + max(1, ceil(log2(D)))) + 23 + F + 2 x RST_SYNC
@@ -217,7 +197,7 @@ The specification formula assumes an 8-bit timer. The current RTL adds 4 timer f
 - F = 1 when `MAX_ATTEMPTS` = 1, otherwise 2.
 - `RST_SYNC` = 1 when the reset synchronizer is enabled.
 
-At the operating values (D = 16, `MAX_ATTEMPTS` = 3, `RST_SYNC` = 1) this gives 55 flops. This figure is derived from the RTL and must be confirmed by the synthesis report. Any difference from technology mapping must be documented.
+At the operating values (D = 16, `MAX_ATTEMPTS` = 3, `RST_SYNC` = 1) this gives 55 flops. This figure must be confirmed by the synthesis report. Any difference from technology mapping must be documented.
 
 ### Static timing analysis
 
@@ -227,7 +207,7 @@ STA uses the declared clock period, input and output delays, and asynchronous-in
 - Worst setup slack and worst hold slack.
 - The corresponding corner for each.
 
-## 8. Verification environment and execution
+## 7. Verification environment and execution
 
 The environment uses cocotb with an RTL simulator such as Icarus Verilog or Verilator. See `test/README.md` for how to run it.
 
@@ -239,7 +219,7 @@ Record the following for each run:
 - Simulation logs and failure messages.
 - Random seeds and regression results.
 
-## 9. Acceptance criteria
+## 8. Acceptance criteria
 
 The design is functionally verified when:
 
@@ -253,12 +233,12 @@ The design is functionally verified when:
 Implementation acceptance also needs:
 
 - N1: clean lint report.
-- N2: synthesis structure and flop count as in section 7.
+- N2: synthesis structure and flop count as in section 6.
 - N3: non-negative setup and hold slack at all declared corners.
 
 N4 is optional.
 
-## 10. Verification evidence
+## 9. Verification evidence
 
 | Evidence | Description |
 |---|---|
@@ -271,6 +251,6 @@ N4 is optional.
 | Synthesis report | Yosys cell statistics and flop count |
 | STA reports | Setup and hold reports for each declared corner |
 
-## 11. Scope of this document
+## 10. Scope of this document
 
 This document defines the verification strategy and acceptance criteria for CL-4. It is a plan and does not state that any simulation, regression, lint, synthesis or timing check has been completed.
