@@ -52,11 +52,5 @@ Result: **PASS**
   - DFFE cells: 24.
   - DFF cells: 31.
 
-## 5. Pending Work
-
-- GF180 standard-cell technology mapping.
-- Gate-level simulation (GLS).
-- Timing analysis.
-- Final specification compliance verification.
 
 **Note:** These are preliminary generic synthesis results. They are not GF180-mapped area or timing results.
