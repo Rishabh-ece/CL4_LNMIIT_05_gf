@@ -2,7 +2,7 @@
 
 """
 
-CL-4 combination lock - complete cocotb regression for complete-password comparison (F01..F36, with F31 revised and F36 async reset retained).
+CL-4 combination lock - Cocotb regression for the uploaded complete-code, 12-bit-timer, asynchronous-reset RTL.
 
 
 
@@ -14,7 +14,7 @@ Works on cocotb 2.x (uses unit="ns").  Two ways to run it:
 
         TOPLEVEL = tb  ->  tb.user_project = tt_um_CL4_LNMIIT
 
-     Only the default parameters (CFG-0) exist in this build.
+     The Tiny Tapeout wrapper instantiates combo_lock with its RTL defaults.
 
 
 
@@ -88,15 +88,15 @@ from cocotb.triggers import FallingEdge, Timer
 
 # ----------------------------------------------------------------------------
 
-D = int(os.getenv("CL4_D", "24"))
+D = int(os.getenv("CL4_D", "16"))
 
 MAXA = int(os.getenv("CL4_MAX_ATTEMPTS", "3"))
 
-UNL = int(os.getenv("CL4_UNLOCK_CYCLES", "100"))
+UNL = int(os.getenv("CL4_UNLOCK_CYCLES", "4000"))
 
-LOCK = int(os.getenv("CL4_LOCKOUT_CYCLES", "200"))
+LOCK = int(os.getenv("CL4_LOCKOUT_CYCLES", "4000"))
 
-N = int(os.getenv("CL4_N", "250"))
+N = int(os.getenv("CL4_N", "4000"))
 
 CODE = int(os.getenv("CL4_CODE", "0x9C"), 0)
 
@@ -224,7 +224,7 @@ class RefModel:
 
         int_rst = self.rs2 if RS else rst_n
 
-        self.rs2, self.rs1 = self.rs1, rst_n  # synchronizer, itself not reset
+        self.rs2, self.rs1 = self.rs1, rst_n  # release shifts through async-cleared stages
 
         if int_rst is None:
 
@@ -296,19 +296,19 @@ class RefModel:
 
                     self.prefix[0] = digit
 
-                    st_n, tmr_n = DIGIT2, (N - 1) & 0xFF
+                    st_n, tmr_n = DIGIT2, (N - 1) & 0xFFF
 
                 elif st == DIGIT2:
 
                     self.prefix[1] = digit
 
-                    st_n, tmr_n = DIGIT3, (N - 1) & 0xFF
+                    st_n, tmr_n = DIGIT3, (N - 1) & 0xFFF
 
                 elif st == DIGIT3:
 
                     self.prefix[2] = digit
 
-                    st_n, tmr_n = DIGIT4, (N - 1) & 0xFF
+                    st_n, tmr_n = DIGIT4, (N - 1) & 0xFFF
 
                 else:
 
@@ -316,7 +316,7 @@ class RefModel:
 
                     if candidate == CODE:
 
-                        st_n, tmr_n, fail_n = UNLOCK, (UNL - 1) & 0xFF, 0
+                        st_n, tmr_n, fail_n = UNLOCK, (UNL - 1) & 0xFFF, 0
 
                     else:
 
@@ -348,7 +348,7 @@ class RefModel:
 
             if fail >= MAXA - 1:
 
-                st_n, tmr_n, fail_n = LOCKOUT, (LOCK - 1) & 0xFF, MAXA
+                st_n, tmr_n, fail_n = LOCKOUT, (LOCK - 1) & 0xFFF, MAXA
 
             else:
 
@@ -2262,7 +2262,7 @@ async def test_port_interface(dut):
 
 async def test_parameter_configuration(dut):
 
-    """F30: validate the parameter set for this elaborated build.
+    """F30: validate the parameter set for this elaborated build (12-bit timers).
 
 
 
@@ -2280,11 +2280,12 @@ async def test_parameter_configuration(dut):
 
     assert 1 <= MAXA <= 3, "F30: MAX_ATTEMPTS must be in 1..3"
 
-    assert 1 <= UNL <= 255, "F30: UNLOCK_CYCLES must be in 1..255"
+    assert 1 <= UNL <= 4095, "F30: UNLOCK_CYCLES must be in 1..4095"
 
-    assert 1 <= LOCK <= 255, "F30: LOCKOUT_CYCLES must be in 1..255"
+    assert 1 <= LOCK <= 4095, "F30: LOCKOUT_CYCLES must be in 1..4095"
 
-    assert 0 <= N <= 255, "F30: INTERDIGIT_TIMEOUT_CYCLES must be in 0..255"
+    assert 0 <= N <= 4095, "F30: INTERDIGIT_TIMEOUT_CYCLES must be in 0..4095"
+    assert N == 0 or N >= D + 2, "F30: N must be 0 or at least D+2"
 
     assert 0 <= CODE <= 255, "F30: CODE_VALUE must fit in 8 bits"
 
@@ -2296,7 +2297,7 @@ async def test_parameter_configuration(dut):
 
     dut._log.info(
 
-        "F30 PASS for this build: D=%d MAX_ATTEMPTS=%d UNLOCK=%d LOCKOUT=%d N=%d CODE=0x%02X RST_SYNC=%d; rerun with compile-time overrides for the full matrix",
+        "F30 PASS for this build: D=%d MAX_ATTEMPTS=%d UNLOCK=%d LOCKOUT=%d N=%d (12-bit timer) CODE=0x%02X RST_SYNC=%d; rerun with compile-time overrides for the full matrix",
 
         D, MAXA, UNL, LOCK, N, CODE, RS)
 
@@ -2402,15 +2403,15 @@ async def test_illegal_state_recovery(dut):
 
         await tb.fail_once(WRONGS[0])
 
-        tb.expect(IDLE, 1, "F31 A setup")
+        tb.expect(IDLE, 1, "F39 A setup")
 
         await inject()
 
-        assert tb.pins.read()[0] == ILLEGAL, "F31: forced value did not reach the state output"
+        assert tb.pins.read()[0] == ILLEGAL, "F39: forced value did not reach the state output"
 
         await tb.tick(1)
 
-        tb.expect(IDLE, 1, "F31 A recovery")
+        tb.expect(IDLE, 1, "F39 A recovery")
 
 
 
@@ -2428,11 +2429,11 @@ async def test_illegal_state_recovery(dut):
 
     await tb.tick(1)
 
-    tb.expect(IDLE, MAXA, "F31 B recovery from LOCKOUT")
+    tb.expect(IDLE, MAXA, "F39 B recovery from LOCKOUT")
 
     assert tb.last.lo == 0
 
-    assert int(core.tmr.value) == tmr_before, "F31: timer changed during illegal-state recovery"
+    assert int(core.tmr.value) == tmr_before, "F39: timer changed during illegal-state recovery"
 
     await tb.tick(D + 2)
 
@@ -2444,11 +2445,11 @@ async def test_illegal_state_recovery(dut):
 
     await tb.tick(1)
 
-    tb.expect(LOCKOUT, MAXA, "F31 B: failure after upset must lock out (>= test)")
+    tb.expect(LOCKOUT, MAXA, "F39 B: failure after upset must lock out (>= test)")
 
     await tb.tick(LOCK + 2)
 
-    tb.expect(IDLE, 0, "F31 B end")
+    tb.expect(IDLE, 0, "F39 B end")
 
     dut._log.info("F39 PASS (preserved illegal-state recovery; forced %s)", "tb.user_project.U_combo_lock.U_entry_fsm.st"
 
