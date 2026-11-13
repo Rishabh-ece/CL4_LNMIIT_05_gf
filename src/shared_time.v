@@ -3,12 +3,12 @@
 module shared_timer (
   input  wire       clk,
   input  wire       rst_n,
-  input  wire [7:0] next_tmr,
-  output reg  [7:0] tmr
+  input  wire [11:0] next_tmr,
+  output reg  [11:0] tmr
 );
   always @(posedge clk or negedge rst_n) begin
     if (!rst_n) begin
-      tmr <= 8'd0;
+      tmr <= 12'd0;
     end else begin
       tmr <= next_tmr;
     end
