@@ -1,0 +1,1627 @@
+
+
+ /----------------------------------------------------------------------------\
+
+ |                                                                            |
+
+ |  yosys -- Yosys Open SYnthesis Suite                                       |
+
+ |                                                                            |
+
+ |  Copyright (C) 2012 - 2020  Claire Xenia Wolf <claire@yosyshq.com>         |
+
+ |                                                                            |
+
+ |  Permission to use, copy, modify, and/or distribute this software for any  |
+
+ |  purpose with or without fee is hereby granted, provided that the above    |
+
+ |  copyright notice and this permission notice appear in all copies.         |
+
+ |                                                                            |
+
+ |  THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES  |
+
+ |  WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF          |
+
+ |  MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR   |
+
+ |  ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES    |
+
+ |  WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN     |
+
+ |  ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF   |
+
+ |  OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.            |
+
+ |                                                                            |
+
+ \----------------------------------------------------------------------------/
+
+
+
+ Yosys 0.29+23 (git sha1 cdeef5481, gcc 7.5.0-3ubuntu1~18.04 -fPIC -Os)
+
+
+
+
+
+-- Running command `read_verilog src/*.v; hierarchy -check -top tt_um_CL4_LNMIIT; proc; opt; check; stat' --
+
+
+
+1. Executing Verilog-2005 frontend: src/button_debounce.v
+
+Parsing Verilog input from `src/button_debounce.v' to AST representation.
+
+Generating RTLIL representation for module `\button_debounce'.
+
+Successfully finished Verilog frontend.
+
+
+
+2. Executing Verilog-2005 frontend: src/code_compare.v
+
+Parsing Verilog input from `src/code_compare.v' to AST representation.
+
+Generating RTLIL representation for module `\code_compare'.
+
+Successfully finished Verilog frontend.
+
+
+
+3. Executing Verilog-2005 frontend: src/combo_lock.v
+
+Parsing Verilog input from `src/combo_lock.v' to AST representation.
+
+Generating RTLIL representation for module `\combo_lock'.
+
+Successfully finished Verilog frontend.
+
+
+
+4. Executing Verilog-2005 frontend: src/entry_fsm.v
+
+Parsing Verilog input from `src/entry_fsm.v' to AST representation.
+
+Generating RTLIL representation for module `\entry_fsm'.
+
+Successfully finished Verilog frontend.
+
+
+
+5. Executing Verilog-2005 frontend: src/failure_counter.v
+
+Parsing Verilog input from `src/failure_counter.v' to AST representation.
+
+Generating RTLIL representation for module `\failure_counter'.
+
+Successfully finished Verilog frontend.
+
+
+
+6. Executing Verilog-2005 frontend: src/press_qualify.v
+
+Parsing Verilog input from `src/press_qualify.v' to AST representation.
+
+Generating RTLIL representation for module `\press_qualify'.
+
+Successfully finished Verilog frontend.
+
+
+
+7. Executing Verilog-2005 frontend: src/project.v
+
+Parsing Verilog input from `src/project.v' to AST representation.
+
+Generating RTLIL representation for module `\tt_um_CL4_LNMIIT'.
+
+Successfully finished Verilog frontend.
+
+
+
+8. Executing Verilog-2005 frontend: src/reset_sync.v
+
+Parsing Verilog input from `src/reset_sync.v' to AST representation.
+
+Generating RTLIL representation for module `\reset_sync'.
+
+Successfully finished Verilog frontend.
+
+
+
+9. Executing Verilog-2005 frontend: src/shared_time.v
+
+Parsing Verilog input from `src/shared_time.v' to AST representation.
+
+Generating RTLIL representation for module `\shared_time'.
+
+Successfully finished Verilog frontend.
+
+
+
+10. Executing HIERARCHY pass (managing design hierarchy).
+
+
+
+10.1. Analyzing design hierarchy..
+
+Top module:  \tt_um_CL4_LNMIIT
+
+Used module:     \combo_lock
+
+Used module:         \button_debounce
+
+Used module:         \failure_counter
+
+Used module:         \shared_time
+
+Used module:         \entry_fsm
+
+Used module:         \code_compare
+
+Used module:         \press_qualify
+
+Used module:         \reset_sync
+
+Parameter \DEBOUNCE_CYCLES = 16
+
+
+
+10.2. Executing AST frontend in derive mode using pre-parsed AST for module `\button_debounce'.
+
+Parameter \DEBOUNCE_CYCLES = 16
+
+Generating RTLIL representation for module `$paramod\button_debounce\DEBOUNCE_CYCLES=s32'00000000000000000000000000010000'.
+
+Parameter \DEBOUNCE_CYCLES = 16
+
+Found cached RTLIL representation for module `$paramod\button_debounce\DEBOUNCE_CYCLES=s32'00000000000000000000000000010000'.
+
+Parameter \DEBOUNCE_CYCLES = 16
+
+Found cached RTLIL representation for module `$paramod\button_debounce\DEBOUNCE_CYCLES=s32'00000000000000000000000000010000'.
+
+Parameter \DEBOUNCE_CYCLES = 16
+
+Found cached RTLIL representation for module `$paramod\button_debounce\DEBOUNCE_CYCLES=s32'00000000000000000000000000010000'.
+
+Parameter \MAX_ATTEMPTS = 3
+
+Parameter \UNLOCK_CYCLES = 4000
+
+Parameter \LOCKOUT_CYCLES = 4000
+
+Parameter \INTERDIGIT_TIMEOUT_CYCLES = 4000
+
+
+
+10.3. Executing AST frontend in derive mode using pre-parsed AST for module `\entry_fsm'.
+
+Parameter \MAX_ATTEMPTS = 3
+
+Parameter \UNLOCK_CYCLES = 4000
+
+Parameter \LOCKOUT_CYCLES = 4000
+
+Parameter \INTERDIGIT_TIMEOUT_CYCLES = 4000
+
+Generating RTLIL representation for module `$paramod$bbdccc09e789bd30fc4b52be389e0426e77b78bc\entry_fsm'.
+
+Parameter \CODE_VALUE = 8'10011100
+
+
+
+10.4. Executing AST frontend in derive mode using pre-parsed AST for module `\code_compare'.
+
+Parameter \CODE_VALUE = 8'10011100
+
+Generating RTLIL representation for module `$paramod\code_compare\CODE_VALUE=8'10011100'.
+
+Parameter \RST_SYNC = 1
+
+
+
+10.5. Executing AST frontend in derive mode using pre-parsed AST for module `\reset_sync'.
+
+Parameter \RST_SYNC = 1
+
+Generating RTLIL representation for module `$paramod\reset_sync\RST_SYNC=s32'00000000000000000000000000000001'.
+
+
+
+10.6. Analyzing design hierarchy..
+
+Top module:  \tt_um_CL4_LNMIIT
+
+Used module:     \combo_lock
+
+Used module:         $paramod\button_debounce\DEBOUNCE_CYCLES=s32'00000000000000000000000000010000
+
+Used module:         \failure_counter
+
+Used module:         \shared_time
+
+Used module:         $paramod$bbdccc09e789bd30fc4b52be389e0426e77b78bc\entry_fsm
+
+Used module:         $paramod\code_compare\CODE_VALUE=8'10011100
+
+Used module:         \press_qualify
+
+Used module:         $paramod\reset_sync\RST_SYNC=s32'00000000000000000000000000000001
+
+
+
+10.7. Analyzing design hierarchy..
+
+Top module:  \tt_um_CL4_LNMIIT
+
+Used module:     \combo_lock
+
+Used module:         $paramod\button_debounce\DEBOUNCE_CYCLES=s32'00000000000000000000000000010000
+
+Used module:         \failure_counter
+
+Used module:         \shared_time
+
+Used module:         $paramod$bbdccc09e789bd30fc4b52be389e0426e77b78bc\entry_fsm
+
+Used module:         $paramod\code_compare\CODE_VALUE=8'10011100
+
+Used module:         \press_qualify
+
+Used module:         $paramod\reset_sync\RST_SYNC=s32'00000000000000000000000000000001
+
+Removing unused module `\reset_sync'.
+
+Removing unused module `\entry_fsm'.
+
+Removing unused module `\code_compare'.
+
+Removing unused module `\button_debounce'.
+
+Removed 4 unused modules.
+
+
+
+11. Executing PROC pass (convert processes to netlists).
+
+
+
+11.1. Executing PROC_CLEAN pass (remove empty switches from decision trees).
+
+Cleaned up 0 empty switches.
+
+
+
+11.2. Executing PROC_RMDEAD pass (remove dead branches from decision trees).
+
+Marked 1 switch rules as full_case in process $proc$src/shared_time.v:9$45 in module shared_time.
+
+Marked 1 switch rules as full_case in process $proc$src/reset_sync.v:12$74 in module $paramod\reset_sync\RST_SYNC=s32'00000000000000000000000000000001.
+
+Marked 1 switch rules as full_case in process $proc$src/failure_counter.v:8$31 in module failure_counter.
+
+Marked 2 switch rules as full_case in process $proc$src/combo_lock.v:143$11 in module combo_lock.
+
+Marked 1 switch rules as full_case in process $proc$src/entry_fsm.v:216$69 in module $paramod$bbdccc09e789bd30fc4b52be389e0426e77b78bc\entry_fsm.
+
+Marked 9 switch rules as full_case in process $proc$src/entry_fsm.v:76$56 in module $paramod$bbdccc09e789bd30fc4b52be389e0426e77b78bc\entry_fsm.
+
+Marked 3 switch rules as full_case in process $proc$src/button_debounce.v:30$51 in module $paramod\button_debounce\DEBOUNCE_CYCLES=s32'00000000000000000000000000010000.
+
+Removed a total of 0 dead cases.
+
+
+
+11.3. Executing PROC_PRUNE pass (remove redundant assignments in processes).
+
+Removed 10 redundant assignments.
+
+Promoted 3 assignments to connections.
+
+
+
+11.4. Executing PROC_INIT pass (extract init attributes).
+
+
+
+11.5. Executing PROC_ARST pass (detect async resets in processes).
+
+Found async reset \rst_n in `\shared_time.$proc$src/shared_time.v:9$45'.
+
+Found async reset \rst_n in `$paramod\reset_sync\RST_SYNC=s32'00000000000000000000000000000001.$proc$src/reset_sync.v:12$74'.
+
+Found async reset \rst_n in `\failure_counter.$proc$src/failure_counter.v:8$31'.
+
+Found async reset \internal_rst_n in `\combo_lock.$proc$src/combo_lock.v:143$11'.
+
+Found async reset \rst_n in `$paramod$bbdccc09e789bd30fc4b52be389e0426e77b78bc\entry_fsm.$proc$src/entry_fsm.v:216$69'.
+
+Found async reset \rst_n in `$paramod\button_debounce\DEBOUNCE_CYCLES=s32'00000000000000000000000000010000.$proc$src/button_debounce.v:30$51'.
+
+
+
+11.6. Executing PROC_ROM pass (convert switches to ROMs).
+
+Converted 0 switches.
+
+<suppressed ~14 debug messages>
+
+
+
+11.7. Executing PROC_MUX pass (convert decision trees to multiplexers).
+
+Creating decoders for process `\shared_time.$proc$src/shared_time.v:9$45'.
+
+     1/1: $0\tmr[11:0]
+
+Creating decoders for process `$paramod\reset_sync\RST_SYNC=s32'00000000000000000000000000000001.$proc$src/reset_sync.v:12$74'.
+
+     1/2: $0\rs2[0:0]
+
+     2/2: $0\rs1[0:0]
+
+Creating decoders for process `\failure_counter.$proc$src/failure_counter.v:8$31'.
+
+     1/1: $0\fail[1:0]
+
+Creating decoders for process `\combo_lock.$proc$src/combo_lock.v:143$11'.
+
+     1/3: $0\entered_code[5:0] [5:4]
+
+     2/3: $0\entered_code[5:0] [3:2]
+
+     3/3: $0\entered_code[5:0] [1:0]
+
+Creating decoders for process `$paramod$bbdccc09e789bd30fc4b52be389e0426e77b78bc\entry_fsm.$proc$src/entry_fsm.v:216$69'.
+
+     1/3: $0\locked_out[0:0]
+
+     2/3: $0\unlock[0:0]
+
+     3/3: $0\st[2:0]
+
+Creating decoders for process `$paramod$bbdccc09e789bd30fc4b52be389e0426e77b78bc\entry_fsm.$proc$src/entry_fsm.v:76$56'.
+
+     1/24: $6\fail_n[1:0]
+
+     2/24: $9\st_n[2:0]
+
+     3/24: $9\tmr_n[11:0]
+
+     4/24: $5\fail_n[1:0]
+
+     5/24: $8\tmr_n[11:0]
+
+     6/24: $8\st_n[2:0]
+
+     7/24: $7\st_n[2:0]
+
+     8/24: $7\tmr_n[11:0]
+
+     9/24: $6\st_n[2:0]
+
+    10/24: $6\tmr_n[11:0]
+
+    11/24: $5\st_n[2:0]
+
+    12/24: $5\tmr_n[11:0]
+
+    13/24: $4\fail_n[1:0]
+
+    14/24: $4\tmr_n[11:0]
+
+    15/24: $4\st_n[2:0]
+
+    16/24: $3\st_n[2:0]
+
+    17/24: $3\tmr_n[11:0]
+
+    18/24: $3\fail_n[1:0]
+
+    19/24: $2\st_n[2:0]
+
+    20/24: $2\tmr_n[11:0]
+
+    21/24: $2\fail_n[1:0]
+
+    22/24: $1\st_n[2:0]
+
+    23/24: $1\tmr_n[11:0]
+
+    24/24: $1\fail_n[1:0]
+
+Creating decoders for process `$paramod\button_debounce\DEBOUNCE_CYCLES=s32'00000000000000000000000000010000.$proc$src/button_debounce.v:30$51'.
+
+     1/4: $0\cnt[3:0]
+
+     2/4: $0\s2[0:0]
+
+     3/4: $0\s1[0:0]
+
+     4/4: $0\lvl[0:0]
+
+
+
+11.8. Executing PROC_DLATCH pass (convert process syncs to latches).
+
+No latch inferred for signal `$paramod$bbdccc09e789bd30fc4b52be389e0426e77b78bc\entry_fsm.\fail_n' from process `$paramod$bbdccc09e789bd30fc4b52be389e0426e77b78bc\entry_fsm.$proc$src/entry_fsm.v:76$56'.
+
+No latch inferred for signal `$paramod$bbdccc09e789bd30fc4b52be389e0426e77b78bc\entry_fsm.\tmr_n' from process `$paramod$bbdccc09e789bd30fc4b52be389e0426e77b78bc\entry_fsm.$proc$src/entry_fsm.v:76$56'.
+
+No latch inferred for signal `$paramod$bbdccc09e789bd30fc4b52be389e0426e77b78bc\entry_fsm.\st_n' from process `$paramod$bbdccc09e789bd30fc4b52be389e0426e77b78bc\entry_fsm.$proc$src/entry_fsm.v:76$56'.
+
+
+
+11.9. Executing PROC_DFF pass (convert process syncs to FFs).
+
+Creating register for signal `\shared_time.\tmr' using process `\shared_time.$proc$src/shared_time.v:9$45'.
+
+  created $adff cell `$procdff$344' with positive edge clock and negative level reset.
+
+Creating register for signal `$paramod\reset_sync\RST_SYNC=s32'00000000000000000000000000000001.\rs1' using process `$paramod\reset_sync\RST_SYNC=s32'00000000000000000000000000000001.$proc$src/reset_sync.v:12$74'.
+
+  created $adff cell `$procdff$345' with positive edge clock and negative level reset.
+
+Creating register for signal `$paramod\reset_sync\RST_SYNC=s32'00000000000000000000000000000001.\rs2' using process `$paramod\reset_sync\RST_SYNC=s32'00000000000000000000000000000001.$proc$src/reset_sync.v:12$74'.
+
+  created $adff cell `$procdff$346' with positive edge clock and negative level reset.
+
+Creating register for signal `\failure_counter.\fail' using process `\failure_counter.$proc$src/failure_counter.v:8$31'.
+
+  created $adff cell `$procdff$347' with positive edge clock and negative level reset.
+
+Creating register for signal `\combo_lock.\entered_code' using process `\combo_lock.$proc$src/combo_lock.v:143$11'.
+
+  created $adff cell `$procdff$348' with positive edge clock and negative level reset.
+
+Creating register for signal `$paramod$bbdccc09e789bd30fc4b52be389e0426e77b78bc\entry_fsm.\unlock' using process `$paramod$bbdccc09e789bd30fc4b52be389e0426e77b78bc\entry_fsm.$proc$src/entry_fsm.v:216$69'.
+
+  created $adff cell `$procdff$349' with positive edge clock and negative level reset.
+
+Creating register for signal `$paramod$bbdccc09e789bd30fc4b52be389e0426e77b78bc\entry_fsm.\locked_out' using process `$paramod$bbdccc09e789bd30fc4b52be389e0426e77b78bc\entry_fsm.$proc$src/entry_fsm.v:216$69'.
+
+  created $adff cell `$procdff$350' with positive edge clock and negative level reset.
+
+Creating register for signal `$paramod$bbdccc09e789bd30fc4b52be389e0426e77b78bc\entry_fsm.\st' using process `$paramod$bbdccc09e789bd30fc4b52be389e0426e77b78bc\entry_fsm.$proc$src/entry_fsm.v:216$69'.
+
+  created $adff cell `$procdff$351' with positive edge clock and negative level reset.
+
+Creating register for signal `$paramod\button_debounce\DEBOUNCE_CYCLES=s32'00000000000000000000000000010000.\s1' using process `$paramod\button_debounce\DEBOUNCE_CYCLES=s32'00000000000000000000000000010000.$proc$src/button_debounce.v:30$51'.
+
+  created $adff cell `$procdff$352' with positive edge clock and negative level reset.
+
+Creating register for signal `$paramod\button_debounce\DEBOUNCE_CYCLES=s32'00000000000000000000000000010000.\s2' using process `$paramod\button_debounce\DEBOUNCE_CYCLES=s32'00000000000000000000000000010000.$proc$src/button_debounce.v:30$51'.
+
+  created $adff cell `$procdff$353' with positive edge clock and negative level reset.
+
+Creating register for signal `$paramod\button_debounce\DEBOUNCE_CYCLES=s32'00000000000000000000000000010000.\lvl' using process `$paramod\button_debounce\DEBOUNCE_CYCLES=s32'00000000000000000000000000010000.$proc$src/button_debounce.v:30$51'.
+
+  created $adff cell `$procdff$354' with positive edge clock and negative level reset.
+
+Creating register for signal `$paramod\button_debounce\DEBOUNCE_CYCLES=s32'00000000000000000000000000010000.\cnt' using process `$paramod\button_debounce\DEBOUNCE_CYCLES=s32'00000000000000000000000000010000.$proc$src/button_debounce.v:30$51'.
+
+  created $adff cell `$procdff$355' with positive edge clock and negative level reset.
+
+
+
+11.10. Executing PROC_MEMWR pass (convert process memory writes to cells).
+
+
+
+11.11. Executing PROC_CLEAN pass (remove empty switches from decision trees).
+
+Removing empty process `shared_time.$proc$src/shared_time.v:9$45'.
+
+Removing empty process `$paramod\reset_sync\RST_SYNC=s32'00000000000000000000000000000001.$proc$src/reset_sync.v:12$74'.
+
+Removing empty process `failure_counter.$proc$src/failure_counter.v:8$31'.
+
+Found and cleaned up 3 empty switches in `\combo_lock.$proc$src/combo_lock.v:143$11'.
+
+Removing empty process `combo_lock.$proc$src/combo_lock.v:143$11'.
+
+Removing empty process `$paramod$bbdccc09e789bd30fc4b52be389e0426e77b78bc\entry_fsm.$proc$src/entry_fsm.v:216$69'.
+
+Found and cleaned up 9 empty switches in `$paramod$bbdccc09e789bd30fc4b52be389e0426e77b78bc\entry_fsm.$proc$src/entry_fsm.v:76$56'.
+
+Removing empty process `$paramod$bbdccc09e789bd30fc4b52be389e0426e77b78bc\entry_fsm.$proc$src/entry_fsm.v:76$56'.
+
+Found and cleaned up 2 empty switches in `$paramod\button_debounce\DEBOUNCE_CYCLES=s32'00000000000000000000000000010000.$proc$src/button_debounce.v:30$51'.
+
+Removing empty process `$paramod\button_debounce\DEBOUNCE_CYCLES=s32'00000000000000000000000000010000.$proc$src/button_debounce.v:30$51'.
+
+Cleaned up 14 empty switches.
+
+
+
+11.12. Executing OPT_EXPR pass (perform const folding).
+
+Optimizing module shared_time.
+
+Optimizing module $paramod\reset_sync\RST_SYNC=s32'00000000000000000000000000000001.
+
+Optimizing module tt_um_CL4_LNMIIT.
+
+<suppressed ~1 debug messages>
+
+Optimizing module press_qualify.
+
+Optimizing module failure_counter.
+
+Optimizing module $paramod\code_compare\CODE_VALUE=8'10011100.
+
+Optimizing module combo_lock.
+
+<suppressed ~3 debug messages>
+
+Optimizing module $paramod$bbdccc09e789bd30fc4b52be389e0426e77b78bc\entry_fsm.
+
+<suppressed ~21 debug messages>
+
+Optimizing module $paramod\button_debounce\DEBOUNCE_CYCLES=s32'00000000000000000000000000010000.
+
+
+
+12. Executing OPT pass (performing simple optimizations).
+
+
+
+12.1. Executing OPT_EXPR pass (perform const folding).
+
+Optimizing module shared_time.
+
+Optimizing module $paramod\reset_sync\RST_SYNC=s32'00000000000000000000000000000001.
+
+Optimizing module tt_um_CL4_LNMIIT.
+
+Optimizing module press_qualify.
+
+Optimizing module failure_counter.
+
+Optimizing module $paramod\code_compare\CODE_VALUE=8'10011100.
+
+Optimizing module combo_lock.
+
+Optimizing module $paramod$bbdccc09e789bd30fc4b52be389e0426e77b78bc\entry_fsm.
+
+Optimizing module $paramod\button_debounce\DEBOUNCE_CYCLES=s32'00000000000000000000000000010000.
+
+
+
+12.2. Executing OPT_MERGE pass (detect identical cells).
+
+Finding identical cells in module `\shared_time'.
+
+Finding identical cells in module `$paramod\reset_sync\RST_SYNC=s32'00000000000000000000000000000001'.
+
+Finding identical cells in module `\tt_um_CL4_LNMIIT'.
+
+Finding identical cells in module `\press_qualify'.
+
+Finding identical cells in module `\failure_counter'.
+
+Finding identical cells in module `$paramod\code_compare\CODE_VALUE=8'10011100'.
+
+Finding identical cells in module `\combo_lock'.
+
+<suppressed ~24 debug messages>
+
+Finding identical cells in module `$paramod$bbdccc09e789bd30fc4b52be389e0426e77b78bc\entry_fsm'.
+
+<suppressed ~279 debug messages>
+
+Finding identical cells in module `$paramod\button_debounce\DEBOUNCE_CYCLES=s32'00000000000000000000000000010000'.
+
+<suppressed ~3 debug messages>
+
+Removed a total of 102 cells.
+
+
+
+12.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+
+Running muxtree optimizer on module \shared_time..
+
+  Creating internal representation of mux trees.
+
+  No muxes found in this module.
+
+Running muxtree optimizer on module $paramod\reset_sync\RST_SYNC=s32'00000000000000000000000000000001..
+
+  Creating internal representation of mux trees.
+
+  No muxes found in this module.
+
+Running muxtree optimizer on module \tt_um_CL4_LNMIIT..
+
+  Creating internal representation of mux trees.
+
+  No muxes found in this module.
+
+Running muxtree optimizer on module \press_qualify..
+
+  Creating internal representation of mux trees.
+
+  No muxes found in this module.
+
+Running muxtree optimizer on module \failure_counter..
+
+  Creating internal representation of mux trees.
+
+  No muxes found in this module.
+
+Running muxtree optimizer on module $paramod\code_compare\CODE_VALUE=8'10011100..
+
+  Creating internal representation of mux trees.
+
+  No muxes found in this module.
+
+Running muxtree optimizer on module \combo_lock..
+
+  Creating internal representation of mux trees.
+
+  Evaluating internal representation of mux trees.
+
+  Analyzing evaluation results.
+
+Running muxtree optimizer on module $paramod$bbdccc09e789bd30fc4b52be389e0426e77b78bc\entry_fsm..
+
+  Creating internal representation of mux trees.
+
+  Evaluating internal representation of mux trees.
+
+  Analyzing evaluation results.
+
+    dead port 2/2 on $mux $procmux$246.
+
+    dead port 2/2 on $mux $procmux$218.
+
+    dead port 2/2 on $mux $procmux$216.
+
+    dead port 2/2 on $mux $procmux$205.
+
+    dead port 2/2 on $mux $procmux$286.
+
+    dead port 2/2 on $mux $procmux$235.
+
+    dead port 1/2 on $mux $procmux$203.
+
+    dead port 2/2 on $mux $procmux$193.
+
+    dead port 2/2 on $mux $procmux$313.
+
+    dead port 2/2 on $mux $procmux$284.
+
+    dead port 1/2 on $mux $procmux$191.
+
+    dead port 2/2 on $mux $procmux$181.
+
+    dead port 2/2 on $mux $procmux$274.
+
+    dead port 2/2 on $mux $procmux$295.
+
+    dead port 1/2 on $mux $procmux$179.
+
+    dead port 2/2 on $mux $procmux$176.
+
+    dead port 2/2 on $mux $procmux$166.
+
+    dead port 2/2 on $mux $procmux$233.
+
+    dead port 2/2 on $mux $procmux$272.
+
+    dead port 1/2 on $mux $procmux$164.
+
+    dead port 2/2 on $mux $procmux$161.
+
+    dead port 2/2 on $mux $procmux$151.
+
+    dead port 2/2 on $mux $procmux$262.
+
+    dead port 2/2 on $mux $procmux$143.
+
+    dead port 2/2 on $mux $procmux$231.
+
+    dead port 2/2 on $mux $procmux$135.
+
+    dead port 2/2 on $mux $procmux$128.
+
+    dead port 2/2 on $mux $procmux$121.
+
+    dead port 2/2 on $mux $procmux$304.
+
+    dead port 2/2 on $mux $procmux$114.
+
+    dead port 2/2 on $mux $procmux$108.
+
+    dead port 2/2 on $mux $procmux$260.
+
+    dead port 2/2 on $mux $procmux$102.
+
+    dead port 2/2 on $mux $procmux$250.
+
+    dead port 2/2 on $mux $procmux$220.
+
+    dead port 2/2 on $mux $procmux$248.
+
+Running muxtree optimizer on module $paramod\button_debounce\DEBOUNCE_CYCLES=s32'00000000000000000000000000010000..
+
+  Creating internal representation of mux trees.
+
+  Evaluating internal representation of mux trees.
+
+  Analyzing evaluation results.
+
+Removed 36 multiplexer ports.
+
+<suppressed ~9 debug messages>
+
+
+
+12.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+
+  Optimizing cells in module \shared_time.
+
+  Optimizing cells in module $paramod\reset_sync\RST_SYNC=s32'00000000000000000000000000000001.
+
+  Optimizing cells in module \tt_um_CL4_LNMIIT.
+
+  Optimizing cells in module \press_qualify.
+
+  Optimizing cells in module \failure_counter.
+
+  Optimizing cells in module $paramod\code_compare\CODE_VALUE=8'10011100.
+
+  Optimizing cells in module \combo_lock.
+
+    New ctrl vector for $pmux cell $procmux$83: { $procmux$97_CMP $procmux$96_CMP $auto$opt_reduce.cc:134:opt_pmux$357 }
+
+    New ctrl vector for $pmux cell $procmux$91: { $procmux$97_CMP $procmux$95_CMP $auto$opt_reduce.cc:134:opt_pmux$359 }
+
+    New ctrl vector for $pmux cell $procmux$77: { $procmux$97_CMP $auto$opt_reduce.cc:134:opt_pmux$361 }
+
+  Optimizing cells in module \combo_lock.
+
+  Optimizing cells in module $paramod$bbdccc09e789bd30fc4b52be389e0426e77b78bc\entry_fsm.
+
+  Optimizing cells in module $paramod\button_debounce\DEBOUNCE_CYCLES=s32'00000000000000000000000000010000.
+
+Performed a total of 3 changes.
+
+
+
+12.5. Executing OPT_MERGE pass (detect identical cells).
+
+Finding identical cells in module `\shared_time'.
+
+Finding identical cells in module `$paramod\reset_sync\RST_SYNC=s32'00000000000000000000000000000001'.
+
+Finding identical cells in module `\tt_um_CL4_LNMIIT'.
+
+Finding identical cells in module `\press_qualify'.
+
+Finding identical cells in module `\failure_counter'.
+
+Finding identical cells in module `$paramod\code_compare\CODE_VALUE=8'10011100'.
+
+Finding identical cells in module `\combo_lock'.
+
+Finding identical cells in module `$paramod$bbdccc09e789bd30fc4b52be389e0426e77b78bc\entry_fsm'.
+
+<suppressed ~12 debug messages>
+
+Finding identical cells in module `$paramod\button_debounce\DEBOUNCE_CYCLES=s32'00000000000000000000000000010000'.
+
+Removed a total of 4 cells.
+
+
+
+12.6. Executing OPT_DFF pass (perform DFF optimizations).
+
+Adding EN signal on $procdff$348 ($adff) from module combo_lock (D = $procmux$83_Y, Q = \entered_code [3:2]).
+
+Adding EN signal on $procdff$348 ($adff) from module combo_lock (D = $procmux$91_Y, Q = \entered_code [1:0]).
+
+Adding EN signal on $procdff$348 ($adff) from module combo_lock (D = $procmux$77_Y, Q = \entered_code [5:4]).
+
+Adding EN signal on $procdff$354 ($adff) from module $paramod\button_debounce\DEBOUNCE_CYCLES=s32'00000000000000000000000000010000 (D = \s2, Q = \lvl).
+
+
+
+12.7. Executing OPT_CLEAN pass (remove unused cells and wires).
+
+Finding unused cells or wires in module \shared_time..
+
+Finding unused cells or wires in module $paramod\reset_sync\RST_SYNC=s32'00000000000000000000000000000001..
+
+Finding unused cells or wires in module \tt_um_CL4_LNMIIT..
+
+Finding unused cells or wires in module \press_qualify..
+
+Finding unused cells or wires in module \failure_counter..
+
+Finding unused cells or wires in module $paramod\code_compare\CODE_VALUE=8'10011100..
+
+Finding unused cells or wires in module \combo_lock..
+
+Finding unused cells or wires in module $paramod$bbdccc09e789bd30fc4b52be389e0426e77b78bc\entry_fsm..
+
+Finding unused cells or wires in module $paramod\button_debounce\DEBOUNCE_CYCLES=s32'00000000000000000000000000010000..
+
+Removed 8 unused cells and 197 unused wires.
+
+<suppressed ~17 debug messages>
+
+
+
+12.8. Executing OPT_EXPR pass (perform const folding).
+
+Optimizing module $paramod$bbdccc09e789bd30fc4b52be389e0426e77b78bc\entry_fsm.
+
+Optimizing module $paramod\button_debounce\DEBOUNCE_CYCLES=s32'00000000000000000000000000010000.
+
+Optimizing module $paramod\code_compare\CODE_VALUE=8'10011100.
+
+Optimizing module $paramod\reset_sync\RST_SYNC=s32'00000000000000000000000000000001.
+
+Optimizing module combo_lock.
+
+<suppressed ~4 debug messages>
+
+Optimizing module failure_counter.
+
+Optimizing module press_qualify.
+
+Optimizing module shared_time.
+
+Optimizing module tt_um_CL4_LNMIIT.
+
+
+
+12.9. Rerunning OPT passes. (Maybe there is more to do..)
+
+
+
+12.10. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+
+Running muxtree optimizer on module $paramod$bbdccc09e789bd30fc4b52be389e0426e77b78bc\entry_fsm..
+
+  Creating internal representation of mux trees.
+
+  Evaluating internal representation of mux trees.
+
+  Analyzing evaluation results.
+
+Running muxtree optimizer on module $paramod\button_debounce\DEBOUNCE_CYCLES=s32'00000000000000000000000000010000..
+
+  Creating internal representation of mux trees.
+
+  Evaluating internal representation of mux trees.
+
+  Analyzing evaluation results.
+
+Running muxtree optimizer on module $paramod\code_compare\CODE_VALUE=8'10011100..
+
+  Creating internal representation of mux trees.
+
+  No muxes found in this module.
+
+Running muxtree optimizer on module $paramod\reset_sync\RST_SYNC=s32'00000000000000000000000000000001..
+
+  Creating internal representation of mux trees.
+
+  No muxes found in this module.
+
+Running muxtree optimizer on module \combo_lock..
+
+  Creating internal representation of mux trees.
+
+  Evaluating internal representation of mux trees.
+
+  Analyzing evaluation results.
+
+Running muxtree optimizer on module \failure_counter..
+
+  Creating internal representation of mux trees.
+
+  No muxes found in this module.
+
+Running muxtree optimizer on module \press_qualify..
+
+  Creating internal representation of mux trees.
+
+  No muxes found in this module.
+
+Running muxtree optimizer on module \shared_time..
+
+  Creating internal representation of mux trees.
+
+  No muxes found in this module.
+
+Running muxtree optimizer on module \tt_um_CL4_LNMIIT..
+
+  Creating internal representation of mux trees.
+
+  No muxes found in this module.
+
+Removed 0 multiplexer ports.
+
+<suppressed ~10 debug messages>
+
+
+
+12.11. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+
+  Optimizing cells in module $paramod$bbdccc09e789bd30fc4b52be389e0426e77b78bc\entry_fsm.
+
+    New ctrl vector for $pmux cell $procmux$316: { $procmux$167_CTRL $procmux$122_CMP $auto$opt_reduce.cc:134:opt_pmux$385 }
+
+    New ctrl vector for $pmux cell $procmux$322: { $procmux$167_CTRL $procmux$122_CMP $auto$opt_reduce.cc:134:opt_pmux$387 }
+
+  Optimizing cells in module $paramod$bbdccc09e789bd30fc4b52be389e0426e77b78bc\entry_fsm.
+
+  Optimizing cells in module $paramod\button_debounce\DEBOUNCE_CYCLES=s32'00000000000000000000000000010000.
+
+  Optimizing cells in module $paramod\code_compare\CODE_VALUE=8'10011100.
+
+  Optimizing cells in module $paramod\reset_sync\RST_SYNC=s32'00000000000000000000000000000001.
+
+  Optimizing cells in module \combo_lock.
+
+  Optimizing cells in module \failure_counter.
+
+  Optimizing cells in module \press_qualify.
+
+  Optimizing cells in module \shared_time.
+
+  Optimizing cells in module \tt_um_CL4_LNMIIT.
+
+Performed a total of 2 changes.
+
+
+
+12.12. Executing OPT_MERGE pass (detect identical cells).
+
+Finding identical cells in module `$paramod$bbdccc09e789bd30fc4b52be389e0426e77b78bc\entry_fsm'.
+
+<suppressed ~3 debug messages>
+
+Finding identical cells in module `$paramod\button_debounce\DEBOUNCE_CYCLES=s32'00000000000000000000000000010000'.
+
+Finding identical cells in module `$paramod\code_compare\CODE_VALUE=8'10011100'.
+
+Finding identical cells in module `$paramod\reset_sync\RST_SYNC=s32'00000000000000000000000000000001'.
+
+Finding identical cells in module `\combo_lock'.
+
+<suppressed ~3 debug messages>
+
+Finding identical cells in module `\failure_counter'.
+
+Finding identical cells in module `\press_qualify'.
+
+Finding identical cells in module `\shared_time'.
+
+Finding identical cells in module `\tt_um_CL4_LNMIIT'.
+
+Removed a total of 2 cells.
+
+
+
+12.13. Executing OPT_DFF pass (perform DFF optimizations).
+
+
+
+12.14. Executing OPT_CLEAN pass (remove unused cells and wires).
+
+Finding unused cells or wires in module $paramod$bbdccc09e789bd30fc4b52be389e0426e77b78bc\entry_fsm..
+
+Finding unused cells or wires in module $paramod\button_debounce\DEBOUNCE_CYCLES=s32'00000000000000000000000000010000..
+
+Finding unused cells or wires in module $paramod\code_compare\CODE_VALUE=8'10011100..
+
+Finding unused cells or wires in module $paramod\reset_sync\RST_SYNC=s32'00000000000000000000000000000001..
+
+Finding unused cells or wires in module \combo_lock..
+
+Finding unused cells or wires in module \failure_counter..
+
+Finding unused cells or wires in module \press_qualify..
+
+Finding unused cells or wires in module \shared_time..
+
+Finding unused cells or wires in module \tt_um_CL4_LNMIIT..
+
+Removed 1 unused cells and 3 unused wires.
+
+<suppressed ~3 debug messages>
+
+
+
+12.15. Executing OPT_EXPR pass (perform const folding).
+
+Optimizing module $paramod$bbdccc09e789bd30fc4b52be389e0426e77b78bc\entry_fsm.
+
+Optimizing module $paramod\button_debounce\DEBOUNCE_CYCLES=s32'00000000000000000000000000010000.
+
+Optimizing module $paramod\code_compare\CODE_VALUE=8'10011100.
+
+Optimizing module $paramod\reset_sync\RST_SYNC=s32'00000000000000000000000000000001.
+
+Optimizing module combo_lock.
+
+Optimizing module failure_counter.
+
+Optimizing module press_qualify.
+
+Optimizing module shared_time.
+
+Optimizing module tt_um_CL4_LNMIIT.
+
+
+
+12.16. Rerunning OPT passes. (Maybe there is more to do..)
+
+
+
+12.17. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+
+Running muxtree optimizer on module $paramod$bbdccc09e789bd30fc4b52be389e0426e77b78bc\entry_fsm..
+
+  Creating internal representation of mux trees.
+
+  Evaluating internal representation of mux trees.
+
+  Analyzing evaluation results.
+
+Running muxtree optimizer on module $paramod\button_debounce\DEBOUNCE_CYCLES=s32'00000000000000000000000000010000..
+
+  Creating internal representation of mux trees.
+
+  Evaluating internal representation of mux trees.
+
+  Analyzing evaluation results.
+
+Running muxtree optimizer on module $paramod\code_compare\CODE_VALUE=8'10011100..
+
+  Creating internal representation of mux trees.
+
+  No muxes found in this module.
+
+Running muxtree optimizer on module $paramod\reset_sync\RST_SYNC=s32'00000000000000000000000000000001..
+
+  Creating internal representation of mux trees.
+
+  No muxes found in this module.
+
+Running muxtree optimizer on module \combo_lock..
+
+  Creating internal representation of mux trees.
+
+  Evaluating internal representation of mux trees.
+
+  Analyzing evaluation results.
+
+Running muxtree optimizer on module \failure_counter..
+
+  Creating internal representation of mux trees.
+
+  No muxes found in this module.
+
+Running muxtree optimizer on module \press_qualify..
+
+  Creating internal representation of mux trees.
+
+  No muxes found in this module.
+
+Running muxtree optimizer on module \shared_time..
+
+  Creating internal representation of mux trees.
+
+  No muxes found in this module.
+
+Running muxtree optimizer on module \tt_um_CL4_LNMIIT..
+
+  Creating internal representation of mux trees.
+
+  No muxes found in this module.
+
+Removed 0 multiplexer ports.
+
+<suppressed ~11 debug messages>
+
+
+
+12.18. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+
+  Optimizing cells in module $paramod$bbdccc09e789bd30fc4b52be389e0426e77b78bc\entry_fsm.
+
+  Optimizing cells in module $paramod\button_debounce\DEBOUNCE_CYCLES=s32'00000000000000000000000000010000.
+
+  Optimizing cells in module $paramod\code_compare\CODE_VALUE=8'10011100.
+
+  Optimizing cells in module $paramod\reset_sync\RST_SYNC=s32'00000000000000000000000000000001.
+
+  Optimizing cells in module \combo_lock.
+
+  Optimizing cells in module \failure_counter.
+
+  Optimizing cells in module \press_qualify.
+
+  Optimizing cells in module \shared_time.
+
+  Optimizing cells in module \tt_um_CL4_LNMIIT.
+
+Performed a total of 0 changes.
+
+
+
+12.19. Executing OPT_MERGE pass (detect identical cells).
+
+Finding identical cells in module `$paramod$bbdccc09e789bd30fc4b52be389e0426e77b78bc\entry_fsm'.
+
+Finding identical cells in module `$paramod\button_debounce\DEBOUNCE_CYCLES=s32'00000000000000000000000000010000'.
+
+Finding identical cells in module `$paramod\code_compare\CODE_VALUE=8'10011100'.
+
+Finding identical cells in module `$paramod\reset_sync\RST_SYNC=s32'00000000000000000000000000000001'.
+
+Finding identical cells in module `\combo_lock'.
+
+Finding identical cells in module `\failure_counter'.
+
+Finding identical cells in module `\press_qualify'.
+
+Finding identical cells in module `\shared_time'.
+
+Finding identical cells in module `\tt_um_CL4_LNMIIT'.
+
+Removed a total of 0 cells.
+
+
+
+12.20. Executing OPT_DFF pass (perform DFF optimizations).
+
+
+
+12.21. Executing OPT_CLEAN pass (remove unused cells and wires).
+
+Finding unused cells or wires in module $paramod$bbdccc09e789bd30fc4b52be389e0426e77b78bc\entry_fsm..
+
+Finding unused cells or wires in module $paramod\button_debounce\DEBOUNCE_CYCLES=s32'00000000000000000000000000010000..
+
+Finding unused cells or wires in module $paramod\code_compare\CODE_VALUE=8'10011100..
+
+Finding unused cells or wires in module $paramod\reset_sync\RST_SYNC=s32'00000000000000000000000000000001..
+
+Finding unused cells or wires in module \combo_lock..
+
+Finding unused cells or wires in module \failure_counter..
+
+Finding unused cells or wires in module \press_qualify..
+
+Finding unused cells or wires in module \shared_time..
+
+Finding unused cells or wires in module \tt_um_CL4_LNMIIT..
+
+
+
+12.22. Executing OPT_EXPR pass (perform const folding).
+
+Optimizing module $paramod$bbdccc09e789bd30fc4b52be389e0426e77b78bc\entry_fsm.
+
+Optimizing module $paramod\button_debounce\DEBOUNCE_CYCLES=s32'00000000000000000000000000010000.
+
+Optimizing module $paramod\code_compare\CODE_VALUE=8'10011100.
+
+Optimizing module $paramod\reset_sync\RST_SYNC=s32'00000000000000000000000000000001.
+
+Optimizing module combo_lock.
+
+Optimizing module failure_counter.
+
+Optimizing module press_qualify.
+
+Optimizing module shared_time.
+
+Optimizing module tt_um_CL4_LNMIIT.
+
+
+
+12.23. Finished OPT passes. (There is nothing left to do.)
+
+
+
+13. Executing CHECK pass (checking for obvious problems).
+
+Checking module $paramod$bbdccc09e789bd30fc4b52be389e0426e77b78bc\entry_fsm...
+
+Checking module $paramod\button_debounce\DEBOUNCE_CYCLES=s32'00000000000000000000000000010000...
+
+Checking module $paramod\code_compare\CODE_VALUE=8'10011100...
+
+Checking module $paramod\reset_sync\RST_SYNC=s32'00000000000000000000000000000001...
+
+Checking module combo_lock...
+
+Checking module failure_counter...
+
+Checking module press_qualify...
+
+Checking module shared_time...
+
+Checking module tt_um_CL4_LNMIIT...
+
+Found and reported 0 problems.
+
+
+
+14. Printing statistics.
+
+
+
+=== $paramod$bbdccc09e789bd30fc4b52be389e0426e77b78bc\entry_fsm ===
+
+
+
+   Number of wires:                 44
+
+   Number of wire bits:            172
+
+   Number of public wires:          12
+
+   Number of public wire bits:      40
+
+   Number of memories:               0
+
+   Number of memory bits:            0
+
+   Number of processes:              0
+
+   Number of cells:                 40
+
+     $add                            2
+
+     $adff                           3
+
+     $eq                             8
+
+     $ge                             1
+
+     $logic_not                      2
+
+     $mux                           17
+
+     $pmux                           3
+
+     $reduce_bool                    1
+
+     $reduce_or                      2
+
+     $sub                            1
+
+
+
+=== $paramod\button_debounce\DEBOUNCE_CYCLES=s32'00000000000000000000000000010000 ===
+
+
+
+   Number of wires:                 17
+
+   Number of wire bits:             29
+
+   Number of public wires:           8
+
+   Number of public wire bits:      11
+
+   Number of memories:               0
+
+   Number of memory bits:            0
+
+   Number of processes:              0
+
+   Number of cells:                 14
+
+     $add                            1
+
+     $adff                           3
+
+     $adffe                          1
+
+     $and                            2
+
+     $eq                             2
+
+     $mux                            2
+
+     $not                            2
+
+     $reduce_and                     1
+
+
+
+=== $paramod\code_compare\CODE_VALUE=8'10011100 ===
+
+
+
+   Number of wires:                  4
+
+   Number of wire bits:             17
+
+   Number of public wires:           4
+
+   Number of public wire bits:      17
+
+   Number of memories:               0
+
+   Number of memory bits:            0
+
+   Number of processes:              0
+
+   Number of cells:                  1
+
+     $eq                             1
+
+
+
+=== $paramod\reset_sync\RST_SYNC=s32'00000000000000000000000000000001 ===
+
+
+
+   Number of wires:                  5
+
+   Number of wire bits:              5
+
+   Number of public wires:           5
+
+   Number of public wire bits:       5
+
+   Number of memories:               0
+
+   Number of memory bits:            0
+
+   Number of processes:              0
+
+   Number of cells:                  2
+
+     $adff                           2
+
+
+
+=== combo_lock ===
+
+
+
+   Number of wires:                 34
+
+   Number of wire bits:             86
+
+   Number of public wires:          18
+
+   Number of public wire bits:      59
+
+   Number of memories:               0
+
+   Number of memory bits:            0
+
+   Number of processes:              0
+
+   Number of cells:                 31
+
+     $adffe                          3
+
+     $eq                             3
+
+     $logic_not                      1
+
+     $mux                            2
+
+     $ne                             2
+
+     $not                            2
+
+     $paramod$bbdccc09e789bd30fc4b52be389e0426e77b78bc\entry_fsm      1
+
+     $paramod\button_debounce\DEBOUNCE_CYCLES=s32'00000000000000000000000000010000      4
+
+     $paramod\code_compare\CODE_VALUE=8'10011100      1
+
+     $paramod\reset_sync\RST_SYNC=s32'00000000000000000000000000000001      1
+
+     $pmux                           3
+
+     $reduce_and                     2
+
+     $reduce_or                      3
+
+     failure_counter                 1
+
+     press_qualify                   1
+
+     shared_time                     1
+
+
+
+=== failure_counter ===
+
+
+
+   Number of wires:                  4
+
+   Number of wire bits:              6
+
+   Number of public wires:           4
+
+   Number of public wire bits:       6
+
+   Number of memories:               0
+
+   Number of memory bits:            0
+
+   Number of processes:              0
+
+   Number of cells:                  1
+
+     $adff                           1
+
+
+
+=== press_qualify ===
+
+
+
+   Number of wires:                  9
+
+   Number of wire bits:             13
+
+   Number of public wires:           3
+
+   Number of public wire bits:       7
+
+   Number of memories:               0
+
+   Number of memory bits:            0
+
+   Number of processes:              0
+
+   Number of cells:                  9
+
+     $eq                             4
+
+     $logic_or                       3
+
+     $or                             2
+
+
+
+=== shared_time ===
+
+
+
+   Number of wires:                  4
+
+   Number of wire bits:             26
+
+   Number of public wires:           4
+
+   Number of public wire bits:      26
+
+   Number of memories:               0
+
+   Number of memory bits:            0
+
+   Number of processes:              0
+
+   Number of cells:                  1
+
+     $adff                           1
+
+
+
+=== tt_um_CL4_LNMIIT ===
+
+
+
+   Number of wires:                 13
+
+   Number of wire bits:             51
+
+   Number of public wires:          13
+
+   Number of public wire bits:      51
+
+   Number of memories:               0
+
+   Number of memory bits:            0
+
+   Number of processes:              0
+
+   Number of cells:                  1
+
+     combo_lock                      1
+
+
+
+=== design hierarchy ===
+
+
+
+   tt_um_CL4_LNMIIT                  1
+
+     combo_lock                      1
+
+       $paramod$bbdccc09e789bd30fc4b52be389e0426e77b78bc\entry_fsm      1
+
+       $paramod\button_debounce\DEBOUNCE_CYCLES=s32'00000000000000000000000000010000      4
+
+       $paramod\code_compare\CODE_VALUE=8'10011100      1
+
+       $paramod\reset_sync\RST_SYNC=s32'00000000000000000000000000000001      1
+
+       failure_counter               1
+
+       press_qualify                 1
+
+       shared_time                   1
+
+
+
+   Number of wires:                185
+
+   Number of wire bits:            492
+
+   Number of public wires:          95
+
+   Number of public wire bits:     255
+
+   Number of memories:               0
+
+   Number of memory bits:            0
+
+   Number of processes:              0
+
+   Number of cells:                131
+
+     $add                            6
+
+     $adff                          19
+
+     $adffe                          7
+
+     $and                            8
+
+     $eq                            24
+
+     $ge                             1
+
+     $logic_not                      3
+
+     $logic_or                       3
+
+     $mux                           27
+
+     $ne                             2
+
+     $not                           10
+
+     $or                             2
+
+     $pmux                           6
+
+     $reduce_and                     6
+
+     $reduce_bool                    1
+
+     $reduce_or                      5
+
+     $sub                            1
+
+
+
+End of script. Logfile hash: 520dea3b4b, CPU: user 0.11s system 0.01s, MEM: 13.20 MB peak
+
+Yosys 0.29+23 (git sha1 cdeef5481, gcc 7.5.0-3ubuntu1~18.04 -fPIC -Os)
+
+Time spent: 33% 5x opt_expr (0 sec), 19% 4x opt_merge (0 sec), ...
