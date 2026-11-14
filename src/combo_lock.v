@@ -40,15 +40,7 @@ module combo_lock #(
 
 );
 
-  // FSM encodings used only to steer the digit-storage register.
 
-  localparam [2:0] S_IDLE   = 3'b000;
-
-  localparam [2:0] S_DIGIT2 = 3'b001;
-
-  localparam [2:0] S_DIGIT3 = 3'b010;
-
-  localparam [2:0] S_DIGIT4 = 3'b011;
 
 
 
@@ -78,7 +70,7 @@ module combo_lock #(
 
   // comparator, so bits [1:0] are not stored.
 
-  reg [7:2] entered_code;
+  wire [7:2] entered_code;
 
 
 
@@ -138,34 +130,6 @@ module combo_lock #(
 
 
 
-  // Storage only: no comparison happens here.
-
-  always @(posedge clk or negedge internal_rst_n) begin
-
-    if (!internal_rst_n) begin
-
-      entered_code <= 6'd0;
-
-    end else begin
-
-      case (st)
-
-        S_IDLE:   entered_code <= valid ? {digit, 4'b0000} : 6'd0;
-
-        S_DIGIT2: if (valid) entered_code[5:4] <= digit;
-
-        S_DIGIT3: if (valid) entered_code[3:2] <= digit;
-
-        S_DIGIT4: entered_code <= entered_code;  // hold until verdict
-
-        default:  entered_code <= 6'd0;          // UNLOCK/FAIL/LOCKOUT/illegal
-
-      endcase
-
-    end
-
-  end
-
 
 
   code_compare #(
@@ -184,40 +148,25 @@ module combo_lock #(
 
 
 
-  entry_fsm #(
-
+    entry_fsm #(
     .MAX_ATTEMPTS(MAX_ATTEMPTS),
-
     .UNLOCK_CYCLES(UNLOCK_CYCLES),
-
     .LOCKOUT_CYCLES(LOCKOUT_CYCLES),
-
     .INTERDIGIT_TIMEOUT_CYCLES(INTERDIGIT_TIMEOUT_CYCLES)
-
   ) U_entry_fsm (
-
     .clk(clk),
-
     .rst_n(internal_rst_n),
-
     .valid(valid),
-
+    .digit(digit),                 // new
     .match(match),
-
     .fail(fail),
-
     .tmr(tmr),
-
     .st(st),
-
     .unlock(unlock),
-
     .locked_out(locked_out),
-
+    .entered_code(entered_code),   // new
     .fail_n(fail_n),
-
     .tmr_n(tmr_n)
-
   );
 
 
