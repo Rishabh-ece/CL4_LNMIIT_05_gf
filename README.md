@@ -1,15 +1,16 @@
-![](../../workflows/gds/badge.svg) ![](../../workflows/docs/badge.svg) ![](../../workflows/test/badge.svg) ![](../../workflows/fpga/badge.svg)
+![GDS](../../workflows/gds/badge.svg) ![Docs](../../workflows/docs/badge.svg) ![Test](../../workflows/test/badge.svg) ![FPGA](../../workflows/fpga/badge.svg)
 
 # CL-4: 4-Digit Combination Lock Controller
 
 A four-button, four-digit electronic combination lock, written in Verilog and built for [Tiny Tapeout](https://tinytapeout.com) on the GF180 (180 nm) process.
 
-- Top module: `tt_um_CL4_LNMIIT`
-- Core module: `combo_lock`
-- Tile size: 1x1
-- Clock: 1 kHz
-- Authors: Rishabh Agrawal, Ankit Mawle (LNMIIT, Jaipur)
-- Full project documentation: [docs/info.md](docs/info.md)
+- **Top module:** `tt_um_CL4_LNMIIT`
+- **Core module:** `combo_lock`
+- **Tile size:** 1x1
+- **Clock:** 1 kHz
+- **Authors:** Rishabh Agrawal, Ankit Mawle (LNMIIT, Jaipur)
+- **Functional specification:** [docs/info.md](docs/info.md)
+- **Verification plan:** [docs/verification_plan.md](docs/verification_plan.md)
 
 ## What it does
 
@@ -59,7 +60,7 @@ The `state` output (`uo[6:4]`) shows the current FSM state:
 
 ## How it works
 
-```
+```text
 btn[3:0] -> 2-FF sync -> debounce (x4) -> press_qualify -> code_compare -> entry_fsm -> unlock / locked_out
                                                                               |  ^
                                                               failure_counter +  + shared_timer
@@ -79,10 +80,10 @@ btn[3:0] -> 2-FF sync -> debounce (x4) -> press_qualify -> code_compare -> entry
 
 ### Key design points
 
-- **Debounce:** a button must differ from its debounced level for `D` consecutive cycles to change it, in both directions. A pulse shorter than `D` is filtered, and a held button gives exactly one press. A clean press first sampled at edge `j` changes the FSM state at edge `j + D + 1`.
+- **Debounce:** a button must differ from its debounced level for `D` consecutive cycles to change it, in both directions. A pulse shorter than `D` is filtered, and a held button gives exactly one press.
 - **Independent debouncers:** each button has its own filter, so two buttons pressed close together are never merged.
 - **Simultaneous presses:** if two or more debounced presses complete in the same cycle, the cycle is not a digit. It is neither correct nor a failure.
-- **Code check:** digits 1 to 3 are stored as they arrive, and the full 8-bit code is compared once, when the fourth digit arrives. A wrong code therefore enters FAIL after the fourth digit, rather than at the first wrong digit.
+- **Code check:** digits 1 to 3 are stored as they arrive, and the full 8-bit code is compared once, when the fourth digit arrives.
 - **Failures never expire with time.** Only a successful unlock, the end of a lockout, or a reset clears the count.
 - **During lockout** `attempt_count` stays at `MAX_ATTEMPTS`, input is ignored and the timer is not extended.
 - **Lockout test** uses `fail >= MAX_ATTEMPTS - 1` rather than equality, so a corrupted counter cannot bypass lockout.
@@ -123,7 +124,9 @@ If you use a different clock, these durations scale with it. Choose the clock so
 
 ## Verification
 
-The functional spec is [CL4-SPEC-001](docs/info.md), with a feature-by-feature verification plan (F01 to F35, plus lint, synthesis and timing checks). The plan includes a cycle-accurate reference model and at least 100 randomized tests of 5000 cycles each, with bounce and simultaneous presses.
+The functional specification is [CL4-SPEC-001](docs/info.md), and the feature-by-feature verification plan is available in [docs/verification_plan.md](docs/verification_plan.md).
+
+The verification plan covers functional tests F01 to F35, a cycle-accurate reference model, randomized regression, and static checks.
 
 Tests use [cocotb](https://www.cocotb.org/) and live in `test/`. To run them locally:
 
@@ -132,22 +135,130 @@ cd test
 make
 ```
 
-> **Status:** update this section as results come in. Do not mark an item as passing until the log shows it.
+### Verification status
 
-| Check | Status |
+| Check | Status | Result |
+|---|---|---|
+| RTL compilation and cocotb test workflow | **Passed** | GitHub Actions test workflow completed successfully |
+| Directed and functional simulation | **Passed** | Test workflow completed successfully |
+| Verilator lint | **Passed** | Lint run completed |
+| Yosys synthesis | **Completed** | Synthesis completed successfully |
+| Gate-level simulation (GLS) | **Passed** | Tiny Tapeout GL test workflow completed successfully |
+| Tiny Tapeout GDS build | **Passed** | GitHub Actions GDS build completed successfully |
+| Tiny Tapeout precheck | **Passed** | Precheck workflow completed successfully |
+| Layout viewer deployment | **Passed** | Viewer workflow completed successfully |
+| Standalone OpenROAD routing | **Passed** | Detailed routing completed with zero final routing violations |
+| Standalone OpenROAD timing | **Passed** | Positive setup and hold slack across the nine reported combinations |
+| Standalone OpenROAD DRV signoff | **Outstanding** | Maximum-capacitance and SS-corner maximum-slew violations remain |
+| Standalone OpenROAD PDN connectivity | **Passed** | VDD and VSS reported connected |
+| Standalone OpenROAD IR-drop analysis | **Passed** | Reported worst IR drop approximately 0.00% |
+
+### GitHub Actions
+
+The repository includes automated workflows for testing and the Tiny Tapeout build.
+
+- **Test workflow:** installs Icarus Verilog and cocotb, runs the test suite and checks the results.
+- **GDS workflow:** builds the GDS using the Tiny Tapeout GF180 flow.
+- **Precheck:** runs the Tiny Tapeout precheck after GDS generation.
+- **GLS:** runs the gate-level simulation after GDS generation.
+- **Viewer:** deploys the generated layout viewer.
+
+The checked workflow runs completed successfully:
+
+- [RTL test workflow](https://github.com/Rishabh-ece/CL4_LNMIIT_05_gf/actions/runs/45384009732)
+- [GDS, precheck, GLS and viewer workflow](https://github.com/Rishabh-ece/CL4_LNMIIT_05_gf/actions/runs/45387195580)
+
+## Synthesis and physical design
+
+Two separate standalone implementation flows are maintained in this repository.
+
+### 1. Yosys synthesis and OpenSTA
+
+Directory: [`synthesis_sta_gf180/`](synthesis_sta_gf180/)
+
+This flow performs:
+
+- RTL synthesis using Yosys.
+- GF180 standard-cell technology mapping.
+- Gate-level netlist generation.
+- Cell statistics and area reporting.
+- Static timing analysis using OpenSTA at TT, SS and FF process corners.
+
+See [`synthesis_sta_gf180/README.md`](synthesis_sta_gf180/README.md) for installation, configuration and execution instructions.
+
+### 2. Standalone OpenROAD physical design
+
+Directory: [`openroad_gf180/`](openroad_gf180/)
+
+This flow performs:
+
+1. Yosys synthesis.
+2. Floorplanning and tap-cell insertion.
+3. Power distribution network generation.
+4. Global placement and design repair.
+5. Detailed placement and clock-tree synthesis.
+6. Setup and hold timing repair.
+7. Global and detailed routing.
+8. Antenna checking and filler insertion.
+9. Parasitic extraction using OpenRCX.
+10. Multi-corner static timing analysis and IR-drop analysis.
+
+See [`openroad_gf180/README.md`](openroad_gf180/README.md) for the complete commands and environment configuration.
+
+### Synthesis results
+
+The completed Yosys synthesis run reported:
+
+| Metric | Result |
+|---|---:|
+| Synthesized cell area | 7832.4736 µm² |
+| Sequential cell area | 4105.024 µm² |
+| Sequential area percentage | 52.41% |
+
+These are synthesis results before physical placement and routing.
+
+### Standalone OpenROAD implementation results
+
+The standalone OpenROAD flow completed through the final fill stage (`13_fill`).
+
+| Stage | Result |
 |---|---|
-| Compile with all sources | not yet recorded |
-| Verilator lint (`--lint-only -Wall`) | not yet recorded |
-| Directed cocotb tests | not yet recorded |
-| Reference-model and randomized regression | not yet recorded |
-| Synthesis (latches, flop count) | not yet recorded |
-| Static timing | not yet recorded |
+| Floorplanning | Completed |
+| Tap-cell insertion | 72 endcaps and 173 tap cells |
+| Power distribution network | Completed |
+| Global placement | Completed with zero final placement overflow |
+| Design repair | 6 instances resized and 14 buffers inserted |
+| Detailed placement | Completed |
+| Clock-tree synthesis | 9 clock buffers created for 55 clock sinks |
+| Clock skew | 0.30 ns reported setup skew |
+| Timing repair | No setup or hold violations found |
+| Global routing | Completed with zero routing overflow |
+| Antenna check | 0 net and 0 pin violations |
+| Detailed routing | 0 final routing violations |
+| Fill insertion | 722 filler instances |
 
-## Build flow
+### Standalone OpenROAD signoff results
 
-The GitHub Actions in this repository build the ASIC with [LibreLane](https://www.zerotoasiccourse.com/terminology/librelane/), generate the documentation, run the tests and run the FPGA build.
+Signoff was run across three process corners (TT, SS and FF) and three RC corners (nominal, minimum and maximum), giving nine STA combinations.
 
-To harden locally, see the [local hardening guide](https://www.tinytapeout.com/guides/local-hardening/).
+| Check | Result |
+|---|---|
+| Worst reported timing slack | Positive in all nine combinations |
+| Minimum reported slack | Approximately 0.17 ns |
+| Total negative slack | 0.00 in all nine combinations |
+| VDD connectivity | Connected |
+| VSS connectivity | Connected |
+| Worst reported IR drop | Approximately 0.00% |
+| Maximum capacitance | Violations remain |
+| Maximum slew | SS-corner violations remain |
+
+**Signoff note:** Timing closure and electrical design-rule closure are separate checks. The standalone OpenROAD timing reports show positive slack, but the DRV reports are not yet clean.
+
+The maximum-capacitance violation appears at `clkbuf_0_clk/Z`, with approximately 0.21 against the specified 0.20 limit. The SS corner also has maximum-slew violations, with a worst transition of approximately 4.52 ns against the 3 ns limit. These violations remain under investigation.
+
+The standalone flow generated the final OpenROAD database (`out/13_fill.odb`), extracted SPEF files, SDF files and post-route netlists.
+
+The Tiny Tapeout GitHub Actions GDS build is a separate flow and has completed successfully.
 
 ## About Tiny Tapeout
 
