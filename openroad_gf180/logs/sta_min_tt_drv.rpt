@@ -1,0 +1,6 @@
+max capacitance
+
+Pin                                    Limit     Cap   Slack
+------------------------------------------------------------
+clkbuf_0_clk/Z                          0.20    0.20   -0.00 (VIOLATED)
+

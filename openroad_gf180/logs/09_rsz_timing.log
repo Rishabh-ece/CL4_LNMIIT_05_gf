@@ -1,0 +1,19 @@
+OpenROAD dcf36133a369abc8f3c5e5738cd4d82e4903c0e0 
+Features included (+) or not (-): +GPU +GUI +Python
+This program is licensed under the BSD-3 license. See the LICENSE file for details.
+Components of this program may be licensed under more restrictive licenses which must be honored.
+[INFO RSZ-0100] Repair move sequence: UnbufferMove SizeUpMove SwapPinsMove BufferMove CloneMove SplitLoadMove 
+[INFO RSZ-0098] No setup violations found
+[INFO RSZ-0033] No hold violations found.
+Placement Analysis
+---------------------------------
+total displacement          0.0 u
+average displacement        0.0 u
+max displacement            0.0 u
+original HPWL            8144.0 u
+legalized HPWL           8144.0 u
+delta HPWL                    0 %
+
+worst slack max 799995.44
+worst slack min 0.50
+tns max 0.00

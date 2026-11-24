@@ -1,0 +1,52 @@
+OpenROAD dcf36133a369abc8f3c5e5738cd4d82e4903c0e0 
+Features included (+) or not (-): +GPU +GUI +Python
+This program is licensed under the BSD-3 license. See the LICENSE file for details.
+Components of this program may be licensed under more restrictive licenses which must be honored.
+[INFO GRT-0020] Min routing layer: Metal2
+[INFO GRT-0021] Max routing layer: Metal5
+[INFO GRT-0022] Global adjustment: 0%
+[INFO GRT-0023] Grid origin: (0, 0)
+[INFO GRT-0088] Layer Metal1  Track-Pitch = 0.5600  line-2-Via Pitch: 0.4750
+[INFO GRT-0088] Layer Metal2  Track-Pitch = 0.5600  line-2-Via Pitch: 0.5600
+[INFO GRT-0088] Layer Metal3  Track-Pitch = 0.5600  line-2-Via Pitch: 0.5600
+[INFO GRT-0088] Layer Metal4  Track-Pitch = 0.5600  line-2-Via Pitch: 0.5600
+[INFO GRT-0088] Layer Metal5  Track-Pitch = 0.9000  line-2-Via Pitch: 0.8200
+[INFO GRT-0003] Macros: 0
+[INFO GRT-0004] Blockages: 0
+[INFO GRT-0019] Found 10 clock nets.
+[INFO GRT-0001] Minimum degree: 2
+[INFO GRT-0002] Maximum degree: 11
+
+[INFO GRT-0053] Routing resources analysis:
+          Routing      Original      Derated      Resource
+Layer     Direction    Resources     Resources    Reduction (%)
+---------------------------------------------------------------
+Metal1     Horizontal          0             0          0.00%
+Metal2     Vertical         5520          3680          33.33%
+Metal3     Horizontal       5820          3896          33.06%
+Metal4     Vertical         5504          3680          33.14%
+Metal5     Horizontal       3564          2398          32.72%
+---------------------------------------------------------------
+
+[INFO GRT-0197] Via related to pin nodes: 1896
+[INFO GRT-0198] Via related Steiner nodes: 27
+[INFO GRT-0199] Via filling finished.
+[INFO GRT-0111] Final number of vias: 2287
+[INFO GRT-0112] Final usage 3D: 7966
+
+[INFO GRT-0096] Final congestion report:
+Layer         Resource        Demand        Usage (%)    Max H / Max V / Total Overflow
+---------------------------------------------------------------------------------------
+Metal1               0             0            0.00%             0 /  0 /  0
+Metal2            3680           504           13.70%             0 /  0 /  0
+Metal3            3896           590           15.14%             0 /  0 /  0
+Metal4            3680             3            0.08%             0 /  0 /  0
+Metal5            2398             8            0.33%             0 /  0 /  0
+---------------------------------------------------------------------------------------
+Total            13654          1105            8.09%             0 /  0 /  0
+
+[INFO GRT-0018] Total wirelength: 15573 um
+[INFO GRT-0014] Routed nets: 329
+[INFO GRT-0303] Global routing runtime = 00:00:00
+worst slack max 799995.38
+worst slack min 0.52

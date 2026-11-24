@@ -1,0 +1,19 @@
+OpenROAD dcf36133a369abc8f3c5e5738cd4d82e4903c0e0 
+Features included (+) or not (-): +GPU +GUI +Python
+This program is licensed under the BSD-3 license. See the LICENSE file for details.
+Components of this program may be licensed under more restrictive licenses which must be honored.
+[INFO RSZ-0027] Inserted 5 gf180mcu_fd_sc_mcu7t5v0__dlyb_1 input buffers.
+Iteration |   Area    | Resized | Buffers | Nets repaired | Remaining
+---------------------------------------------------------------------
+        0 |     +0.0% |       0 |       0 |             0 |       303
+    final |     +6.8% |       6 |      14 |             5 |         0
+---------------------------------------------------------------------
+[INFO RSZ-0034] Found 7 slew violations.
+[INFO RSZ-0035] Found 3 fanout violations.
+[INFO RSZ-0039] Resized 6 instances.
+[INFO RSZ-0038] Inserted 14 buffers in 5 nets.
+[INFO RSZ-0042] Inserted 17 tie gf180mcu_fd_sc_mcu7t5v0__tiel instances.
+[INFO RSZ-0042] Inserted 1 tie gf180mcu_fd_sc_mcu7t5v0__tieh instances.
+[WARNING RSZ-0020] found 2 floating nets.
+ VDD
+ VSS

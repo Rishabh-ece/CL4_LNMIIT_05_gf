@@ -1,0 +1,24 @@
+OpenROAD dcf36133a369abc8f3c5e5738cd4d82e4903c0e0 
+Features included (+) or not (-): +GPU +GUI +Python
+This program is licensed under the BSD-3 license. See the LICENSE file for details.
+Components of this program may be licensed under more restrictive licenses which must be honored.
+[INFO ODB-0388] unsupported LEF58_EOLENCLOSURE property for layer Via1 :"
+  	EOLENCLOSURE 0.34 0.06 ;"
+[INFO ODB-0388] unsupported LEF58_EOLENCLOSURE property for layer Via2 :" EOLENCLOSURE 0.34 0.06 ; "
+[INFO ODB-0388] unsupported LEF58_EOLENCLOSURE property for layer Via3 :" EOLENCLOSURE 0.34 0.06 ; "
+[INFO ODB-0388] unsupported LEF58_EOLENCLOSURE property for layer Via4 :" EOLENCLOSURE 0.34 0.06 ; "
+[INFO ODB-0227] LEF file: /home/rishabh/.ciel/gf180mcuD/libs.ref/gf180mcu_fd_sc_mcu7t5v0/techlef/gf180mcu_fd_sc_mcu7t5v0__nom.tlef, created 15 layers, 56 vias
+[WARNING ODB-0220] WARNING (LEFPARS-2008): NOWIREEXTENSIONATPIN statement is obsolete in version 5.6 or later.
+The NOWIREEXTENSIONATPIN statement will be ignored. See file /home/rishabh/.ciel/gf180mcuD/libs.ref/gf180mcu_fd_sc_mcu7t5v0/lef/gf180mcu_fd_sc_mcu7t5v0.lef at line 2.
+
+[INFO ODB-0227] LEF file: /home/rishabh/.ciel/gf180mcuD/libs.ref/gf180mcu_fd_sc_mcu7t5v0/lef/gf180mcu_fd_sc_mcu7t5v0.lef, created 229 library cells
+[INFO IFP-0001] Added 36 rows of 345 site GF018hv5v_mcu_sc7.
+[INFO IFP-0100] Die BBox:  (  0.000  0.000 ) ( 200.000 150.000 ) um
+[INFO IFP-0101] Core BBox: (  3.360  3.920 ) ( 196.560 145.040 ) um
+[INFO IFP-0102] Core area:                        27264.384 um^2
+[INFO IFP-0103] Total instances area:              7832.474 um^2
+[INFO IFP-0104] Effective utilization:                0.287
+[INFO IFP-0105] Number of instances:                    279
+[INFO IFP-0030] Inserted 0 tiecells using gf180mcu_fd_sc_mcu7t5v0__tiel/ZN.
+[INFO IFP-0030] Inserted 0 tiecells using gf180mcu_fd_sc_mcu7t5v0__tieh/Z.
+Design area 7832 um^2 29% utilization.

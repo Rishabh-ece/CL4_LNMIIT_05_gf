@@ -1,0 +1,39 @@
+OpenROAD dcf36133a369abc8f3c5e5738cd4d82e4903c0e0 
+Features included (+) or not (-): +GPU +GUI +Python
+This program is licensed under the BSD-3 license. See the LICENSE file for details.
+Components of this program may be licensed under more restrictive licenses which must be honored.
+Group                  Internal  Switching    Leakage      Total
+                          Power      Power      Power      Power (Watts)
+----------------------------------------------------------------
+Sequential             1.37e-08   3.50e-10   1.03e-08   2.44e-08  30.2%
+Combinational          1.24e-09   1.28e-09   1.28e-08   1.53e-08  19.0%
+Clock                  1.19e-08   5.38e-09   2.37e-08   4.10e-08  50.8%
+Macro                  0.00e+00   0.00e+00   0.00e+00   0.00e+00   0.0%
+Pad                    0.00e+00   0.00e+00   0.00e+00   0.00e+00   0.0%
+----------------------------------------------------------------
+Total                  2.69e-08   7.01e-09   4.68e-08   8.07e-08 100.0%
+                          33.3%       8.7%      58.0%
+[INFO PSM-0040] All shapes on net VDD are connected.
+########## IR report #################
+Net              : VDD
+Corner           : default
+Total power      : 8.07e-08 W
+Supply voltage   : 3.30e+00 V
+Worstcase voltage: 3.30e+00 V
+Average voltage  : 3.30e+00 V
+Average IR drop  : 3.49e-09 V
+Worstcase IR drop: 1.23e-08 V
+Percentage drop  : 0.00 %
+######################################
+[INFO PSM-0040] All shapes on net VSS are connected.
+########## IR report #################
+Net              : VSS
+Corner           : default
+Total power      : 8.07e-08 W
+Supply voltage   : 0.00e+00 V
+Worstcase voltage: 7.36e-09 V
+Average voltage  : 3.09e-09 V
+Average IR drop  : 3.09e-09 V
+Worstcase IR drop: 7.36e-09 V
+Percentage drop  : 0.00 %
+######################################

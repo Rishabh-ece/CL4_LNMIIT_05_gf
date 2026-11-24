@@ -1,0 +1,74 @@
+OpenROAD dcf36133a369abc8f3c5e5738cd4d82e4903c0e0 
+Features included (+) or not (-): +GPU +GUI +Python
+This program is licensed under the BSD-3 license. See the LICENSE file for details.
+Components of this program may be licensed under more restrictive licenses which must be honored.
+[INFO CTS-0050] Root buffer is gf180mcu_fd_sc_mcu7t5v0__clkbuf_16.
+[INFO CTS-0051] Sink buffer is gf180mcu_fd_sc_mcu7t5v0__clkbuf_8.
+[INFO CTS-0052] The following clock buffers will be used for CTS:
+                    gf180mcu_fd_sc_mcu7t5v0__clkbuf_2
+                    gf180mcu_fd_sc_mcu7t5v0__clkbuf_4
+                    gf180mcu_fd_sc_mcu7t5v0__clkbuf_8
+[INFO CTS-0049] Characterization buffer is gf180mcu_fd_sc_mcu7t5v0__clkbuf_8.
+[INFO CTS-0007] Net "clk" found for clock "clk".
+[INFO CTS-0010]  Clock net "clk" has 55 sinks.
+[INFO CTS-0008] TritonCTS found 1 clock nets.
+[INFO CTS-0097] Characterization used 3 buffer(s) types.
+[INFO CTS-0201] 0 blockages from hard placement blockages and placed macros will be used.
+[INFO CTS-0027] Generating H-Tree topology for net clk.
+[INFO CTS-0028]  Total number of sinks: 55.
+[INFO CTS-0090]  Sinks will be clustered based on buffer max cap.
+[INFO CTS-0030]  Number of static layers: 0.
+[INFO CTS-0020]  Wire segment unit: 39200  dbu (19 um).
+[INFO CTS-0023]  Original sink region: [(10810, 74480), (351290, 246960)].
+[INFO CTS-0024]  Normalized sink region: [(0.275765, 1.9), (8.96148, 6.3)].
+[INFO CTS-0025]     Width:  8.6857.
+[INFO CTS-0026]     Height: 4.4000.
+ Level 1
+    Direction: Horizontal
+    Sinks per sub-region: 28
+    Sub-region size: 4.3429 X 4.4000
+[INFO CTS-0034]     Segment length (rounded): 2.
+ Level 2
+    Direction: Vertical
+    Sinks per sub-region: 14
+    Sub-region size: 4.3429 X 2.2000
+[INFO CTS-0034]     Segment length (rounded): 1.
+ Level 3
+    Direction: Horizontal
+    Sinks per sub-region: 7
+    Sub-region size: 2.1714 X 2.2000
+[INFO CTS-0034]     Segment length (rounded): 1.
+[INFO CTS-0032]  Stop criterion found. Max number of sinks is 10.
+[INFO CTS-0035]  Number of sinks covered: 55.
+[INFO CTS-0018]     Created 9 clock buffers.
+[INFO CTS-0012]     Minimum number of buffers in the clock path: 2.
+[INFO CTS-0013]     Maximum number of buffers in the clock path: 2.
+[INFO CTS-0015]     Created 9 clock nets.
+[INFO CTS-0016]     Fanout distribution for the current clock = 6:1, 7:7..
+[INFO CTS-0017]     Max level of the clock tree: 3.
+[INFO CTS-0098] Clock net "clk"
+[INFO CTS-0099]  Sinks 56
+[INFO CTS-0100]  Leaf buffers 0
+[INFO CTS-0101]  Average sink wire length 224.32 um
+[INFO CTS-0102]  Path depth 2 - 2
+[INFO CTS-0207]  Dummy loads inserted 1
+[INFO RSZ-0058] Using max wire length 8210um.
+Placement Analysis
+---------------------------------
+total displacement        344.4 u
+average displacement        0.6 u
+max displacement           12.9 u
+original HPWL            7535.2 u
+legalized HPWL           8144.0 u
+delta HPWL                    8 %
+
+Clock clk
+   0.85 source latency _403_/CLK ^
+  -0.76 target latency _391_/CLK ^
+   0.25 clock uncertainty
+  -0.04 CRPR
+--------------
+   0.30 setup skew
+
+worst slack max 799995.44
+worst slack min 0.50
