@@ -1,0 +1,73 @@
+max slew
+
+Pin                                    Limit    Slew   Slack
+------------------------------------------------------------
+_388_/RN                                3.00    5.62   -2.62 (VIOLATED)
+_389_/RN                                3.00    5.62   -2.62 (VIOLATED)
+_390_/RN                                3.00    5.62   -2.62 (VIOLATED)
+_391_/RN                                3.00    5.62   -2.62 (VIOLATED)
+_392_/RN                                3.00    5.62   -2.62 (VIOLATED)
+_393_/Q                                 3.00    5.62   -2.62 (VIOLATED)
+_395_/RN                                3.00    5.62   -2.62 (VIOLATED)
+_396_/RN                                3.00    5.62   -2.62 (VIOLATED)
+_397_/RN                                3.00    5.62   -2.62 (VIOLATED)
+_398_/RN                                3.00    5.62   -2.62 (VIOLATED)
+_399_/RN                                3.00    5.62   -2.62 (VIOLATED)
+_400_/RN                                3.00    5.62   -2.62 (VIOLATED)
+_401_/RN                                3.00    5.62   -2.62 (VIOLATED)
+_402_/RN                                3.00    5.62   -2.62 (VIOLATED)
+_403_/RN                                3.00    5.62   -2.62 (VIOLATED)
+_404_/RN                                3.00    5.62   -2.62 (VIOLATED)
+_405_/RN                                3.00    5.62   -2.62 (VIOLATED)
+_406_/RN                                3.00    5.62   -2.62 (VIOLATED)
+_407_/RN                                3.00    5.62   -2.62 (VIOLATED)
+_408_/RN                                3.00    5.62   -2.62 (VIOLATED)
+_409_/RN                                3.00    5.62   -2.62 (VIOLATED)
+_410_/RN                                3.00    5.62   -2.62 (VIOLATED)
+_411_/RN                                3.00    5.62   -2.62 (VIOLATED)
+_412_/RN                                3.00    5.62   -2.62 (VIOLATED)
+_413_/RN                                3.00    5.62   -2.62 (VIOLATED)
+_414_/RN                                3.00    5.62   -2.62 (VIOLATED)
+_415_/RN                                3.00    5.62   -2.62 (VIOLATED)
+_416_/RN                                3.00    5.62   -2.62 (VIOLATED)
+_417_/RN                                3.00    5.62   -2.62 (VIOLATED)
+_418_/RN                                3.00    5.62   -2.62 (VIOLATED)
+_419_/RN                                3.00    5.62   -2.62 (VIOLATED)
+_420_/RN                                3.00    5.62   -2.62 (VIOLATED)
+_421_/RN                                3.00    5.62   -2.62 (VIOLATED)
+_422_/RN                                3.00    5.62   -2.62 (VIOLATED)
+_423_/RN                                3.00    5.62   -2.62 (VIOLATED)
+_424_/RN                                3.00    5.62   -2.62 (VIOLATED)
+_425_/RN                                3.00    5.62   -2.62 (VIOLATED)
+_426_/RN                                3.00    5.62   -2.62 (VIOLATED)
+_427_/RN                                3.00    5.62   -2.62 (VIOLATED)
+_428_/RN                                3.00    5.62   -2.62 (VIOLATED)
+_429_/RN                                3.00    5.62   -2.62 (VIOLATED)
+_430_/RN                                3.00    5.62   -2.62 (VIOLATED)
+_431_/RN                                3.00    5.62   -2.62 (VIOLATED)
+_432_/RN                                3.00    5.62   -2.62 (VIOLATED)
+_433_/RN                                3.00    5.62   -2.62 (VIOLATED)
+_434_/RN                                3.00    5.62   -2.62 (VIOLATED)
+_435_/RN                                3.00    5.62   -2.62 (VIOLATED)
+_436_/RN                                3.00    5.62   -2.62 (VIOLATED)
+_437_/RN                                3.00    5.62   -2.62 (VIOLATED)
+_438_/RN                                3.00    5.62   -2.62 (VIOLATED)
+_439_/RN                                3.00    5.62   -2.62 (VIOLATED)
+_440_/RN                                3.00    5.62   -2.62 (VIOLATED)
+_441_/RN                                3.00    5.62   -2.62 (VIOLATED)
+_442_/RN                                3.00    5.62   -2.62 (VIOLATED)
+
+max fanout
+
+Pin                                   Limit Fanout  Slack
+---------------------------------------------------------
+_393_/Q                                  10     53    -43 (VIOLATED)
+_226_/ZN                                 10     13     -3 (VIOLATED)
+_390_/Q                                  10     12     -2 (VIOLATED)
+
+max capacitance
+
+Pin                                    Limit     Cap   Slack
+------------------------------------------------------------
+_393_/Q                                 0.20    0.38   -0.18 (VIOLATED)
+
