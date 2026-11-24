@@ -87,12 +87,6 @@ At a 1 kHz clock frequency, 4000 cycles correspond to 4 seconds.
    pip show cocotb
    ```
 
-   The current testbench uses Cocotb 2.x syntax:
-
-   ```python
-   Clock(dut.clk, 10, unit="ns")
-   ```
-
    The Makefile must select the Cocotb 2.x test-module variable:
 
    ```make
@@ -104,7 +98,7 @@ At a 1 kHz clock frequency, 4000 cycles correspond to 4 seconds.
 4. For GLS, load the project environment before running the simulation:
 
    ```sh
-   source ~/ttsetup/env.sh
+   source ~/ttsetup/venv/bin/activate
    ```
 
 ## Timing notes for writing tests
@@ -138,7 +132,7 @@ The RTL regression includes directed functional tests and a cycle-accurate refer
 First load the GF180 environment:
 
 ```sh
-source ~/ttsetup/env.sh
+source ~/ttsetup/venv/bin/activate
 ```
 
 Then run:
