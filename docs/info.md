@@ -9,23 +9,27 @@ You can also include images in this folder and reference them in the markdown. E
 
 ## How it works
 
-CL-4 is a parameterized 4-digit combination lock controller written in Verilog for Tiny Tapeout on the GF180 (180 nm) process. It reads a four-digit code from four independent push buttons, checks the entered sequence, and drives the unlock and lockout outputs. The default code is `2 → 1 → 3 → 0` (`CODE_VALUE = 8'h9C`).
+CL-4 is a parameterized 4-digit combination lock controller written in Verilog for Tiny Tapeout on the GF180 (180 nm) process. It reads a four-digit code from four independent push buttons, checks the entered sequence, and drives the unlock and lockout outputs. The default code is `2 → 1 → 3 → 0` (`CODE_VALUE = 8'h9C`), fixed at synthesis time.
 
 ### Architecture
 
 ```
-btn[3:0] -> 2-FF sync -> debounce (x4) -> press_qualify -> code_compare -> entry_fsm -> unlock / locked_out
-                                                                              |  ^
-                                                              failure_counter +  + shared_timer
+btn[3:0] -> 2-FF sync -> debounce (x4) -> press_qualify -> entry_fsm -> unlock / locked_out
+                                                |  ^  ^        |
+                                  code_compare <-+  |  |        +-> entered_code[7:2] (digits 1-3, stored in entry_fsm)
+                                                    |  +-- failure_counter
+                                                    +----- shared_time (12-bit timer)
 ```
+
+Source modules: `button_debounce`, `press_qualify`, `code_compare`, `entry_fsm`, `shared_time`, `failure_counter`, `reset_sync`, `combo_lock` (integration) and `project.v` (Tiny Tapeout wrapper `tt_um_CL4_LNMIIT`).
 
 - **Button synchronizers**: each of the four buttons passes through its own 2-flop synchronizer before any other logic uses it.
 - **Debounce filters**: each button has an independent filter. The debounced level changes only after the synchronized input has differed from it for `DEBOUNCE_CYCLES` consecutive clock cycles, in both directions. A completed 0 → 1 change produces a one-cycle press pulse. A held button gives exactly one press.
 - **Press qualification and digit encoder**: a cycle counts as a digit only when exactly one button produces a press. Presses that complete in the same cycle are discarded, and they are neither correct nor a failure.
-- **Digit storage and code comparator**: the first three digits are stored as they are accepted. When the fourth digit arrives, the full 8-bit entered code is compared with `CODE_VALUE`. Digits 1 to 3 are accepted without comparison.
+- **Digit storage and code comparator**: the first three digits are accepted without comparison and stored in `entered_code[7:2]`, a register inside `entry_fsm`. When the fourth digit arrives, `code_compare` joins the stored digits with the live fourth digit and compares the full 8-bit value with `CODE_VALUE`. The stored digits are cleared in IDLE, UNLOCK, FAIL, LOCKOUT and on reset.
 - **Entry FSM**: a seven-state FSM (`IDLE`, `DIGIT2`, `DIGIT3`, `DIGIT4`, `UNLOCK`, `FAIL`, `LOCKOUT`). The code is judged in `DIGIT4`: a match goes to `UNLOCK`, a mismatch goes to `FAIL`.
-- **Shared timer**: one 12-bit down-counter serves the inter-digit timeout, the unlock duration and the lockout duration. These uses are exclusive by state.
-- **Failure counter**: a 2-bit counter of consecutive failed codes. After `MAX_ATTEMPTS` failures the FSM enters `LOCKOUT`. It does not expire with time. A successful unlock, the end of a lockout, or a reset clears it.
+- **Shared timer** (`shared_time`): one 12-bit down-counter serves the inter-digit timeout, the unlock duration and the lockout duration. These uses are exclusive by state.
+- **Failure counter**: a 2-bit counter of consecutive failed codes. After `MAX_ATTEMPTS` failures the FSM enters `LOCKOUT`. The test is `fail >= MAX_ATTEMPTS - 1`, so the counter cannot wrap past the threshold. It does not expire with time. A successful unlock, the end of a lockout, or a reset clears it.
 - **Output registers**: `unlock` and `locked_out` come straight from flip-flops loaded from the next state, so they always match the decoded `state`.
 
 ### FSM states
@@ -39,7 +43,7 @@ btn[3:0] -> 2-FF sync -> debounce (x4) -> press_qualify -> code_compare -> entry
 | `100` | UNLOCK | Code correct, `unlock` = 1 |
 | `101` | FAIL | Code wrong, lasts exactly one cycle |
 | `110` | LOCKOUT | Too many failures, `locked_out` = 1 |
-| `111` | (illegal) | Unreachable; returns to IDLE on the next edge |
+| `111` | (illegal) | Unreachable; returns to IDLE on the next edge, `fail` and the timer unchanged |
 
 ### Parameters and timing
 
@@ -52,6 +56,8 @@ btn[3:0] -> 2-FF sync -> debounce (x4) -> press_qualify -> code_compare -> entry
 | `INTERDIGIT_TIMEOUT_CYCLES` | 4000 | 0 to 4095 (0 disables the timeout) |
 | `CODE_VALUE` | `8'h9C` | any 8-bit value |
 | `RST_SYNC` | 1 | 0 or 1 |
+
+Values outside these ranges are rejected at elaboration.
 
 The project clock is 1 kHz (`clock_hz: 1000` in `info.yaml`), so one cycle is 1 ms:
 
@@ -66,14 +72,14 @@ A clean press first sampled high at edge `j` changes the FSM state at edge `j + 
 
 ### Clocking and reset
 
-The design uses a single clock domain, and all state is clocked on the rising edge of `clk`. `rst_n` is active low. With `RST_SYNC = 1`, it passes through a two-flop reset synchronizer before it reaches the rest of the design. Reset clears the FSM, the failure counter, the timer, the stored digits, the outputs, and every button synchronizer and debouncer. A button held through reset produces one press after reset is released.
+The design uses a single clock domain, and all state is clocked on the rising edge of `clk`. `rst_n` is active low and is applied to every flip-flop as an asynchronous-assert reset. With `RST_SYNC = 1`, `rst_n` passes through the two-flop `reset_sync` block: assertion takes effect immediately, and release is synchronized to `clk` (two clock edges), so all flops leave reset together. With `RST_SYNC = 0`, `rst_n` is used directly and must already be synchronous to `clk`. Reset clears the FSM, the failure counter, the timer, the stored digits, the outputs, and every button synchronizer and debouncer. A button held through reset produces one press after reset is released.
 
 ### Behavior summary
 
 - A correct code asserts `unlock` for `UNLOCK_CYCLES`, then returns to IDLE and clears the failure count.
 - A wrong code shows `FAIL` for one cycle and adds 1 to `attempt_count`.
 - `MAX_ATTEMPTS` wrong codes in a row start a lockout of `LOCKOUT_CYCLES`. `attempt_count` stays at `MAX_ATTEMPTS` throughout, all button input is ignored (even the correct code), and the timer is not extended. When the lockout ends, the count clears and the first press is judged in IDLE.
-- If the next digit does not arrive within the inter-digit window, the partial entry is dropped and the FSM returns to IDLE. This is an abandoned attempt and is not counted as a failure.
+- If the next digit does not arrive within the inter-digit window, the partial entry is dropped and the FSM returns to IDLE. This is an abandoned attempt and is not counted as a failure. A press in the cycle just after the window is judged as a new first digit.
 - Presses that arrive in `UNLOCK`, `FAIL` or `LOCKOUT` are discarded and never queued.
 
 ---
@@ -110,7 +116,7 @@ The design uses a single clock domain, and all state is clocked on the rising ed
 
 Because a wrong code is judged only after the fourth digit, `FAIL` appears after the fourth press, not at the first wrong digit.
 
-The cocotb testbench is in the `test` directory. See `test/README.md` to run it. The verification plan is in [verification.md](verification.md).
+The cocotb testbench is in the `test` directory. See `test/README.md` to run it (RTL simulation, and gate-level simulation with `GATES=yes`). The verification plan is in [verification.md](verification.md).
 
 ## External hardware
 
